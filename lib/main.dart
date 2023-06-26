@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const Eatsplorer());
+void main() {
+  runApp(const Eatsplorer());
+}
 
 class Eatsplorer extends StatelessWidget {
   const Eatsplorer({super.key});
