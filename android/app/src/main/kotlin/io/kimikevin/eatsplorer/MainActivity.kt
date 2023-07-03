@@ -9,7 +9,7 @@ class MainActivity: FlutterActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Aligns the Flutter view vertically with the window.
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             // Disable the Android splash screen fade out animation to avoid

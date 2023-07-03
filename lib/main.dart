@@ -6,7 +6,7 @@ import 'core/constants.dart';
 void main() {
 
   ErrorWidget.builder = (FlutterErrorDetails details) => Material(
-    color: Constants.kPrimaryColor,
+    color: Constants.redRibbon,
     child: Center(
       child: Text(
         details.exception.toString(),

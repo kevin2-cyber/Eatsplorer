@@ -1,5 +1,4 @@
 import 'package:eatsplorer/app/presentation/home.dart';
-import 'package:eatsplorer/core/theme.dart';
 import 'package:flutter/material.dart';
 
 class Eatsplorer extends StatelessWidget {
@@ -9,7 +8,10 @@ class Eatsplorer extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.light(),
+      themeMode: ThemeMode.system,
+      theme: ThemeData(
+        fontFamily: 'Samsung Sharp Sans',
+      ),
       home: const Home(),
     );
   }
