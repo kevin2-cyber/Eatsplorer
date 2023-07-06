@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red_ribbon">#FF2950</color>
+    <color name="blue_vogue">#192E51</color>
+    <color name="lynch">#607698</color>
+    <color name="athens_gray">#E9E9F0</color>
 </resources>
