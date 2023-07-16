@@ -48,9 +48,11 @@
     <EditText
         android:id="@+id/et_email"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="331dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="389dp"
         android:autofillHints="name"
         android:background="@drawable/et_background"
         android:drawableEnd="@drawable/baseline_mail_outline_24"
@@ -62,10 +64,11 @@
         android:textAllCaps="false"
         android:textColor="@color/lynch"
         android:textColorHint="@color/lynch"
-        app:layout_constraintBottom_toTopOf="@+id/et_password"
+        app:layout_constraintBottom_toTopOf="@+id/google"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_name" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/et_password"
@@ -87,21 +90,21 @@
         android:textColorHint="@color/lynch"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_email" />
+        app:layout_constraintTop_toBottomOf="@+id/et_email"
+        app:layout_constraintVertical_bias="0.146" />
 
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="202dp"
+        android:layout_marginBottom="312dp"
         android:fontFamily="@font/samsung"
         android:text="I have read"
         android:textColor="@color/lynch"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/et_password"
-        app:layout_constraintTop_toBottomOf="@+id/et_name"
-        app:layout_constraintVertical_bias="0.947" />
+        app:layout_constraintStart_toStartOf="@+id/et_password" />
 
     <TextView
         android:id="@+id/terms"
@@ -130,17 +133,16 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_name"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.939" />
 
     <TextView
         android:id="@+id/tv_sign_up_with"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="81dp"
+        android:layout_marginTop="424dp"
         android:fontFamily="@font/samsung"
         android:text="Or sign up with"
         android:textColor="@color/lynch"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_name" />
@@ -148,9 +150,10 @@
     <Button
         android:id="@+id/google"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="21dp"
         android:background="@drawable/btn_secondary_background"
         android:drawableStart="@drawable/googleg_standard_color_18"
         android:fontFamily="@font/samsung"
@@ -159,10 +162,10 @@
         android:text="@string/google"
         android:textAllCaps="false"
         android:textColor="@color/lynch"
-        app:layout_constraintBottom_toBottomOf="@+id/apple"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/apple"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/apple"
+        app:layout_constraintTop_toBottomOf="@+id/et_email"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
