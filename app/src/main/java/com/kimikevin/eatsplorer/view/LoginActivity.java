@@ -2,6 +2,8 @@ package com.kimikevin.eatsplorer.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -24,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
 
@@ -32,8 +35,16 @@ public class LoginActivity extends AppCompatActivity {
             password = binding.etPass.getText().toString().trim();
 
             if (Objects.equals(email, "kimikevin@zoho.com") && password.equals("asdfzxcvbnm")) {
-                Toast.makeText(this, "Well done", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
     }
+
+    //TODO: add login auth(email and password sign in and oauth)
+    //TODO: Add database
+
+    //TODO: link database
+
+    // navigate to HomeActivity upon successful login
 }

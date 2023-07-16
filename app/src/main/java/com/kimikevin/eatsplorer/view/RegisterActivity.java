@@ -1,4 +1,4 @@
-package com.kimikevin.eatsplorer;
+package com.kimikevin.eatsplorer.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,20 +7,24 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
+import com.kimikevin.eatsplorer.R;
+import com.kimikevin.eatsplorer.databinding.ActivityRegisterBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
-    ActivityMainBinding binding;
+    ActivityRegisterBinding mBinding;
+    String name = "";
+    String email = "";
+    String password = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        mBinding = ActivityRegisterBinding.inflate(getLayoutInflater());
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         super.onCreate(savedInstanceState);
-        setContentView(binding.getRoot());
+        setContentView(mBinding.getRoot());
     }
 }
