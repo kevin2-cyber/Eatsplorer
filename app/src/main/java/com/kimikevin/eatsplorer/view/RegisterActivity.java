@@ -6,8 +6,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
-import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityRegisterBinding;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -26,5 +26,15 @@ public class RegisterActivity extends AppCompatActivity {
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         super.onCreate(savedInstanceState);
         setContentView(mBinding.getRoot());
+
+        name = mBinding.etName.getText().toString().trim();
+        email = mBinding.etEmail.getText().toString().trim();
+        password = mBinding.etPassword.getText().toString().trim();
+
+        mBinding.btnRegister.setOnClickListener(view -> {
+            if (name != null) {
+                Toast.makeText(this, "Hey", Toast.LENGTH_SHORT).show();
+            } getViewModelStore();
+        });
     }
 }
