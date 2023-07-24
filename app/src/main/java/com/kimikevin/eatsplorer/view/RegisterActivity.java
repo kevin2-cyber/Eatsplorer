@@ -4,10 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityRegisterBinding;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -34,7 +39,24 @@ public class RegisterActivity extends AppCompatActivity {
         mBinding.btnRegister.setOnClickListener(view -> {
             if (name != null) {
                 Toast.makeText(this, "Hey", Toast.LENGTH_SHORT).show();
-            } getViewModelStore();
+            }
         });
+
+        mBinding.etPass.setOnClickListener(this::togglePassword);
+    }
+
+    // toggle password
+    private void togglePassword(View view) {
+        if (view.getId() == mBinding.etPass.getId()) {
+            if(mBinding.etPass.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                ((ImageView) (view)).setImageResource(R.drawable.baseline_visibility_off_24);
+                // show password
+                mBinding.etPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            } else {
+                ((ImageView) (view)).setImageResource(R.drawable.baseline_visibility_24);
+                // Hide password
+                mBinding.etPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
+        }
     }
 }

@@ -36,12 +36,12 @@ public class LoginActivity extends AppCompatActivity {
 
         binding.btnSignIn.setOnClickListener(view -> validateData());
 
-        // navigate to SignUpActivity
-//        binding.tvSignUp.setOnClickListener(view -> {
-//            Intent intent = new Intent(this, RegisterActivity.class);
-//            startActivity(intent);
-//        });
-//        binding.etPass.setOnClickListener(this::togglePassword);
+         // navigate to SignUpActivity
+        binding.tvSignUp.setOnClickListener(view -> {
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
+        });
+        binding.etPassword.setOnClickListener(this::togglePassword);
     }
 
     //TODO: add login auth(email and password sign in and oauth)
@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     private void validateData(){
         // get data
         email = binding.etEmail.getText().toString().trim();
-        password = binding.etPass.getText().toString().trim();
+        password = binding.etPassword.getText().toString().trim();
 
         // validate user
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -62,11 +62,11 @@ public class LoginActivity extends AppCompatActivity {
                     AppCompatResources.getDrawable(this, R.drawable.baseline_close_24));
         } else if (TextUtils.isEmpty(password)) {
             // no password entered
-            binding.etPass.setError("no password entered",
+            binding.etPassword.setError("no password entered",
                     AppCompatResources.getDrawable(this, R.drawable.baseline_close_24));
             System.out.println();
         } else if (password.length() < 6) {
-            binding.etPass.setError("Password must be more than six characters",
+            binding.etPassword.setError("Password must be more than six characters",
                     AppCompatResources.getDrawable(this, R.drawable.baseline_close_24));
         } else {
             startActivity(new Intent(this, MapsActivity.class));
@@ -75,15 +75,15 @@ public class LoginActivity extends AppCompatActivity {
 
     // toggle password
     private void togglePassword(View view) {
-        if (view.getId() == binding.etPass.getId()) {
-            if(binding.etPass.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+        if (view.getId() == binding.etPassword.getId()) {
+            if(binding.etPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
                 ((ImageView) (view)).setImageResource(R.drawable.baseline_visibility_off_24);
                 // show password
-                binding.etPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                binding.etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
             } else {
                 ((ImageView) (view)).setImageResource(R.drawable.baseline_visibility_24);
                 // Hide password
-                binding.etPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                binding.etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
         }
     }
