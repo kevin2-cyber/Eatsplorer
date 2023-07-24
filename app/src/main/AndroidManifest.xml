@@ -43,12 +43,13 @@
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".view.RegisterActivity"
+            android:exported="false"
+            android:label="RegisterActivity"/>
+        <activity
+            android:name=".view.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

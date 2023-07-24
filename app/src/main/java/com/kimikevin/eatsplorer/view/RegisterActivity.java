@@ -27,9 +27,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(mBinding.getRoot());
 
-        name = mBinding.etName.getText().toString().trim();
-        email = mBinding.etEmail.getText().toString().trim();
-        password = mBinding.etPassword.getText().toString().trim();
+        name = mBinding.etFullName.getText().toString().trim();
+        email = mBinding.etEmailAddress.getText().toString().trim();
+        password = mBinding.etPass.getText().toString().trim();
 
         mBinding.btnRegister.setOnClickListener(view -> {
             if (name != null) {

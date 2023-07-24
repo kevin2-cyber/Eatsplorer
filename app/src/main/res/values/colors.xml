@@ -6,4 +6,8 @@
     <color name="blue_vogue">#192E51</color>
     <color name="lynch">#607698</color>
     <color name="athens_gray">#E9E9F0</color>
+    <color name="txt_red">#D42323</color>
+    <color name="txt_black">#0D0D0D</color>
+    <color name="et_grey">#DEDEDE</color>
+    <color name="transparent">#00000000</color>
 </resources>
