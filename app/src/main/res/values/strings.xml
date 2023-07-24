@@ -17,4 +17,11 @@
     <string name="or_sign_in_with">Or sign in with</string>
     <string name="google">Google</string>
     <string name="apple">Apple</string>
+
+<!--    For maps-->
+    <string name="option_get_place">Get place</string>
+    <string name="pick_place">Choose a place</string>
+    <string name="default_info_title">Default Location</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="default_info_snippet">No places found, because location permission is disabled.</string>
 </resources>
