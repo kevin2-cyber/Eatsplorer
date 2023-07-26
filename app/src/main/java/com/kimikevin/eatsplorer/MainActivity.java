@@ -27,6 +27,23 @@ public class MainActivity extends AppCompatActivity {
     Button mButton;
     ActivityMainBinding binding;
 
+    ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                setDotIndicator(position);
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -59,5 +76,13 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(mViewPagerAdapter);
 
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    public void setDotIndicator(int position) {
+        binding.viewPagerMain.removeAllViews();
+    }
+
+    private int getItem(int i) {
+        return mViewPager.getCurrentItem() + i;
     }
 }
