@@ -16,12 +16,6 @@
         android:theme="@style/Theme.Eatsplorer"
         tools:targetApi="31" >
         <activity
-            android:name=".view.FullscreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
-            android:label="@string/title_activity_fullscreen"
-            android:theme="@style/Theme.Eatsplorer.Fullscreen" />
-        <activity
             android:name=".view.HomeActivity"
             android:exported="false" />
         <!--
