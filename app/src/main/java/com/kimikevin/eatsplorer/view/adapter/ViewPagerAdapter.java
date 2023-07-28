@@ -65,16 +65,16 @@ public class ViewPagerAdapter extends PagerAdapter {
         tvTitle.setText(onboarding.get(position).getTitle());
         tvTitleRed.setText(onboarding.get(position).getTitleRed());
         tvTitleBlack.setText(onboarding.get(position).getTitleBlack());
-//        // setting the buttons according to position
-//        linearLayout.setVisibility(position == 2 ? View.GONE : View.VISIBLE);
-//        skipBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_background));
-//        skipBtn.setOnClickListener(view -> skipBtn.performClick());
-//        nextBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_background));
-//        getStartedBtn.setVisibility(position == 2 ? View.VISIBLE : View.INVISIBLE);
-//        getStartedBtn.setOnClickListener(view -> {
-//            Intent intent = new Intent(context, RegisterActivity.class);
-//            context.startActivity(intent);
-//        });
+        // setting the buttons according to position
+        linearLayout.setVisibility(position == 2 ? View.GONE : View.VISIBLE);
+        skipBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_background));
+        skipBtn.setOnClickListener(view -> skipBtn.performClick());
+        nextBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_background));
+        getStartedBtn.setVisibility(position == 2 ? View.VISIBLE : View.INVISIBLE);
+        getStartedBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(context, RegisterActivity.class);
+            context.startActivity(intent);
+        });
         // Adding the view
         container.addView(itemView);
         return itemView;
