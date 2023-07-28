@@ -28,8 +28,8 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:background="@color/white"
-            tools:context=".MapsActivity" />
+            tools:context=".MapsActivity"
+            tools:layout="@layout/activity_main" />
 
         <ListView
             android:id="@+id/listPlaces"
