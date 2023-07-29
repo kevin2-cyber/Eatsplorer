@@ -23,6 +23,9 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.common.internal.ApiExceptionUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -53,7 +56,7 @@ import java.util.Objects;
  */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private static final String TAG = MapsActivity.class.getSimpleName();
+        private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
     private CameraPosition cameraPosition;
     // The entry point to the Places API.

@@ -3,6 +3,7 @@ package com.kimikevin.eatsplorer.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
          // navigate to SignUpActivity
         binding.tvSignUp.setOnClickListener(view -> {
             Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent);
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         });
         binding.etPassword.setOnClickListener(this::togglePassword);
     }

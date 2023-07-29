@@ -2,6 +2,7 @@ package com.kimikevin.eatsplorer.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
@@ -40,6 +41,11 @@ public class RegisterActivity extends AppCompatActivity {
             if (name != null) {
                 Toast.makeText(this, "Hey", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        mBinding.tvSignIn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         });
 
         mBinding.etPass.setOnClickListener(this::togglePassword);
