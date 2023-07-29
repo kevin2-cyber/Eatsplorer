@@ -25,7 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    Onboarding[] onboarding;
+    List<Onboarding> onboarding;
     ViewPager mViewPager;
     ViewPagerAdapter mViewPagerAdapter;
 
@@ -81,14 +81,13 @@ public class MainActivity extends AppCompatActivity {
         });
         setContentView(binding.getRoot());
 
-        onboarding = new Onboarding[] {
-                new Onboarding("Satisfy your cravings",R.drawable.onboarding_image_1,
-                        "with","ease"),
-                new Onboarding("Find your new favourite",R.drawable.onboarding_image_2,
-                        "restaurant with","just a tap"),
-                new Onboarding("Fresh meals, delivered to",R.drawable.onboarding_image_3,
-                        "your","doorstep")
-        };
+        onboarding.add(new Onboarding("Satisfy your cravings",R.drawable.onboarding_image_1,
+                "with","ease"));
+        onboarding.add(new Onboarding("Find your new favourite",R.drawable.onboarding_image_2,
+                "restaurant with","just a tap"));
+        onboarding.add(new Onboarding("Fresh meals, delivered to",R.drawable.onboarding_image_3,
+                "your","doorstep"));
+
 
         // initializing the ViewPager object
         mViewPager = binding.viewPagerMain;
