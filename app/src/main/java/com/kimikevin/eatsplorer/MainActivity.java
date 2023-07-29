@@ -7,7 +7,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -20,12 +19,10 @@ import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
 import com.kimikevin.eatsplorer.model.Onboarding;
 import com.kimikevin.eatsplorer.view.adapter.ViewPagerAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    List<Onboarding> onboarding;
+    Onboarding[] onboarding;
     ViewPager mViewPager;
     ViewPagerAdapter mViewPagerAdapter;
 
@@ -81,12 +78,14 @@ public class MainActivity extends AppCompatActivity {
         });
         setContentView(binding.getRoot());
 
-        onboarding.add(new Onboarding("Satisfy your cravings",R.drawable.onboarding_image_1,
-                "with","ease"));
-        onboarding.add(new Onboarding("Find your new favourite",R.drawable.onboarding_image_2,
-                "restaurant with","just a tap"));
-        onboarding.add(new Onboarding("Fresh meals, delivered to",R.drawable.onboarding_image_3,
-                "your","doorstep"));
+        onboarding = new Onboarding[] {
+                new Onboarding("Satisfy your cravings",R.drawable.onboarding_image_1,
+                        "with","ease"),
+                new Onboarding("Find your new favourite",R.drawable.onboarding_image_2,
+                        "restaurant with","just a tap"),
+                new Onboarding("Fresh meals, delivered to",R.drawable.onboarding_image_3,
+                        "your","doorstep")
+        };
 
 
         // initializing the ViewPager object
