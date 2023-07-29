@@ -3,10 +3,16 @@ package com.kimikevin.eatsplorer;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnticipateInterpolator;
 import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
@@ -19,7 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    List<Onboarding> onboarding = new ArrayList<>();
+    List<Onboarding> onboarding;
     ViewPager mViewPager;
     ViewPagerAdapter mViewPagerAdapter;
 
@@ -52,17 +58,36 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         super.onCreate(savedInstanceState);
+        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
+            final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
+                    splashScreenView,
+                    View.TRANSLATION_Y,
+                    0f,
+                    -splashScreenView.getHeight()
+            );
+            slideUp.setInterpolator(new AnticipateInterpolator());
+            slideUp.setDuration(200L);
+
+            // Call SplashScreenView.remove at the end of your custom animation.
+            slideUp.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    splashScreenView.remove();
+                }
+            });
+
+            // Run your animation.
+            slideUp.start();
+        });
         setContentView(binding.getRoot());
 
-        onboarding.add(
-                new Onboarding("Satisfy your cravings",R.drawable.onboarding_image_1,
-                        "with","ease"));
-        onboarding.add(
-                new Onboarding("Find your new favourite",R.drawable.onboarding_image_2,
-                        "restaurant with","just a tap"));
-        onboarding.add(
-                new Onboarding("Fresh meals, delivered to",R.drawable.onboarding_image_3,
-                        "your","doorstep"));
+        onboarding.add(new Onboarding("Satisfy your cravings",R.drawable.onboarding_image_1,
+                "with","ease"));
+        onboarding.add(new Onboarding("Find your new favourite",R.drawable.onboarding_image_2,
+                "restaurant with","just a tap"));
+        onboarding.add(new Onboarding("Fresh meals, delivered to",R.drawable.onboarding_image_3,
+                "your","doorstep"));
+
 
         // initializing the ViewPager object
         mViewPager = binding.viewPagerMain;
@@ -71,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout = binding.tabLayout;
 
         // initializing the ViewPagerAdapter Object
-        mViewPagerAdapter = new ViewPagerAdapter(this);
+        mViewPagerAdapter = new ViewPagerAdapter(this, onboarding);
 
         mViewPager.setAdapter(mViewPagerAdapter);
 

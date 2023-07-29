@@ -19,23 +19,25 @@ import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.model.Onboarding;
 import com.kimikevin.eatsplorer.view.RegisterActivity;
 
+import java.util.List;
+
 
 public class ViewPagerAdapter extends PagerAdapter {
     Context context;
 
-    Onboarding[] onboarding;
+    List<Onboarding> onboarding;
 
     LayoutInflater mLayoutInflater;
 
-    public ViewPagerAdapter (Context context) {
+    public ViewPagerAdapter (Context context, List<Onboarding> onboarding) {
         this.context = context;
-        onboarding = new Onboarding[]{};
+        this.onboarding = onboarding;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return onboarding.length;
+        return onboarding.size();
     }
 
     @Override
@@ -58,11 +60,11 @@ public class ViewPagerAdapter extends PagerAdapter {
         Button nextBtn = itemView.findViewById(R.id.next_btn);
         LinearLayout linearLayout = itemView.findViewById(R.id.ll_buttons);
         // setting the image in the ImageView
-        imageView.setImageResource(onboarding[position].getImage());
+        imageView.setImageResource(onboarding.get(position).getImage());
         // setting the titles in the TextViews
-        tvTitle.setText(onboarding[position].getTitle());
-        tvTitleRed.setText(onboarding[position].getTitleRed());
-        tvTitleBlack.setText(onboarding[position].getTitleBlack());
+        tvTitle.setText(onboarding.get(position).getTitle());
+        tvTitleRed.setText(onboarding.get(position).getTitleRed());
+        tvTitleBlack.setText(onboarding.get(position).getTitleBlack());
         // setting the buttons according to position
         linearLayout.setVisibility(position == 2 ? View.GONE : View.VISIBLE);
         skipBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_background));
