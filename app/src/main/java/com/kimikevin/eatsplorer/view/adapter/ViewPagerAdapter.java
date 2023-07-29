@@ -27,9 +27,9 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     LayoutInflater mLayoutInflater;
 
-    public ViewPagerAdapter (Context context) {
+    public ViewPagerAdapter (Context context, Onboarding[] onboarding) {
         this.context = context;
-        onboarding = new Onboarding[]{};
+        this.onboarding = onboarding;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 

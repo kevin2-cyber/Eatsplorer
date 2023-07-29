@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -23,9 +22,6 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.common.internal.ApiExceptionUtil;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -57,7 +53,7 @@ import java.util.Objects;
 public class MapsActivity extends FragmentActivity
         implements OnMapReadyCallback {
 
-        private static final String TAG = MapsActivity.class.getSimpleName();
+    private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;
     private CameraPosition cameraPosition;
     // The entry point to the Places API.
@@ -82,7 +78,7 @@ public class MapsActivity extends FragmentActivity
     private static final int M_MAX_ENTRIES = 5;
     private String[] likelyPlaceNames;
     private String[] likelyPlaceAddresses;
-    private List[] likelyPlaceAttributions;
+    private String[] likelyPlaceAttributions;
     private LatLng[] likelyPlaceLatLngs;
     private ActivityMapsBinding binding;
 
@@ -227,7 +223,7 @@ public class MapsActivity extends FragmentActivity
     /**
      * Prompts the user for permission to use the device location.
      */
-    private  void getLocationPermission() {
+    private void getLocationPermission() {
         /*
          * Request location permission, so that we can get the location of the
          * device. The result of the permission request is handled by a callback,
@@ -239,7 +235,7 @@ public class MapsActivity extends FragmentActivity
             locationPermissionGranted = true;
         } else {
             ActivityCompat.requestPermissions(this,
-                    new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
     }
@@ -252,9 +248,9 @@ public class MapsActivity extends FragmentActivity
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         locationPermissionGranted = false;
-        if(requestCode == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) { // If request is cancelled, the result arrays are empty.
+        if (requestCode == PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION) { // If request is cancelled, the result arrays are empty.
             if (grantResults.length > 0
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 locationPermissionGranted = true;
             }
         } else {
@@ -283,7 +279,17 @@ public class MapsActivity extends FragmentActivity
 
             // Get the likely places - that is, the businesses and other points of interest that
             // are the best match for the device's current location.
-            @SuppressLint("MissingPermission")
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             Task<FindCurrentPlaceResponse> placeResult =
                     placesClient.findCurrentPlace(request);
             placeResult.addOnCompleteListener(task -> {
@@ -296,15 +302,15 @@ public class MapsActivity extends FragmentActivity
                     int i = 0;
                     likelyPlaceNames = new String[count];
                     likelyPlaceAddresses = new String[count];
-                    likelyPlaceAttributions = new List[count];
+                    likelyPlaceAttributions = new String[count];
                     likelyPlaceLatLngs = new LatLng[count];
 
                     for(PlaceLikelihood placeLikelihood : likelyPlaces.getPlaceLikelihoods()) {
                         // Build a list of likely places to show the user.
                         likelyPlaceNames[i] = placeLikelihood.getPlace().getName();
                         likelyPlaceAddresses[i] = placeLikelihood.getPlace().getAddress();
-                        likelyPlaceAttributions[i] = placeLikelihood.getPlace()
-                                .getAttributions();
+                        likelyPlaceAttributions[i] = Objects.requireNonNull(placeLikelihood.getPlace()
+                                .getAttributions()).toString();
                         likelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLatLng();
 
                         i++;
