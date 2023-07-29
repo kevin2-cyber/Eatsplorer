@@ -55,27 +55,28 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         super.onCreate(savedInstanceState);
-        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
-            final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
-                    splashScreenView,
-                    View.TRANSLATION_Y,
-                    0f,
-                    -splashScreenView.getHeight()
-            );
-            slideUp.setInterpolator(new AnticipateInterpolator());
-            slideUp.setDuration(200L);
-
-            // Call SplashScreenView.remove at the end of your custom animation.
-            slideUp.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    splashScreenView.remove();
-                }
-            });
-
-            // Run your animation.
-            slideUp.start();
-        });
+//        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
+//            final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
+//                    splashScreenView,
+//                    View.TRANSLATION_Y,
+//                    0f,
+//                    -splashScreenView.getHeight()
+//            );
+//            slideUp.setInterpolator(new AnticipateInterpolator());
+//            slideUp.setDuration(200L);
+//
+//            // Call SplashScreenView.remove at the end of your custom animation.
+//            slideUp.addListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    splashScreenView.remove();
+//                }
+//            });
+//
+//            // Run your animation.
+//            slideUp.start();
+//        });
+        setTheme(R.style.Base_Theme_Eatsplorer);
         setContentView(binding.getRoot());
 
         onboarding = new Onboarding[] {
