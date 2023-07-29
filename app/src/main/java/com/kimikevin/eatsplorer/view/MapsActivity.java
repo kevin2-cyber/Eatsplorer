@@ -54,7 +54,8 @@ import java.util.Objects;
 /**
  * An activity that displays a map showing the place at the device's current location.
  */
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity
+        implements OnMapReadyCallback {
 
         private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap mMap;

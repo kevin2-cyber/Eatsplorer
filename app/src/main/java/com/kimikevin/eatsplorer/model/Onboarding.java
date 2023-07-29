@@ -29,19 +29,19 @@ public class Onboarding {
         return titleRed;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
-    }
-
-    public void setTitleBlack(String titleBlack) {
-        this.titleBlack = titleBlack;
-    }
-
-    public void setTitleRed(String titleRed) {
-        this.titleRed = titleRed;
-    }
+//    public void setTitle(String title) {
+//        this.title = title;
+//    }
+//
+//    public void setImage(int image) {
+//        this.image = image;
+//    }
+//
+//    public void setTitleBlack(String titleBlack) {
+//        this.titleBlack = titleBlack;
+//    }
+//
+//    public void setTitleRed(String titleRed) {
+//        this.titleRed = titleRed;
+//    }
 }
