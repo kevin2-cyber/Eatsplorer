@@ -111,7 +111,6 @@ public class MapsActivity extends FragmentActivity
                 .findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
-        return 0;
     }
 
     /**
