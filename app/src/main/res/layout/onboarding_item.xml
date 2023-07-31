@@ -93,7 +93,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/tv_skip"
+            android:id="@+id/skip_btn"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="140dp"
             android:layout_height="49dp"

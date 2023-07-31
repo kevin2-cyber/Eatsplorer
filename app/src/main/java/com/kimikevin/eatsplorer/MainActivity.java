@@ -3,52 +3,55 @@ package com.kimikevin.eatsplorer;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AnticipateInterpolator;
 import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
 import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
 import com.kimikevin.eatsplorer.model.Onboarding;
-import com.kimikevin.eatsplorer.view.adapter.ViewPagerAdapter;
+import com.kimikevin.eatsplorer.view.RegisterActivity;
+import com.kimikevin.eatsplorer.view.adapter.OnboardingPagerAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    List<Onboarding> onboarding;
-    ViewPager mViewPager;
-    ViewPagerAdapter mViewPagerAdapter;
+    Onboarding[] onboarding;
+    ViewPager onboardingViewPager;
+    OnboardingPagerAdapter mOnboardingPagerAdapter;
 
     TabLayout mTabLayout;
-    Button mButton;
+    Button getStartedBtn, nextBtn, skipBtn;
     ActivityMainBinding binding;
 
-//    ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
-//        @Override
-//        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                setDotIndicator(position);
-//        }
-//
-//        @Override
-//        public void onPageSelected(int position) {
-//
-//        }
-//
-//        @Override
-//        public void onPageScrollStateChanged(int state) {
-//
-//        }
-//    };
+    ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            if (position < 2) {
+                getStartedBtn.setVisibility(View.GONE);
+                skipBtn.setVisibility(View.VISIBLE);
+                nextBtn.setVisibility(View.VISIBLE);
+            } else {
+                getStartedBtn.setVisibility(View.VISIBLE);
+                skipBtn.setVisibility(View.GONE);
+                nextBtn.setVisibility(View.GONE);
+            }
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,49 +61,74 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         super.onCreate(savedInstanceState);
-        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
-            final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
-                    splashScreenView,
-                    View.TRANSLATION_Y,
-                    0f,
-                    -splashScreenView.getHeight()
-            );
-            slideUp.setInterpolator(new AnticipateInterpolator());
-            slideUp.setDuration(200L);
-
-            // Call SplashScreenView.remove at the end of your custom animation.
-            slideUp.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    splashScreenView.remove();
-                }
-            });
-
-            // Run your animation.
-            slideUp.start();
-        });
+//        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
+//            final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
+//                    splashScreenView,
+//                    View.TRANSLATION_Y,
+//                    0f,
+//                    -splashScreenView.getHeight()
+//            );
+//            slideUp.setInterpolator(new AnticipateInterpolator());
+//            slideUp.setDuration(200L);
+//
+//            // Call SplashScreenView.remove at the end of your custom animation.
+//            slideUp.addListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    splashScreenView.remove();
+//                }
+//            });
+//
+//            // Run your animation.
+//            slideUp.start();
+//        });
+        setTheme(R.style.Base_Theme_Eatsplorer);
         setContentView(binding.getRoot());
 
-        onboarding.add(new Onboarding("Satisfy your cravings",R.drawable.onboarding_image_1,
-                "with","ease"));
-        onboarding.add(new Onboarding("Find your new favourite",R.drawable.onboarding_image_2,
-                "restaurant with","just a tap"));
-        onboarding.add(new Onboarding("Fresh meals, delivered to",R.drawable.onboarding_image_3,
-                "your","doorstep"));
+        getStartedBtn = findViewById(R.id.get_started_btn);
+        nextBtn = findViewById(R.id.next_btn);
+        skipBtn = findViewById(R.id.skip_btn);
+
+        onboarding = new Onboarding[] {
+                new Onboarding("Satisfy your cravings",R.drawable.onboarding_image_1,
+                        "with","ease"),
+                new Onboarding("Find your new favourite",R.drawable.onboarding_image_2,
+                        "restaurant with","just a tap"),
+                new Onboarding("Fresh meals, delivered to",R.drawable.onboarding_image_3,
+                        "your","doorstep")
+        };
+
+        nextBtn.setOnClickListener(view -> {
+            if (getItem(0) < 2)
+                onboardingViewPager.setCurrentItem(getItem(1), true);
+            else {
+                Intent intent = new Intent(this, RegisterActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        skipBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
 
         // initializing the ViewPager object
-        mViewPager = binding.viewPagerMain;
+        onboardingViewPager = binding.viewPagerMain;
 
         // initializing the TabLayout object
         mTabLayout = binding.tabLayout;
 
         // initializing the ViewPagerAdapter Object
-        mViewPagerAdapter = new ViewPagerAdapter(this, onboarding);
+        mOnboardingPagerAdapter = new OnboardingPagerAdapter(this, onboarding);
 
-        mViewPager.setAdapter(mViewPagerAdapter);
+        onboardingViewPager.setAdapter(mOnboardingPagerAdapter);
 
-        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setupWithViewPager(onboardingViewPager);
+        onboardingViewPager.addOnPageChangeListener(pageChangeListener);
+
     }
 
 //    public void setDotIndicator(int position) {
@@ -110,4 +138,8 @@ public class MainActivity extends AppCompatActivity {
 //    private int getItem(int i) {
 //        return mViewPager.getCurrentItem() + i;
 //    }
+
+    private int getItem(int i) {
+        return onboardingViewPager.getCurrentItem() + i;
+    }
 }

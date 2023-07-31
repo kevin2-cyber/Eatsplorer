@@ -19,17 +19,15 @@ import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.model.Onboarding;
 import com.kimikevin.eatsplorer.view.RegisterActivity;
 
-import java.util.List;
 
-
-public class ViewPagerAdapter extends PagerAdapter {
+public class OnboardingPagerAdapter extends PagerAdapter {
     Context context;
 
-    List<Onboarding> onboarding;
+    Onboarding[] onboarding;
 
     LayoutInflater mLayoutInflater;
 
-    public ViewPagerAdapter (Context context, List<Onboarding> onboarding) {
+    public OnboardingPagerAdapter(Context context, Onboarding[] onboarding) {
         this.context = context;
         this.onboarding = onboarding;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -37,7 +35,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return onboarding.size();
+        return onboarding.length;
     }
 
     @Override
@@ -56,25 +54,25 @@ public class ViewPagerAdapter extends PagerAdapter {
         TextView tvTitleBlack = itemView.findViewById(R.id.tv_onboarding_title_black);
         TextView tvTitleRed = itemView.findViewById(R.id.tv_onboarding_title_red);
         Button getStartedBtn = itemView.findViewById(R.id.get_started_btn);
-        Button skipBtn = itemView.findViewById(R.id.tv_skip);
+        Button skipBtn = itemView.findViewById(R.id.skip_btn);
         Button nextBtn = itemView.findViewById(R.id.next_btn);
         LinearLayout linearLayout = itemView.findViewById(R.id.ll_buttons);
         // setting the image in the ImageView
-        imageView.setImageResource(onboarding.get(position).getImage());
+        imageView.setImageResource(onboarding[position].getImage());
         // setting the titles in the TextViews
-        tvTitle.setText(onboarding.get(position).getTitle());
-        tvTitleRed.setText(onboarding.get(position).getTitleRed());
-        tvTitleBlack.setText(onboarding.get(position).getTitleBlack());
+        tvTitle.setText(onboarding[position].getTitle());
+        tvTitleRed.setText(onboarding[position].getTitleRed());
+        tvTitleBlack.setText(onboarding[position].getTitleBlack());
         // setting the buttons according to position
-        linearLayout.setVisibility(position == 2 ? View.GONE : View.VISIBLE);
-        skipBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_background));
-        skipBtn.setOnClickListener(view -> skipBtn.performClick());
-        nextBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_background));
-        getStartedBtn.setVisibility(position == 2 ? View.VISIBLE : View.INVISIBLE);
-        getStartedBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(context, RegisterActivity.class);
-            context.startActivity(intent);
-        });
+//        linearLayout.setVisibility(position == 2 ? View.GONE : View.VISIBLE);
+//        skipBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_background));
+//        skipBtn.setOnClickListener(view -> skipBtn.performClick());
+//        nextBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_background));
+//        getStartedBtn.setVisibility(position == 2 ? View.VISIBLE : View.INVISIBLE);
+//        getStartedBtn.setOnClickListener(view -> {
+//            Intent intent = new Intent(context, RegisterActivity.class);
+//            context.startActivity(intent);
+//        });
         // Adding the view
         container.addView(itemView);
         return itemView;

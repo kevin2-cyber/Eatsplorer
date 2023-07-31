@@ -49,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         mBinding.etPass.setOnClickListener(this::togglePassword);
+        return 0;
     }
 
     // toggle password
