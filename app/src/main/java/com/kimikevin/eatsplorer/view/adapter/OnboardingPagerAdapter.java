@@ -19,17 +19,15 @@ import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.model.Onboarding;
 import com.kimikevin.eatsplorer.view.RegisterActivity;
 
-import java.util.List;
 
-
-public class ViewPagerAdapter extends PagerAdapter {
+public class OnboardingPagerAdapter extends PagerAdapter {
     Context context;
 
     Onboarding[] onboarding;
 
     LayoutInflater mLayoutInflater;
 
-    public ViewPagerAdapter (Context context, Onboarding[] onboarding) {
+    public OnboardingPagerAdapter(Context context, Onboarding[] onboarding) {
         this.context = context;
         this.onboarding = onboarding;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

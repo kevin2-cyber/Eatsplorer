@@ -3,28 +3,23 @@ package com.kimikevin.eatsplorer;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AnticipateInterpolator;
 import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
 import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
 import com.kimikevin.eatsplorer.model.Onboarding;
-import com.kimikevin.eatsplorer.view.adapter.ViewPagerAdapter;
+import com.kimikevin.eatsplorer.view.adapter.OnboardingPagerAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
 
     Onboarding[] onboarding;
     ViewPager mViewPager;
-    ViewPagerAdapter mViewPagerAdapter;
+    OnboardingPagerAdapter mOnboardingPagerAdapter;
 
     TabLayout mTabLayout;
     Button mButton;
@@ -96,9 +91,9 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout = binding.tabLayout;
 
         // initializing the ViewPagerAdapter Object
-        mViewPagerAdapter = new ViewPagerAdapter(this, onboarding);
+        mOnboardingPagerAdapter = new OnboardingPagerAdapter(this, onboarding);
 
-        mViewPager.setAdapter(mViewPagerAdapter);
+        mViewPager.setAdapter(mOnboardingPagerAdapter);
 
         mTabLayout.setupWithViewPager(mViewPager);
     }
