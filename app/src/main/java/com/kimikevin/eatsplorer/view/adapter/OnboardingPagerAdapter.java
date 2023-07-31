@@ -54,7 +54,7 @@ public class OnboardingPagerAdapter extends PagerAdapter {
         TextView tvTitleBlack = itemView.findViewById(R.id.tv_onboarding_title_black);
         TextView tvTitleRed = itemView.findViewById(R.id.tv_onboarding_title_red);
         Button getStartedBtn = itemView.findViewById(R.id.get_started_btn);
-        Button skipBtn = itemView.findViewById(R.id.tv_skip);
+        Button skipBtn = itemView.findViewById(R.id.skip_btn);
         Button nextBtn = itemView.findViewById(R.id.next_btn);
         LinearLayout linearLayout = itemView.findViewById(R.id.ll_buttons);
         // setting the image in the ImageView
@@ -64,15 +64,15 @@ public class OnboardingPagerAdapter extends PagerAdapter {
         tvTitleRed.setText(onboarding[position].getTitleRed());
         tvTitleBlack.setText(onboarding[position].getTitleBlack());
         // setting the buttons according to position
-        linearLayout.setVisibility(position == 2 ? View.GONE : View.VISIBLE);
-        skipBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_background));
-        skipBtn.setOnClickListener(view -> skipBtn.performClick());
-        nextBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_background));
-        getStartedBtn.setVisibility(position == 2 ? View.VISIBLE : View.INVISIBLE);
-        getStartedBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(context, RegisterActivity.class);
-            context.startActivity(intent);
-        });
+//        linearLayout.setVisibility(position == 2 ? View.GONE : View.VISIBLE);
+//        skipBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_background));
+//        skipBtn.setOnClickListener(view -> skipBtn.performClick());
+//        nextBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.btn_background));
+//        getStartedBtn.setVisibility(position == 2 ? View.VISIBLE : View.INVISIBLE);
+//        getStartedBtn.setOnClickListener(view -> {
+//            Intent intent = new Intent(context, RegisterActivity.class);
+//            context.startActivity(intent);
+//        });
         // Adding the view
         container.addView(itemView);
         return itemView;
