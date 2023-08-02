@@ -16,7 +16,7 @@
         android:layout_marginTop="43dp"
         android:fontFamily="@font/samsung"
         android:text="Let\'s"
-        android:textColor="@color/txt_black"
+        android:textColor="@color/blue_vogue"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
         android:layout_marginBottom="3dp"
         android:fontFamily="@font/samsung"
         android:text="Sign You up"
-        android:textColor="@color/txt_red"
+        android:textColor="@color/red_ribbon"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tv_your"
@@ -43,7 +43,7 @@
         android:layout_marginTop="3dp"
         android:fontFamily="@font/samsung"
         android:text="your meal awaits"
-        android:textColor="@color/txt_black"
+        android:textColor="@color/blue_vogue"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/tv_let"
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/samsung"
         android:text="If you have an\naccount please"
-        android:textColor="@color/et_grey"
+        android:textColor="@color/lynch"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/tv_sign_in"
         app:layout_constraintStart_toStartOf="@+id/tv_your"
@@ -69,7 +69,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/samsung"
         android:text="Sign In here"
-        android:textColor="@color/txt_red"
+        android:textColor="@color/red_ribbon"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/tv_account"
         app:layout_constraintTop_toBottomOf="@+id/tv_your" />
@@ -82,7 +82,7 @@
         android:layout_marginTop="21dp"
         android:fontFamily="@font/samsung"
         android:text="Full name"
-        android:textColor="@color/txt_black"
+        android:textColor="@color/blue_vogue"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_account" />
@@ -118,7 +118,7 @@
         android:layout_marginBottom="12dp"
         android:fontFamily="@font/samsung"
         android:text="Email Address"
-        android:textColor="@color/txt_black"
+        android:textColor="@color/blue_vogue"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/et_email_address"
         app:layout_constraintStart_toStartOf="parent" />
@@ -154,7 +154,7 @@
         android:layout_marginTop="11dp"
         android:fontFamily="@font/samsung"
         android:text="Password"
-        android:textColor="@color/txt_black"
+        android:textColor="@color/blue_vogue"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_email_address" />
@@ -217,7 +217,7 @@
         android:layout_marginBottom="33dp"
         android:fontFamily="@font/samsung"
         android:text="By signing up, you have agreed to our"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/lynch"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/tv_connect"
         app:layout_constraintEnd_toEndOf="parent"
@@ -263,7 +263,7 @@
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/samsung"
         android:text="Or Connect with"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/lynch"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -293,7 +293,7 @@
             android:text="Facebook"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="@color/txt_black"
+            android:textColor="@color/blue_vogue"
             android:textSize="16sp" />
 
         <Button
@@ -309,7 +309,7 @@
             android:text="Google"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="@color/txt_black"
+            android:textColor="@color/blue_vogue"
             android:textSize="16sp" />
     </LinearLayout>
 
