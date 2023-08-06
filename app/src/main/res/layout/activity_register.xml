@@ -99,7 +99,7 @@
         android:background="@drawable/et_background"
         android:drawableEnd="@drawable/check"
         android:fontFamily="@font/samsung"
-        android:hint="abel"
+        android:hint="Abel"
         android:inputType="textPersonName"
         android:paddingStart="20dp"
         android:paddingEnd="10dp"
