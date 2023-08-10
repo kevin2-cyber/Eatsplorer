@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -36,7 +37,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".view.MapsActivity"
+            android:name=".MainActivity"
             android:exported="false"
             android:label="@string/title_activity_maps"/>
         <activity
@@ -47,8 +48,9 @@
             android:name=".view.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MapsActivity"
             android:exported="true"
+            android:label="@string/title_activity_maps"
             android:theme="@style/Base.Theme.Eatsplorer">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
