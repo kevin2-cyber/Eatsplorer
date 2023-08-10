@@ -15,14 +15,14 @@ import com.google.android.material.tabs.TabLayout;
 import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
 import com.kimikevin.eatsplorer.model.Onboarding;
 import com.kimikevin.eatsplorer.view.RegisterActivity;
-import com.kimikevin.eatsplorer.view.adapter.OnboardingPagerAdapter;
+import com.kimikevin.eatsplorer.view.adapter.OnboardingAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
 
     Onboarding[] onboarding;
     ViewPager onboardingViewPager;
-    OnboardingPagerAdapter mOnboardingPagerAdapter;
+    OnboardingAdapter mOnboardingAdapter;
 
     TabLayout mTabLayout;
     Button getStartedBtn, nextBtn, skipBtn;
@@ -122,9 +122,9 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout = binding.tabLayout;
 
         // initializing the ViewPagerAdapter Object
-        mOnboardingPagerAdapter = new OnboardingPagerAdapter(this, onboarding);
+        mOnboardingAdapter = new OnboardingAdapter(this, onboarding);
 
-        onboardingViewPager.setAdapter(mOnboardingPagerAdapter);
+        onboardingViewPager.setAdapter(mOnboardingAdapter);
 
         mTabLayout.setupWithViewPager(onboardingViewPager);
         onboardingViewPager.addOnPageChangeListener(pageChangeListener);
