@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
+            setDotIndicator(position);
             if (position < 2) {
                 getStartedBtn.setVisibility(View.GONE);
                 skipBtn.setVisibility(View.VISIBLE);
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
 //            // Run your animation.
 //            slideUp.start();
 //        });
-        setTheme(R.style.Base_Theme_Eatsplorer);
         setContentView(binding.getRoot());
 
         getStartedBtn = findViewById(R.id.get_started_btn);
@@ -131,13 +131,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    public void setDotIndicator(int position) {
-//        binding.viewPagerMain.removeAllViews();
-//    }
-//
-//    private int getItem(int i) {
-//        return mViewPager.getCurrentItem() + i;
-//    }
+    public void setDotIndicator(int position) {
+        binding.viewPagerMain.removeAllViews();
+    }
 
     private int getItem(int i) {
         return onboardingViewPager.getCurrentItem() + i;

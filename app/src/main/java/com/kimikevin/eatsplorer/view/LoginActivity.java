@@ -43,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         });
             binding.showPassBtn.setOnClickListener(this::togglePassword);
-        return 0;
     }
 
     //TODO: add login auth(email and password sign in and oauth)
