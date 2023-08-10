@@ -17,6 +17,8 @@ import com.kimikevin.eatsplorer.model.Onboarding;
 import com.kimikevin.eatsplorer.view.RegisterActivity;
 import com.kimikevin.eatsplorer.view.adapter.OnboardingAdapter;
 
+import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     TabLayout mTabLayout;
     Button getStartedBtn, nextBtn, skipBtn;
     ActivityMainBinding binding;
+    public static final String LOG_TAG = MainActivity.class.getSimpleName().toLowerCase(Locale.ROOT);
 
     ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
