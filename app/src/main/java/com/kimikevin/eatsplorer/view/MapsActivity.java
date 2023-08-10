@@ -162,7 +162,7 @@ public class MapsActivity extends FragmentActivity
             @Override
             public View getInfoContents(@NonNull Marker marker) {
                 View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents,
-                        (FrameLayout) findViewById(R.id.map));
+                        findViewById(R.id.map));
 
                 TextView title = infoWindow.findViewById(R.id.title);
                 title.setText(marker.getTitle());
@@ -370,6 +370,8 @@ public class MapsActivity extends FragmentActivity
                 .setTitle(R.string.pick_place)
                 .setItems(likelyPlaceNames,listener)
                 .show();
+
+        dialog.show();
     }
 
     @Override
