@@ -2,6 +2,7 @@ package com.kimikevin.eatsplorer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,7 +24,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     Onboarding[] onboarding;
-    ViewPager onboardingViewPager;
+    ViewPager2 onboardingViewPager;
     OnboardingAdapter mOnboardingAdapter;
 
     TabLayout mTabLayout;
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // initializing the ViewPager object
-        onboardingViewPager = binding.viewPagerMain;
+        onboardingViewPager = binding.viewPager;
 
         // initializing the TabLayout object
         mTabLayout = binding.tabLayout;
