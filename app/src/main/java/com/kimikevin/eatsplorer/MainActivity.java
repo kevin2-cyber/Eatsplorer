@@ -16,7 +16,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
 import com.kimikevin.eatsplorer.model.Onboarding;
 import com.kimikevin.eatsplorer.view.RegisterActivity;
-import com.kimikevin.eatsplorer.view.adapter.OnboardingAdapter;
 
 import java.util.Locale;
 
