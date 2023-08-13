@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="43dp"
         android:fontFamily="@font/samsung"
-        android:text="Satisfy your cravings"
+        android:text="Satisfy your cravings \n with ease"
         android:textAlignment="center"
         android:textColor="@color/blue_vogue"
         android:textSize="24sp"
@@ -33,52 +33,19 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
-    <LinearLayout
-        android:id="@+id/ll_colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_onboarding_title">
-
-        <TextView
-            android:id="@+id/tv_onboarding_title_black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:fontFamily="@font/samsung"
-            android:text="with"
-            android:textColor="@color/txt_black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tv_onboarding_title_red"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:fontFamily="@font/samsung"
-            android:text="ease"
-            android:textColor="@color/red_ribbon"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
     <TextView
         android:id="@+id/tv_onboarding_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="7dp"
         android:fontFamily="@font/samsung"
+        android:gravity="center"
         android:text="Integer a viverra sit feugiat leo\ncommodo nunc."
         android:textAlignment="gravity"
         android:textColor="@color/lynch"
         app:layout_constraintStart_toStartOf="@+id/tv_onboarding_title"
-        app:layout_constraintTop_toBottomOf="@+id/ll_colored" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_onboarding_title" />
 
     <LinearLayout
         android:id="@+id/ll_buttons"

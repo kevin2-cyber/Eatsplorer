@@ -10,19 +10,24 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
 import com.kimikevin.eatsplorer.model.Onboarding;
+import com.kimikevin.eatsplorer.view.adapter.OnboardingAdapter;
 
+import java.util.List;
 import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    Onboarding[] onboarding;
-    ViewPager2 onboardingViewPager;
-    OnboardingAdapter mOnboardingAdapter;
 
-    TabLayout mTabLayout;
+    List<Onboarding> onboardings;
+
+    ViewPager2 onboardingViewPager;
+    OnboardingAdapter onboardingAdapter;
+
+    TabLayout tabLayout;
     Button getStartedBtn, nextBtn, skipBtn;
     ActivityMainBinding binding;
     public static final String LOG_TAG = MainActivity.class.getSimpleName().toLowerCase(Locale.ROOT);
@@ -43,14 +48,7 @@ public class MainActivity extends AppCompatActivity {
         nextBtn = findViewById(R.id.next_btn);
         skipBtn = findViewById(R.id.skip_btn);
 
-        onboarding = new Onboarding[] {
-                new Onboarding("Satisfy your cravings",R.drawable.onboarding_image_1,
-                        "with","ease"),
-                new Onboarding("Find your new favourite",R.drawable.onboarding_image_2,
-                        "restaurant with","just a tap"),
-                new Onboarding("Fresh meals, delivered to",R.drawable.onboarding_image_3,
-                        "your","doorstep")
-        };
+
 
 
 
@@ -58,23 +56,22 @@ public class MainActivity extends AppCompatActivity {
         onboardingViewPager = binding.viewPager;
 
         // initializing the TabLayout object
-        mTabLayout = binding.tabLayout;
+        tabLayout = binding.tabLayout;
 
-        // initializing the ViewPagerAdapter Object
-        mOnboardingAdapter = new OnboardingAdapter(this, onboarding);
+        onboardingAdapter = new OnboardingAdapter(onboardings, this);
 
-        onboardingViewPager.setAdapter(mOnboardingAdapter);
+        onboardingViewPager.setAdapter(onboardingAdapter);
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout , onboardingViewPager, (tab, position) -> tab.setText(LOG_TAG + (position + 1)));
+        tabLayoutMediator.attach();
 
-        mTabLayout.setupWithViewPager(onboardingViewPager);
-        onboardingViewPager.addOnPageChangeListener(pageChangeListener);
+//        // initializing the ViewPagerAdapter Object
+//        mOnboardingAdapter = new OnboardingAdapter(this, onboarding);
+//
+//        onboardingViewPager.setAdapter(mOnboardingAdapter);
+//
+//        mTabLayout.setupWithViewPager(onboardingViewPager);
+//        onboardingViewPager.addOnPageChangeListener(pageChangeListener);
 
     }
 
-    public void setDotIndicator(int position) {
-        binding.viewPagerMain.removeAllViews();
-    }
-
-    private int getItem(int i) {
-        return onboardingViewPager.getCurrentItem() + i;
-    }
 }
