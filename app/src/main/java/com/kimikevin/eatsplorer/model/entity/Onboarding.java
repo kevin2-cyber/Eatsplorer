@@ -1,4 +1,4 @@
-package com.kimikevin.eatsplorer.model;
+package com.kimikevin.eatsplorer.model.entity;
 
 public class Onboarding {
     private String title;

@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kimikevin.eatsplorer.R;
-import com.kimikevin.eatsplorer.model.Onboarding;
+import com.kimikevin.eatsplorer.model.entity.Onboarding;
 
 import java.util.List;
 
