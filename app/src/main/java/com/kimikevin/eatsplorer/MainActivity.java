@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager2 onboardingViewPager;
     OnboardingAdapter onboardingAdapter;
 
-    Button getStartedBtn, nextBtn, skipBtn;
+    Button nextBtn, skipBtn;
     LinearLayout onboardingIndicators;
     ActivityMainBinding binding;
     public static final String LOG_TAG = MainActivity.class.getSimpleName().toLowerCase(Locale.ROOT);
@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
 
-        getStartedBtn = binding.getStartedBtn;
         nextBtn = binding.nextBtn;
         skipBtn = binding.skipBtn;
         onboardingIndicators = binding.onboardingIndicators;
@@ -63,22 +62,6 @@ public class MainActivity extends AppCompatActivity {
         // initializing the ViewPager object
         onboardingViewPager = binding.viewPager;
         onboardingViewPager.setAdapter(onboardingAdapter);
-
-        getStartedBtn.setVisibility(
-                onboardingViewPager.getCurrentItem() == onboardingAdapter.getItemCount()
-                        ? View.VISIBLE : View.GONE
-        );
-
-        nextBtn.setVisibility(
-                onboardingViewPager.getCurrentItem() != onboardingAdapter.getItemCount()
-                        ? View.VISIBLE : View.GONE
-        );
-
-        skipBtn.setVisibility(
-                onboardingViewPager.getCurrentItem() != onboardingAdapter.getItemCount()
-                        ? View.VISIBLE : View.GONE
-        );
-
 
         setupOnboardingIndicators();
         setCurrentOnboardingIndicator(0);
@@ -100,17 +83,11 @@ public class MainActivity extends AppCompatActivity {
         nextBtn.setOnClickListener(view -> {
             if(onboardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
                 onboardingViewPager.setCurrentItem(onboardingViewPager.getCurrentItem() + 1);
-            }
-        });
-
-        getStartedBtn.setOnClickListener(view -> {
-            if(onboardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
-                return;
             } else {
                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                finish();
             }
         });
-
 
 
     }
@@ -177,6 +154,11 @@ public class MainActivity extends AppCompatActivity {
                         )
                 );
             }
+        }
+        if (index == onboardingAdapter.getItemCount() - 1) {
+            nextBtn.setText("Get Started");
+        } else {
+            nextBtn.setText("Next");
         }
     }
 
