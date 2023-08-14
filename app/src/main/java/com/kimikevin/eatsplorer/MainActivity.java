@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     ViewPager2 onboardingViewPager;
     OnboardingAdapter onboardingAdapter;
 
-    TabLayout tabLayout;
     Button getStartedBtn, nextBtn, skipBtn;
     ActivityMainBinding binding;
     public static final String LOG_TAG = MainActivity.class.getSimpleName().toLowerCase(Locale.ROOT);
@@ -44,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
 
-        getStartedBtn = findViewById(R.id.get_started_btn);
-        nextBtn = findViewById(R.id.next_btn);
-        skipBtn = findViewById(R.id.skip_btn);
+        getStartedBtn = binding.getStartedBtn;
+        nextBtn = binding.nextBtn;
+        skipBtn = binding.skipBtn;
 
 
 
@@ -55,22 +54,12 @@ public class MainActivity extends AppCompatActivity {
         // initializing the ViewPager object
         onboardingViewPager = binding.viewPager;
 
-        // initializing the TabLayout object
-        tabLayout = binding.tabLayout;
+
 
         onboardingAdapter = new OnboardingAdapter(onboardings, this);
 
         onboardingViewPager.setAdapter(onboardingAdapter);
-        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout , onboardingViewPager, (tab, position) -> tab.setText(LOG_TAG + (position + 1)));
-        tabLayoutMediator.attach();
 
-//        // initializing the ViewPagerAdapter Object
-//        mOnboardingAdapter = new OnboardingAdapter(this, onboarding);
-//
-//        onboardingViewPager.setAdapter(mOnboardingAdapter);
-//
-//        mTabLayout.setupWithViewPager(onboardingViewPager);
-//        onboardingViewPager.addOnPageChangeListener(pageChangeListener);
 
     }
 
