@@ -1,4 +1,3 @@
 package com.kimikevin.eatsplorer.model.dao;
 
-public interface UserDAO {
-}
+public interface UserDAO {}
