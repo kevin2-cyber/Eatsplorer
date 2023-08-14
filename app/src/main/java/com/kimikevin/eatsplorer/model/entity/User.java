@@ -1,11 +1,23 @@
 package com.kimikevin.eatsplorer.model.entity;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "user")
 public class User {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private int id;
+    @ColumnInfo(name = "name")
     private String username;
+    @ColumnInfo(name = "email")
     private String email;
+    @ColumnInfo(name = "password")
     private String password;
 
+    @Ignore
     public User(){}
 
     public User(int id, String username, String email, String password) {
