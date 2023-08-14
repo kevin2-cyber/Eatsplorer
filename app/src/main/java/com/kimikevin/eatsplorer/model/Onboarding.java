@@ -11,6 +11,8 @@ public class Onboarding {
         this.description = description;
     }
 
+    public Onboarding(){}
+
     public String getTitle() {
         return title;
     }

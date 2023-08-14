@@ -15,6 +15,7 @@ import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
 import com.kimikevin.eatsplorer.model.Onboarding;
 import com.kimikevin.eatsplorer.view.adapter.OnboardingAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -50,17 +51,38 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        setupOnboardingItems();
 
         // initializing the ViewPager object
         onboardingViewPager = binding.viewPager;
-
-
-
-        onboardingAdapter = new OnboardingAdapter(onboardings, this);
-
         onboardingViewPager.setAdapter(onboardingAdapter);
 
 
+    }
+
+    private void setupOnboardingItems() {
+        onboardings = new ArrayList<>();
+
+        Onboarding first = new Onboarding();
+        first.setTitle("Satisfy your cravings \nwith ease");
+        first.setDescription("Integer a viverra sit feugiat leo\nncommodo nunc.");
+        first.setImage(R.drawable.onboarding_image_1);
+
+        Onboarding second = new Onboarding();
+        second.setTitle("Find your new favourite \nrestaurant with just a tap");
+        second.setDescription("Integer a viverra sit feugiat leo\nncommodo nunc.");
+        second.setImage(R.drawable.onboarding_image_2);
+
+        Onboarding third = new Onboarding();
+        third.setTitle("Fresh meals, delivered to your doorstep");
+        third.setDescription("Integer a viverra sit feugiat leo\nncommodo nunc.");
+        third.setImage(R.drawable.onboarding_image_3);
+
+        onboardings.add(first);
+        onboardings.add(second);
+        onboardings.add(third);
+
+        onboardingAdapter = new OnboardingAdapter(onboardings, this);
     }
 
 }
