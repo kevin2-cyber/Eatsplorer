@@ -3,45 +3,37 @@ package com.kimikevin.eatsplorer.model;
 public class Onboarding {
     private String title;
     private int image;
-    private String titleBlack;
-    private String titleRed;
+    private String description;
 
-    public Onboarding(String title, int image, String titleBlack, String titleRed) {
+    public Onboarding(String title, int image, String description) {
         this.title = title;
         this.image = image;
-        this.titleBlack = titleBlack;
-        this.titleRed = titleRed;
+        this.description = description;
     }
+
+    public Onboarding(){}
 
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getImage() {
         return image;
     }
 
-    public String getTitleBlack() {
-        return titleBlack;
+    public void setImage(int image) {
+        this.image = image;
     }
 
-    public String getTitleRed() {
-        return titleRed;
+    public String getDescription() {
+        return description;
     }
 
-//    public void setTitle(String title) {
-//        this.title = title;
-//    }
-//
-//    public void setImage(int image) {
-//        this.image = image;
-//    }
-//
-//    public void setTitleBlack(String titleBlack) {
-//        this.titleBlack = titleBlack;
-//    }
-//
-//    public void setTitleRed(String titleRed) {
-//        this.titleRed = titleRed;
-//    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
