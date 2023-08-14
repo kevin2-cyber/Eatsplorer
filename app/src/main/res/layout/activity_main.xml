@@ -33,5 +33,52 @@
         app:tabGravity="center"
         app:tabIndicatorHeight="0dp" />
 
+    <Button
+        android:id="@+id/get_started_btn"
+        android:layout_width="199dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/btn_background"
+        android:fontFamily="@font/samsung"
+        android:text="Get Started"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_buttons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/skip_btn"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="140dp"
+            android:layout_height="49dp"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/samsung"
+            android:text="Skip"
+            android:textColor="#9F9F9F" />
+
+        <Button
+            android:id="@+id/next_btn"
+            android:layout_width="140dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="40dp"
+            android:background="@drawable/btn_background"
+            android:fontFamily="@font/samsung"
+            android:text="Next"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
