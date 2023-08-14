@@ -1,18 +1,25 @@
 package com.kimikevin.eatsplorer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
 import com.kimikevin.eatsplorer.model.Onboarding;
+import com.kimikevin.eatsplorer.view.HomeActivity;
 import com.kimikevin.eatsplorer.view.adapter.OnboardingAdapter;
 
 import java.util.ArrayList;
@@ -29,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     OnboardingAdapter onboardingAdapter;
 
     Button getStartedBtn, nextBtn, skipBtn;
+    LinearLayout onboardingIndicators;
     ActivityMainBinding binding;
     public static final String LOG_TAG = MainActivity.class.getSimpleName().toLowerCase(Locale.ROOT);
 
@@ -47,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
         getStartedBtn = binding.getStartedBtn;
         nextBtn = binding.nextBtn;
         skipBtn = binding.skipBtn;
-
-
+        onboardingIndicators = binding.onboardingIndicators;
 
 
         setupOnboardingItems();
@@ -57,25 +64,74 @@ public class MainActivity extends AppCompatActivity {
         onboardingViewPager = binding.viewPager;
         onboardingViewPager.setAdapter(onboardingAdapter);
 
+        getStartedBtn.setVisibility(
+                onboardingViewPager.getCurrentItem() == onboardingAdapter.getItemCount()
+                        ? View.VISIBLE : View.GONE
+        );
+
+        nextBtn.setVisibility(
+                onboardingViewPager.getCurrentItem() != onboardingAdapter.getItemCount()
+                        ? View.VISIBLE : View.GONE
+        );
+
+        skipBtn.setVisibility(
+                onboardingViewPager.getCurrentItem() != onboardingAdapter.getItemCount()
+                        ? View.VISIBLE : View.GONE
+        );
+
+
+        setupOnboardingIndicators();
+        setCurrentOnboardingIndicator(0);
+
+        onboardingViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                setCurrentOnboardingIndicator(position);
+            }
+        });
+
+        skipBtn.setOnClickListener(view -> {
+            if(onboardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
+                onboardingViewPager.setCurrentItem(onboardings.size() -1);
+            }
+        });
+
+        nextBtn.setOnClickListener(view -> {
+            if(onboardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
+                onboardingViewPager.setCurrentItem(onboardingViewPager.getCurrentItem() + 1);
+            }
+        });
+
+        getStartedBtn.setOnClickListener(view -> {
+            if(onboardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
+                return;
+            } else {
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            }
+        });
+
+
 
     }
 
     private void setupOnboardingItems() {
         onboardings = new ArrayList<>();
+        String description = "Integer a viverra sit feugiat leo\nncommodo nunc.";
 
         Onboarding first = new Onboarding();
         first.setTitle("Satisfy your cravings \nwith ease");
-        first.setDescription("Integer a viverra sit feugiat leo\nncommodo nunc.");
+        first.setDescription(description);
         first.setImage(R.drawable.onboarding_image_1);
 
         Onboarding second = new Onboarding();
         second.setTitle("Find your new favourite \nrestaurant with just a tap");
-        second.setDescription("Integer a viverra sit feugiat leo\nncommodo nunc.");
+        second.setDescription(description);
         second.setImage(R.drawable.onboarding_image_2);
 
         Onboarding third = new Onboarding();
         third.setTitle("Fresh meals, delivered to your doorstep");
-        third.setDescription("Integer a viverra sit feugiat leo\nncommodo nunc.");
+        third.setDescription(description);
         third.setImage(R.drawable.onboarding_image_3);
 
         onboardings.add(first);
@@ -83,6 +139,45 @@ public class MainActivity extends AppCompatActivity {
         onboardings.add(third);
 
         onboardingAdapter = new OnboardingAdapter(onboardings, this);
+    }
+
+    private void setupOnboardingIndicators() {
+        ImageView[] indicators = new ImageView[onboardingAdapter.getItemCount()];
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(8,0,8,0);
+        for (int i = 0; i < indicators.length; i++) {
+            indicators[i] = new ImageView(getApplicationContext());
+            indicators[i].setImageDrawable(ContextCompat.getDrawable(
+                    getApplicationContext(),
+                    R.drawable.default_dot
+            ));
+            indicators[i].setLayoutParams(params);
+            onboardingIndicators.addView(indicators[i]);
+        }
+    }
+
+    private void setCurrentOnboardingIndicator(int index) {
+        int childCount = onboardingIndicators.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            ImageView imageView = (ImageView) onboardingIndicators.getChildAt(i);
+            if (i == index) {
+                imageView.setImageDrawable(
+                        ContextCompat.getDrawable(
+                                getApplicationContext(),
+                                R.drawable.selected_dot
+                        )
+                );
+            } else {
+                imageView.setImageDrawable(
+                        ContextCompat.getDrawable(
+                                getApplicationContext(),
+                                R.drawable.default_dot
+                        )
+                );
+            }
+        }
     }
 
 }

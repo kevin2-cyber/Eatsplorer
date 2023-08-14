@@ -56,8 +56,8 @@ public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.On
 
         void setOnboardingData(Onboarding onboarding) {
             tvTitle.setText(onboarding.getTitle());
-            imageOnboarding.setImageResource(onboarding.getImage());
             tvDescription.setText(onboarding.getDescription());
+            imageOnboarding.setImageResource(onboarding.getImage());
         }
     }
 }
