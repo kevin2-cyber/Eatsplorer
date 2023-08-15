@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.transition.Explode;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -52,8 +53,8 @@ public class RegisterActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         });
+        binding.showPassBtn.setOnClickListener(this::togglePassword);
 
-        binding.etPass.setOnClickListener(this::togglePassword);
     }
 
     // validate data
@@ -65,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     // toggle password
     private void togglePassword(View view) {
-        if (view.getId() == binding.etPass.getId()) {
+        if (view.getId() == binding.showPassBtn.getId()) {
             if(binding.etPass.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
                 ((ImageView) (view)).setImageResource(R.drawable.baseline_visibility_off_24);
                 // show password

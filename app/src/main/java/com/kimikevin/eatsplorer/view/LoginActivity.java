@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // toggle password
     private void togglePassword(View view) {
-        if (view.getId() == binding.etPassword.getId()) {
+        if (view.getId() == binding.showPassBtn.getId()) {
             if(binding.etPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
                 ((ImageView) (view)).setImageResource(R.drawable.baseline_visibility_off_24);
                 // show password

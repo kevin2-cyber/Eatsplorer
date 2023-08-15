@@ -10,17 +10,6 @@
     tools:context=".view.LoginActivity">
 
 
-    <LinearLayout
-        android:id="@+id/linear_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </LinearLayout>
 
     <TextView
         android:id="@+id/tvCooking"
