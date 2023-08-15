@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,6 +20,7 @@ import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
 import com.kimikevin.eatsplorer.model.entity.Onboarding;
 import com.kimikevin.eatsplorer.view.RegisterActivity;
 import com.kimikevin.eatsplorer.view.adapter.OnboardingAdapter;
+import com.kimikevin.eatsplorer.view.anim.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
 
+        // Inside your activity (if you did not enable transitions in your theme)
+        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
+
+        // Set an exit transition
+        getWindow().setExitTransition(new Explode());
+
         nextBtn = binding.nextBtn;
         skipBtn = binding.skipBtn;
         onboardingIndicators = binding.onboardingIndicators;
@@ -59,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         // initializing the ViewPager object
         onboardingViewPager = binding.viewPager;
         onboardingViewPager.setAdapter(onboardingAdapter);
+        onboardingViewPager.setPageTransformer(new ZoomOutPageTransformer());
 
         setupOnboardingIndicators();
         setCurrentOnboardingIndicator(0);
@@ -83,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
             if(onboardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
                 onboardingViewPager.setCurrentItem(onboardingViewPager.getCurrentItem() + 1);
             } else {
-                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
                 finish();
             }
         });

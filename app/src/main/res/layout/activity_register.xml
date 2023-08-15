@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
     android:background="@color/white"
     tools:context=".view.RegisterActivity">
 
@@ -68,7 +68,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
-        android:layout_marginBottom="1dp"
         android:fontFamily="@font/samsung"
         android:text="Sign In here"
         android:textColor="@color/red_ribbon"
@@ -197,6 +196,7 @@
         android:background="@drawable/btn_background_red"
         android:fontFamily="@font/samsung"
         android:text="Sign up"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -207,13 +207,13 @@
         android:id="@+id/tv_by"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginBottom="58dp"
         android:fontFamily="@font/samsung"
         android:text="By signing up, you have agreed to our"
         android:textColor="@color/lynch"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
@@ -221,8 +221,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="21dp"
-        android:layout_marginEnd="13dp"
-        app:layout_constraintEnd_toEndOf="@+id/tv_by"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="@+id/tv_by">
 
         <TextView

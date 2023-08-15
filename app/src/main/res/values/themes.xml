@@ -8,6 +8,19 @@
     <style name="Theme.Eatsplorer" parent="Base.Theme.Eatsplorer">
         <item name="android:fontFamily">@font/samsung</item>
         <item name="font">@font/samsung_bold</item>
+
+        <!-- enable window content transitions -->
+        <item name="android:windowActivityTransitions">true</item>
+
+<!--        &lt;!&ndash; specify enter and exit transitions &ndash;&gt;-->
+<!--        <item name="android:windowEnterTransition">@transition/explode</item>-->
+<!--        <item name="android:windowExitTransition">@transition/explode</item>-->
+
+<!--        &lt;!&ndash; specify shared element transitions &ndash;&gt;-->
+<!--        <item name="android:windowSharedElementEnterTransition">-->
+<!--            @transition/change_image_transform</item>-->
+<!--        <item name="android:windowSharedElementExitTransition">-->
+<!--            @transition/change_image_transform</item>-->
     </style>
 
 
