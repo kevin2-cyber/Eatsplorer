@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityRegisterBinding;
+import com.kimikevin.eatsplorer.model.entity.User;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -23,6 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
     String name = "";
     String email = "";
     String password = "";
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +42,6 @@ public class RegisterActivity extends AppCompatActivity {
 //        // Set an exit transition
 //        getWindow().setExitTransition(new Explode());
 
-        name = binding.etFullName.getText().toString().trim();
-        email = binding.etEmailAddress.getText().toString().trim();
-        password = binding.etPass.getText().toString().trim();
-
         binding.btnRegister.setOnClickListener(view -> {
             if (name != null) {
                 Toast.makeText(this, "Hey", Toast.LENGTH_SHORT).show();
@@ -56,6 +54,13 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         binding.etPass.setOnClickListener(this::togglePassword);
+    }
+
+    // validate data
+    private void validateData() {
+        name = binding.etFullName.getText().toString().trim();
+        email = binding.etEmailAddress.getText().toString().trim();
+        password = binding.etPass.getText().toString().trim();
     }
 
     // toggle password

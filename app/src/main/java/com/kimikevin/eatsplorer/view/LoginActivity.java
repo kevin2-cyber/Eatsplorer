@@ -19,12 +19,14 @@ import android.widget.ImageView;
 
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityLoginBinding;
+import com.kimikevin.eatsplorer.model.entity.User;
 
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     String email = "";
     String password = "";
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
             // no password entered
             binding.etPassword.setError("no password entered",
                     AppCompatResources.getDrawable(this, R.drawable.baseline_close_24));
-            System.out.println();
         } else if (password.length() < 6) {
             binding.etPassword.setError("Password must be more than six characters",
                     AppCompatResources.getDrawable(this, R.drawable.baseline_close_24));
