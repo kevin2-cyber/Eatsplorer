@@ -2,25 +2,31 @@ package com.kimikevin.eatsplorer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.transition.Explode;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnticipateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
-import com.kimikevin.eatsplorer.model.Onboarding;
-import com.kimikevin.eatsplorer.view.HomeActivity;
+import com.kimikevin.eatsplorer.model.entity.Onboarding;
+import com.kimikevin.eatsplorer.view.RegisterActivity;
 import com.kimikevin.eatsplorer.view.adapter.OnboardingAdapter;
+import com.kimikevin.eatsplorer.view.anim.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +50,42 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setTheme(R.style.Theme_Eatsplorer);
         super.onCreate(savedInstanceState);
 
+        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
+            final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
+                    splashScreenView,
+                    View.TRANSLATION_Y,
+                    0f,
+                    -splashScreenView.getHeight()
+            );
+            slideUp.setInterpolator(new AnticipateInterpolator());
+            slideUp.setDuration(200L);
+
+            // Call SplashScreenView.remove at the end of your custom animation.
+            slideUp.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    splashScreenView.remove();
+                }
+            });
+
+            // Run your animation.
+            slideUp.start();
+        });
+
         setContentView(binding.getRoot());
+
+//        // Inside your activity (if you did not enable transitions in your theme)
+//        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
+//
+//        // Set an exit transition
+//        getWindow().setExitTransition(new Explode());
 
         nextBtn = binding.nextBtn;
         skipBtn = binding.skipBtn;
@@ -62,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         // initializing the ViewPager object
         onboardingViewPager = binding.viewPager;
         onboardingViewPager.setAdapter(onboardingAdapter);
+        onboardingViewPager.setPageTransformer(new ZoomOutPageTransformer());
 
         setupOnboardingIndicators();
         setCurrentOnboardingIndicator(0);
@@ -77,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
         skipBtn.setOnClickListener(view -> {
             if(onboardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
                 onboardingViewPager.setCurrentItem(onboardings.size() -1);
+            } else {
+                skipBtn.setEnabled(false);
             }
         });
 
@@ -84,7 +122,10 @@ public class MainActivity extends AppCompatActivity {
             if(onboardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
                 onboardingViewPager.setCurrentItem(onboardingViewPager.getCurrentItem() + 1);
             } else {
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent
+//                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+                );
                 finish();
             }
         });
@@ -126,9 +167,10 @@ public class MainActivity extends AppCompatActivity {
         params.setMargins(8,0,8,0);
         for (int i = 0; i < indicators.length; i++) {
             indicators[i] = new ImageView(getApplicationContext());
-            indicators[i].setImageDrawable(ContextCompat.getDrawable(
-                    getApplicationContext(),
-                    R.drawable.default_dot
+            indicators[i].setImageDrawable(
+                    ContextCompat.getDrawable(
+                        getApplicationContext(),
+                        R.drawable.default_dot
             ));
             indicators[i].setLayoutParams(params);
             onboardingIndicators.addView(indicators[i]);
@@ -156,9 +198,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         if (index == onboardingAdapter.getItemCount() - 1) {
-            nextBtn.setText("Get Started");
+            nextBtn.setText(R.string.get_started);
         } else {
-            nextBtn.setText("Next");
+            nextBtn.setText(getString(R.string.next));
         }
     }
 

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.transition.Explode;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,7 +19,7 @@ import com.kimikevin.eatsplorer.databinding.ActivityRegisterBinding;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    ActivityRegisterBinding mBinding;
+    ActivityRegisterBinding binding;
     String name = "";
     String email = "";
     String password = "";
@@ -26,42 +27,48 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        mBinding = ActivityRegisterBinding.inflate(getLayoutInflater());
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
-        setContentView(mBinding.getRoot());
+        setContentView(binding.getRoot());
 
-        name = mBinding.etFullName.getText().toString().trim();
-        email = mBinding.etEmailAddress.getText().toString().trim();
-        password = mBinding.etPass.getText().toString().trim();
+//        // Inside your activity (if you did not enable transitions in your theme)
+//        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
+//
+//        // Set an exit transition
+//        getWindow().setExitTransition(new Explode());
 
-        mBinding.btnRegister.setOnClickListener(view -> {
+        name = binding.etFullName.getText().toString().trim();
+        email = binding.etEmailAddress.getText().toString().trim();
+        password = binding.etPass.getText().toString().trim();
+
+        binding.btnRegister.setOnClickListener(view -> {
             if (name != null) {
                 Toast.makeText(this, "Hey", Toast.LENGTH_SHORT).show();
             }
         });
 
-        mBinding.tvSignIn.setOnClickListener(view -> {
+        binding.tvSignIn.setOnClickListener(view -> {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         });
 
-        mBinding.etPass.setOnClickListener(this::togglePassword);
+        binding.etPass.setOnClickListener(this::togglePassword);
     }
 
     // toggle password
     private void togglePassword(View view) {
-        if (view.getId() == mBinding.etPass.getId()) {
-            if(mBinding.etPass.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+        if (view.getId() == binding.etPass.getId()) {
+            if(binding.etPass.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
                 ((ImageView) (view)).setImageResource(R.drawable.baseline_visibility_off_24);
                 // show password
-                mBinding.etPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                binding.etPass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
             } else {
                 ((ImageView) (view)).setImageResource(R.drawable.baseline_visibility_24);
                 // Hide password
-                mBinding.etPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                binding.etPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
         }
     }

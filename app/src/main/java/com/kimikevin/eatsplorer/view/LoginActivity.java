@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.transition.Explode;
 import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
@@ -35,12 +36,20 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
 
+//        // Inside your activity (if you did not enable transitions in your theme)
+//        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
+//
+//        // Set an exit transition
+//        getWindow().setExitTransition(new Explode());
+
         binding.btnSignIn.setOnClickListener(view -> validateData());
 
          // navigate to SignUpActivity
         binding.tvSignUp.setOnClickListener(view -> {
             Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            startActivity(intent
+//                    ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+            );
         });
             binding.showPassBtn.setOnClickListener(this::togglePassword);
     }

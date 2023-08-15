@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".view.LoginActivity"
-    tools:layout_editor_absoluteX="3dp"
-    tools:layout_editor_absoluteY="2dp">
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    tools:context=".view.LoginActivity">
 
 
     <LinearLayout
@@ -39,26 +39,25 @@
         android:id="@+id/tv_no_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/samsung"
         android:text="If you don\'t have an\naccount please"
         android:textColor="@android:color/darker_gray"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_sign_up"
         app:layout_constraintStart_toStartOf="@+id/tvCooking"
-        app:layout_constraintTop_toTopOf="@+id/tv_sign_up" />
+        app:layout_constraintTop_toTopOf="@+id/tvCooking" />
 
     <TextView
         android:id="@+id/tv_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="49dp"
+        android:layout_marginEnd="54dp"
         android:fontFamily="@font/samsung"
         android:text="Sign up here"
-        android:textColor="@color/txt_red"
+        android:textColor="@color/red_ribbon"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/tvCooking"
-        app:layout_constraintTop_toBottomOf="@+id/tvCooking" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_no_account"
+        app:layout_constraintEnd_toEndOf="@+id/tvCooking" />
 
     <TextView
         android:id="@+id/textView"
@@ -66,7 +65,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/samsung"
         android:text="Sign In"
-        android:textColor="@color/txt_red"
+        android:textColor="@color/red_ribbon"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tvCooking"
@@ -76,40 +75,34 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="46dp"
-        android:layout_marginBottom="209dp"
         android:fontFamily="@font/samsung"
         android:text="Just "
         android:textColor="@color/blue_vogue"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/et_email"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <TextView
         android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginBottom="88dp"
         android:fontFamily="@font/samsung"
         android:text="Email Address"
         android:textColor="@color/blue_vogue"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_no_account" />
+        app:layout_constraintBottom_toTopOf="@+id/tv_password"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/et_email"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginBottom="44dp"
         android:autofillHints="emailAddress"
         android:background="@drawable/et_background"
         android:drawableEnd="@drawable/check"
@@ -120,50 +113,41 @@
         android:paddingEnd="15dp"
         android:textColor="@color/txt_black"
         android:textColorHint="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@+id/tv_password"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_password"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toTopOf="@+id/tv_email" />
 
     <TextView
         android:id="@+id/tv_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="464dp"
+        android:layout_marginBottom="14dp"
         android:fontFamily="@font/samsung"
         android:text="Password"
         android:textColor="@color/blue_vogue"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_email" />
+        app:layout_constraintBottom_toTopOf="@+id/et_password"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/et_password"
         android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="96dp"
+        android:layout_height="50dp"
         android:autofillHints="password"
         android:background="@drawable/et_background"
         android:fontFamily="@font/samsung"
         android:hint="**********"
         android:inputType="textPassword"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
         android:textColor="@color/txt_black"
         android:textColorHint="@android:color/darker_gray"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_sign_in"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_email"
-        app:layout_constraintVertical_bias="0.141" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/show_pass_btn"
@@ -172,11 +156,11 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="16dp"
         android:alpha=".5"
         android:contentDescription="password"
         android:src="@drawable/baseline_visibility_24"
-        app:layout_constraintEnd_toEndOf="@+id/et_password"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/et_password" />
 
     <TextView
@@ -184,88 +168,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_marginEnd="16dp"
         android:fontFamily="@font/samsung"
         android:text="Forgot Password?"
-        android:textColor="@color/txt_black"
+        android:textColor="@color/blue_vogue"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
     <Button
         android:id="@+id/btn_sign_in"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="54dp"
+        android:layout_marginTop="22dp"
         android:background="@drawable/btn_background_red"
         android:fontFamily="@font/samsung"
         android:text="Sign in"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_fb"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_or"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="87dp"
-        android:fontFamily="@font/samsung"
-        android:text="Or"
-        android:textColor="@color/txt_black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/btn_google"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btn_fb"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="19dp"
-        android:background="@drawable/btn_background_outline"
-        android:drawableStart="@drawable/facebook"
-        android:fontFamily="@font/samsung_bold"
-        android:gravity="center"
-        android:paddingStart="50dp"
-        android:paddingEnd="50dp"
-        android:text="Connect with facebook"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/blue_vogue"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_google"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_or" />
-
-    <Button
-        android:id="@+id/btn_google"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="60dp"
-        android:background="@drawable/btn_background_outline"
-        android:drawableStart="@drawable/google"
-        android:fontFamily="@font/samsung_bold"
-        android:gravity="center"
-        android:paddingStart="60dp"
-        android:paddingEnd="60dp"
-        android:text="Connect with Google"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="@color/blue_vogue"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_forgot_password" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
