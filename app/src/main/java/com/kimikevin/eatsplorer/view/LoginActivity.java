@@ -36,18 +36,20 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
 
-        // Inside your activity (if you did not enable transitions in your theme)
-        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
-
-        // Set an exit transition
-        getWindow().setExitTransition(new Explode());
+//        // Inside your activity (if you did not enable transitions in your theme)
+//        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
+//
+//        // Set an exit transition
+//        getWindow().setExitTransition(new Explode());
 
         binding.btnSignIn.setOnClickListener(view -> validateData());
 
          // navigate to SignUpActivity
         binding.tvSignUp.setOnClickListener(view -> {
             Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            startActivity(intent
+//                    ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+            );
         });
             binding.showPassBtn.setOnClickListener(this::togglePassword);
     }

@@ -2,16 +2,22 @@ package com.kimikevin.eatsplorer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.transition.Explode;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnticipateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,19 +50,42 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setTheme(R.style.Theme_Eatsplorer);
         super.onCreate(savedInstanceState);
+
+        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
+            final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
+                    splashScreenView,
+                    View.TRANSLATION_Y,
+                    0f,
+                    -splashScreenView.getHeight()
+            );
+            slideUp.setInterpolator(new AnticipateInterpolator());
+            slideUp.setDuration(200L);
+
+            // Call SplashScreenView.remove at the end of your custom animation.
+            slideUp.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    splashScreenView.remove();
+                }
+            });
+
+            // Run your animation.
+            slideUp.start();
+        });
 
         setContentView(binding.getRoot());
 
-        // Inside your activity (if you did not enable transitions in your theme)
-        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
-
-        // Set an exit transition
-        getWindow().setExitTransition(new Explode());
+//        // Inside your activity (if you did not enable transitions in your theme)
+//        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
+//
+//        // Set an exit transition
+//        getWindow().setExitTransition(new Explode());
 
         nextBtn = binding.nextBtn;
         skipBtn = binding.skipBtn;
@@ -94,7 +123,9 @@ public class MainActivity extends AppCompatActivity {
                 onboardingViewPager.setCurrentItem(onboardingViewPager.getCurrentItem() + 1);
             } else {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+                startActivity(intent
+//                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+                );
                 finish();
             }
         });

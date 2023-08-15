@@ -8,8 +8,8 @@
         <item name="android:fontFamily">@font/samsung</item>
         <item name="font">@font/samsung_bold</item>
 
-        <!-- enable window content transitions -->
-        <item name="android:windowActivityTransitions">true</item>
+<!--        &lt;!&ndash; enable window content transitions &ndash;&gt;-->
+<!--        <item name="android:windowActivityTransitions">true</item>-->
 
 <!--        &lt;!&ndash; specify enter and exit transitions &ndash;&gt;-->
 <!--        <item name="android:windowEnterTransition">@transition/explode</item>-->

@@ -27,18 +27,18 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
+        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
 
-        // Inside your activity (if you did not enable transitions in your theme)
-        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
-
-        // Set an exit transition
-        getWindow().setExitTransition(new Explode());
+//        // Inside your activity (if you did not enable transitions in your theme)
+//        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
+//
+//        // Set an exit transition
+//        getWindow().setExitTransition(new Explode());
 
         name = binding.etFullName.getText().toString().trim();
         email = binding.etEmailAddress.getText().toString().trim();
