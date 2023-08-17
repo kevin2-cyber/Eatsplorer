@@ -48,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // init FirebaseAuth
         auth = FirebaseAuth.getInstance();
-        checkUser();
 
          // navigate to SignUpActivity
         binding.tvSignUp.setOnClickListener(view -> {
@@ -85,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
             binding.etPassword.setError("Password must be more than six characters",
                     AppCompatResources.getDrawable(this, R.drawable.baseline_close_24));
         } else {
-            startActivity(new Intent(this, MapsActivity.class));
+            login();
         }
     }
 
@@ -101,17 +100,6 @@ public class LoginActivity extends AppCompatActivity {
                 // Hide password
                 binding.etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
-        }
-    }
-
-    private void checkUser() {
-        // if user is already logged in go to profile activity
-        // get current user
-        FirebaseUser user = auth.getCurrentUser();
-        if (user != null) {
-            // user is already logged in
-            startActivity(new Intent(this, HomeActivity.class));
-            finish();
         }
     }
 

@@ -49,7 +49,7 @@ public class HomeActivity extends AppCompatActivity {
             String email = user.getEmail();
 
             // set to text view
-            binding.username.setText(" You are logged in as" + email);
+            binding.username.setText(" You are logged in as " + email);
         } else {
 
             //user is null, user not logged in go to login activity
