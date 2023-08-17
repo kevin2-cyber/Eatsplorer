@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "636048708775",
+    "project_id": "eatsplorer-a5d25",
+    "storage_bucket": "eatsplorer-a5d25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636048708775:android:5fed9706a4d52e1b797782",
+        "android_client_info": {
+          "package_name": "com.kimikevin.eatsplorer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636048708775-mlj2743vlv0iidahrv52fh982plqc5cm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kimikevin.eatsplorer",
+            "certificate_hash": "bab45b7c3b0cf977bd5d8a07eaadeacf78a2277e"
+          }
+        },
+        {
+          "client_id": "636048708775-fcmbhonam5ennfn2vr7nctlq28jep8rv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8QvfFjnGXht7F0GnSp0wicmHkRKbSVf8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636048708775-fcmbhonam5ennfn2vr7nctlq28jep8rv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,8 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.transition.Explode;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,7 +15,6 @@ import android.widget.Toast;
 
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityRegisterBinding;
-import com.kimikevin.eatsplorer.model.entity.User;
 
 public class RegisterActivity extends AppCompatActivity {
 

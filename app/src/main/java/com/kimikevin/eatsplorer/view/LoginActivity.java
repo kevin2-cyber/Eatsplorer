@@ -3,14 +3,12 @@ package com.kimikevin.eatsplorer.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.transition.Explode;
 import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
@@ -19,7 +17,6 @@ import android.widget.ImageView;
 
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityLoginBinding;
-import com.kimikevin.eatsplorer.model.entity.User;
 
 
 public class LoginActivity extends AppCompatActivity {
