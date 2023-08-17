@@ -22,8 +22,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
 import com.kimikevin.eatsplorer.model.entity.Onboarding;
+import com.kimikevin.eatsplorer.view.HomeActivity;
 import com.kimikevin.eatsplorer.view.RegisterActivity;
 import com.kimikevin.eatsplorer.view.adapter.OnboardingAdapter;
 import com.kimikevin.eatsplorer.view.anim.ZoomOutPageTransformer;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     Button nextBtn, skipBtn;
     LinearLayout onboardingIndicators;
     ActivityMainBinding binding;
+    FirebaseAuth auth;
     public static final String LOG_TAG = MainActivity.class.getSimpleName().toLowerCase(Locale.ROOT);
 
 
@@ -86,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
 //
 //        // Set an exit transition
 //        getWindow().setExitTransition(new Explode());
+
+        // init auth
+        auth = FirebaseAuth.getInstance();
+        checkUser();
 
         nextBtn = binding.nextBtn;
         skipBtn = binding.skipBtn;
@@ -201,6 +209,17 @@ public class MainActivity extends AppCompatActivity {
             nextBtn.setText(R.string.get_started);
         } else {
             nextBtn.setText(getString(R.string.next));
+        }
+    }
+
+    private void checkUser() {
+        // if user is already logged in go to profile activity
+        // get current user
+        FirebaseUser user = auth.getCurrentUser();
+        if (user != null) {
+            // user is already logged in
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
         }
     }
 

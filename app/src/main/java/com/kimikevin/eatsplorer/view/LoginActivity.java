@@ -3,26 +3,32 @@ package com.kimikevin.eatsplorer.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.transition.Explode;
 import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityLoginBinding;
 
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
+    private ProgressBar bar;
+
+    private FirebaseAuth auth;
+
     String email = "";
     String password = "";
 
@@ -36,22 +42,22 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
 
-//        // Inside your activity (if you did not enable transitions in your theme)
-//        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
-//
-//        // Set an exit transition
-//        getWindow().setExitTransition(new Explode());
+        // configure progressbar
+        bar = new ProgressBar(this);
+        bar.setVisibility(View.GONE);
 
-        binding.btnSignIn.setOnClickListener(view -> validateData());
+        // init FirebaseAuth
+        auth = FirebaseAuth.getInstance();
 
          // navigate to SignUpActivity
         binding.tvSignUp.setOnClickListener(view -> {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent
-//                    ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
             );
         });
             binding.showPassBtn.setOnClickListener(this::togglePassword);
+
+        binding.btnSignIn.setOnClickListener(view -> validateData());
     }
 
     //TODO: add login auth(email and password sign in and oauth)
@@ -74,18 +80,17 @@ public class LoginActivity extends AppCompatActivity {
             // no password entered
             binding.etPassword.setError("no password entered",
                     AppCompatResources.getDrawable(this, R.drawable.baseline_close_24));
-            System.out.println();
         } else if (password.length() < 6) {
             binding.etPassword.setError("Password must be more than six characters",
                     AppCompatResources.getDrawable(this, R.drawable.baseline_close_24));
         } else {
-            startActivity(new Intent(this, MapsActivity.class));
+            login();
         }
     }
 
     // toggle password
     private void togglePassword(View view) {
-        if (view.getId() == binding.etPassword.getId()) {
+        if (view.getId() == binding.showPassBtn.getId()) {
             if(binding.etPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
                 ((ImageView) (view)).setImageResource(R.drawable.baseline_visibility_off_24);
                 // show password
@@ -96,5 +101,33 @@ public class LoginActivity extends AppCompatActivity {
                 binding.etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
         }
+    }
+
+    private void login() {
+        // show progress
+        bar.setVisibility(View.VISIBLE);
+        auth.signInWithEmailAndPassword(email,password)
+                .addOnSuccessListener(task -> {
+                    // login successful
+                    bar.setVisibility(View.GONE);
+
+                    // get user info
+                    FirebaseUser user = auth.getCurrentUser();
+                    assert user != null;
+                    String email = user.getEmail();
+                    Toast.makeText(this,"logged in as " + email,
+                            Toast.LENGTH_LONG).show();
+
+                    // open profile
+                    Intent intent = new Intent(this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                })
+                .addOnFailureListener(task -> {
+                    // login failed
+                    bar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(this,"Login failed due to " + task.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                });
     }
 }
