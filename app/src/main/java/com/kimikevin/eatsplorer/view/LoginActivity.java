@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
 
                     // open profile
-                    Intent intent = new Intent(this, HomeActivity.class);
+                    Intent intent = new Intent(this, MapsActivity.class);
                     startActivity(intent);
                     finish();
                 })
