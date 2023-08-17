@@ -23,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
     String email = "";
     String password = "";
-    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
