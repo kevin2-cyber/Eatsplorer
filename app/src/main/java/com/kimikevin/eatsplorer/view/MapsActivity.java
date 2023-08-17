@@ -92,8 +92,8 @@ public class MapsActivity extends FragmentActivity
 
         // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
-            lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-            cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+            lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION, Location.class);
+            cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION, CameraPosition.class);
         }
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
