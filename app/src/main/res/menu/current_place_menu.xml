@@ -4,11 +4,14 @@
 
     <item
         android:id="@+id/option_get_place"
-        android:title="@string/option_get_place" />
+        android:title="@string/option_get_place"
+        android:icon="@drawable/baseline_location_on_24"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/logout"
         android:title="Log out"
-        android:icon="@drawable/baseline_logout_24"/>
+        android:icon="@drawable/baseline_logout_24"
+        app:showAsAction="always"/>
 
 </menu>

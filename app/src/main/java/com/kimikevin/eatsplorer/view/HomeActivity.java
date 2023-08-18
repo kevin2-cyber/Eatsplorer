@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityHomeBinding;
 
+import java.util.Objects;
+
 public class HomeActivity extends AppCompatActivity {
 
     ActivityHomeBinding binding;
