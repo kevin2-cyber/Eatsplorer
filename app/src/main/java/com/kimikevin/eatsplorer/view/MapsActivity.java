@@ -45,6 +45,7 @@ import com.kimikevin.eatsplorer.BuildConfig;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class MapsActivity extends AppCompatActivity
         implements OnMapReadyCallback {
@@ -98,7 +99,9 @@ public class MapsActivity extends AppCompatActivity
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
 
-        MapsInitializer.initialize(this, MapsInitializer.Renderer.LATEST, renderer -> Log.d(TAG, "onMapsSdkInitialized"));
+        MapsInitializer.initialize(this,
+                MapsInitializer.Renderer.LATEST, renderer -> Log.d(TAG, "onMapsSdkInitialized")
+        );
         // [END maps_current_place_on_create_save_instance_state]
         // [END_EXCLUDE]
 
@@ -134,6 +137,7 @@ public class MapsActivity extends AppCompatActivity
         // [START maps_current_place_map_fragment]
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
         // [END maps_current_place_map_fragment]
         // [END_EXCLUDE]
@@ -186,7 +190,7 @@ public class MapsActivity extends AppCompatActivity
      */
     // [START maps_current_place_on_map_ready]
     @Override
-    public void onMapReady(GoogleMap map) {
+    public void onMapReady(@NonNull GoogleMap map) {
         this.map = map;
 
         // [START_EXCLUDE]
@@ -197,12 +201,12 @@ public class MapsActivity extends AppCompatActivity
 
             @Override
             // Return null here, so that getInfoContents() is called next.
-            public View getInfoWindow(Marker arg0) {
+            public View getInfoWindow(@NonNull Marker arg0) {
                 return null;
             }
 
             @Override
-            public View getInfoContents(Marker marker) {
+            public View getInfoContents(@NonNull Marker marker) {
                 // Inflate the layouts for the info window, title and snippet.
                 View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents,
                         (FrameLayout) findViewById(R.id.map), false);
@@ -344,12 +348,7 @@ public class MapsActivity extends AppCompatActivity
                         FindCurrentPlaceResponse likelyPlaces = task.getResult();
 
                         // Set the count, handling cases where less than 5 entries are returned.
-                        int count;
-                        if (likelyPlaces.getPlaceLikelihoods().size() < M_MAX_ENTRIES) {
-                            count = likelyPlaces.getPlaceLikelihoods().size();
-                        } else {
-                            count = M_MAX_ENTRIES;
-                        }
+                        int count = Math.min(likelyPlaces.getPlaceLikelihoods().size(), M_MAX_ENTRIES);
 
                         int i = 0;
                         likelyPlaceNames = new String[count];
@@ -452,7 +451,7 @@ public class MapsActivity extends AppCompatActivity
                 getLocationPermission();
             }
         } catch (SecurityException e)  {
-            Log.e("Exception: %s", e.getMessage());
+            Log.e("Exception: %s", Objects.requireNonNull(e.getMessage()));
         }
     }
 
