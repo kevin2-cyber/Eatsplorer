@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -39,6 +40,8 @@ import com.google.android.libraries.places.api.model.PlaceLikelihood;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.kimikevin.eatsplorer.BuildConfig;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityMapsBinding;
@@ -81,6 +84,7 @@ public class MapsActivity extends FragmentActivity
     private String[] likelyPlaceAttributions;
     private LatLng[] likelyPlaceLatLngs;
     private ActivityMapsBinding binding;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +93,10 @@ public class MapsActivity extends FragmentActivity
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         super.onCreate(savedInstanceState);
+
+        // init auth
+        auth = FirebaseAuth.getInstance();
+        checkUser();
 
         // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
@@ -156,6 +164,15 @@ public class MapsActivity extends FragmentActivity
             @Override
             // Return null here, so that getInfoContents() is called next.
             public View getInfoWindow(@NonNull Marker marker) {
+//                View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents,
+//                        findViewById(R.id.map));
+//
+//                TextView title = infoWindow.findViewById(R.id.title);
+//                title.setText(marker.getTitle());
+//
+//                TextView snippet = infoWindow.findViewById(R.id.snippet);
+//                snippet.setText(marker.getSnippet());
+//                return infoWindow;
                 return null;
             }
 
@@ -378,6 +395,9 @@ public class MapsActivity extends FragmentActivity
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.option_get_place) {
             showCurrentPlace();
+        } else if (item.getItemId() == R.id.logout) {
+            auth.signOut();
+            checkUser();
         }
         return true;
     }
@@ -401,6 +421,23 @@ public class MapsActivity extends FragmentActivity
             }
         } catch (SecurityException e) {
             Log.e("Exception: %s", Objects.requireNonNull(e.getMessage()));
+        }
+    }
+
+    private void checkUser() {
+        // check if user is logged in or not
+        FirebaseUser user = auth.getCurrentUser();
+
+        if (user != null) {
+
+            // user is not null, user is logged in, get user info
+            String email = user.getEmail();
+
+        } else {
+
+            //user is null, user not logged in go to login activity
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
     }
 }

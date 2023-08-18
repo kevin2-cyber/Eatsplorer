@@ -4,6 +4,11 @@
 
     <item
         android:id="@+id/option_get_place"
-        android:title="@string/option_get_place"
-        app:showAsAction="always" />
+        android:title="@string/option_get_place" />
+
+    <item
+        android:id="@+id/logout"
+        android:title="Log out"
+        android:icon="@drawable/baseline_logout_24"/>
+
 </menu>

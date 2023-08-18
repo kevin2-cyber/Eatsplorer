@@ -2,17 +2,14 @@ package com.kimikevin.eatsplorer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.splashscreen.SplashScreen;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.transition.Explode;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -26,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
 import com.kimikevin.eatsplorer.model.entity.Onboarding;
-import com.kimikevin.eatsplorer.view.HomeActivity;
+import com.kimikevin.eatsplorer.view.MapsActivity;
 import com.kimikevin.eatsplorer.view.RegisterActivity;
 import com.kimikevin.eatsplorer.view.adapter.OnboardingAdapter;
 import com.kimikevin.eatsplorer.view.anim.ZoomOutPageTransformer;
@@ -218,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
             // user is already logged in
-            startActivity(new Intent(this, HomeActivity.class));
+            startActivity(new Intent(this, MapsActivity.class));
             finish();
         }
     }
