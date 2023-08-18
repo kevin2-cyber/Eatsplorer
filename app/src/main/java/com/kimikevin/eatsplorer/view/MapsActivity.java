@@ -42,6 +42,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.BuildConfig;
+import com.kimikevin.eatsplorer.databinding.ActivityMapsBinding;
 
 import java.util.Arrays;
 import java.util.List;
@@ -78,7 +79,7 @@ public class MapsActivity extends AppCompatActivity
     // [END maps_current_place_state_keys]
 
     // Used for selecting the current place.
-    private static final int M_MAX_ENTRIES = 5;
+    private static final int M_MAX_ENTRIES = 20;
     private String[] likelyPlaceNames;
     private String[] likelyPlaceAddresses;
     private List[] likelyPlaceAttributions;
