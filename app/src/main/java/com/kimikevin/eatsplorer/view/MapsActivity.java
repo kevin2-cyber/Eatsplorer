@@ -20,14 +20,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.OnMapsSdkInitializedCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -47,6 +48,7 @@ import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityMapsBinding;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -93,6 +95,8 @@ public class MapsActivity extends FragmentActivity
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         super.onCreate(savedInstanceState);
+
+        MapsInitializer.initialize(this, MapsInitializer.Renderer.LATEST, renderer -> Log.d(TAG, "onMapsSdkInitialized"));
 
         // init auth
         auth = FirebaseAuth.getInstance();
@@ -287,7 +291,7 @@ public class MapsActivity extends FragmentActivity
 
         if (locationPermissionGranted) {
             // Use fields to define the data types to return.
-            List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS,
+            List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.BUSINESS_STATUS,
                     Place.Field.LAT_LNG);
 
             // Use the builder to create a FindCurrentPlaceRequest.
@@ -297,7 +301,8 @@ public class MapsActivity extends FragmentActivity
             // Get the likely places - that is, the businesses and other points of interest that
             // are the best match for the device's current location.
 
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
                 // here to request the missing permissions, and then overriding
@@ -326,8 +331,8 @@ public class MapsActivity extends FragmentActivity
                         // Build a list of likely places to show the user.
                         likelyPlaceNames[i] = placeLikelihood.getPlace().getName();
                         likelyPlaceAddresses[i] = placeLikelihood.getPlace().getAddress();
-                        likelyPlaceAttributions[i] = Objects.requireNonNull(placeLikelihood.getPlace()
-                                .getAttributions()).toString();
+                        likelyPlaceAttributions[i] = Collections.singletonList(Objects.requireNonNull(placeLikelihood.getPlace()
+                                .getAttributions()).toString()).toString();
                         likelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLatLng();
 
                         i++;
