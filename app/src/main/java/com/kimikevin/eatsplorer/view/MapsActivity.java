@@ -42,6 +42,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.BuildConfig;
+import com.kimikevin.eatsplorer.databinding.ActivityMapsBinding;
 
 import java.util.Arrays;
 import java.util.List;
@@ -78,7 +79,7 @@ public class MapsActivity extends AppCompatActivity
     // [END maps_current_place_state_keys]
 
     // Used for selecting the current place.
-    private static final int M_MAX_ENTRIES = 5;
+    private static final int M_MAX_ENTRIES = 20;
     private String[] likelyPlaceNames;
     private String[] likelyPlaceAddresses;
     private List[] likelyPlaceAttributions;
@@ -246,24 +247,21 @@ public class MapsActivity extends AppCompatActivity
         try {
             if (locationPermissionGranted) {
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
-                            // Set the map's camera position to the current location of the device.
-                            lastKnownLocation = task.getResult();
-                            if (lastKnownLocation != null) {
-                                map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                        new LatLng(lastKnownLocation.getLatitude(),
-                                                lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                            }
-                        } else {
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
-                            map.moveCamera(CameraUpdateFactory
-                                    .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
-                            map.getUiSettings().setMyLocationButtonEnabled(false);
+                locationResult.addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Set the map's camera position to the current location of the device.
+                        lastKnownLocation = task.getResult();
+                        if (lastKnownLocation != null) {
+                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                    new LatLng(lastKnownLocation.getLatitude(),
+                                            lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                         }
+                    } else {
+                        Log.d(TAG, "Current location is null. Using defaults.");
+                        Log.e(TAG, "Exception: %s", task.getException());
+                        map.moveCamera(CameraUpdateFactory
+                                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
+                        map.getUiSettings().setMyLocationButtonEnabled(false);
                     }
                 });
             }
@@ -341,42 +339,39 @@ public class MapsActivity extends AppCompatActivity
             @SuppressWarnings("MissingPermission") final
             Task<FindCurrentPlaceResponse> placeResult =
                     placesClient.findCurrentPlace(request);
-            placeResult.addOnCompleteListener (new OnCompleteListener<FindCurrentPlaceResponse>() {
-                @Override
-                public void onComplete(@NonNull Task<FindCurrentPlaceResponse> task) {
-                    if (task.isSuccessful() && task.getResult() != null) {
-                        FindCurrentPlaceResponse likelyPlaces = task.getResult();
+            placeResult.addOnCompleteListener (task -> {
+                if (task.isSuccessful() && task.getResult() != null) {
+                    FindCurrentPlaceResponse likelyPlaces = task.getResult();
 
-                        // Set the count, handling cases where less than 5 entries are returned.
-                        int count = Math.min(likelyPlaces.getPlaceLikelihoods().size(), M_MAX_ENTRIES);
+                    // Set the count, handling cases where less than 5 entries are returned.
+                    int count = Math.min(likelyPlaces.getPlaceLikelihoods().size(), M_MAX_ENTRIES);
 
-                        int i = 0;
-                        likelyPlaceNames = new String[count];
-                        likelyPlaceAddresses = new String[count];
-                        likelyPlaceAttributions = new List[count];
-                        likelyPlaceLatLngs = new LatLng[count];
+                    int i = 0;
+                    likelyPlaceNames = new String[count];
+                    likelyPlaceAddresses = new String[count];
+                    likelyPlaceAttributions = new List[count];
+                    likelyPlaceLatLngs = new LatLng[count];
 
-                        for (PlaceLikelihood placeLikelihood : likelyPlaces.getPlaceLikelihoods()) {
-                            // Build a list of likely places to show the user.
-                            likelyPlaceNames[i] = placeLikelihood.getPlace().getName();
-                            likelyPlaceAddresses[i] = placeLikelihood.getPlace().getAddress();
-                            likelyPlaceAttributions[i] = placeLikelihood.getPlace()
-                                    .getAttributions();
-                            likelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLatLng();
+                    for (PlaceLikelihood placeLikelihood : likelyPlaces.getPlaceLikelihoods()) {
+                        // Build a list of likely places to show the user.
+                        likelyPlaceNames[i] = placeLikelihood.getPlace().getName();
+                        likelyPlaceAddresses[i] = placeLikelihood.getPlace().getAddress();
+                        likelyPlaceAttributions[i] = placeLikelihood.getPlace()
+                                .getAttributions();
+                        likelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLatLng();
 
-                            i++;
-                            if (i > (count - 1)) {
-                                break;
-                            }
+                        i++;
+                        if (i > (count - 1)) {
+                            break;
                         }
+                    }
 
-                        // Show a dialog offering the user the list of likely places, and add a
-                        // marker at the selected place.
-                        MapsActivity.this.openPlacesDialog();
-                    }
-                    else {
-                        Log.e(TAG, "Exception: %s", task.getException());
-                    }
+                    // Show a dialog offering the user the list of likely places, and add a
+                    // marker at the selected place.
+                    MapsActivity.this.openPlacesDialog();
+                }
+                else {
+                    Log.e(TAG, "Exception: %s", task.getException());
                 }
             });
         } else {
@@ -401,27 +396,24 @@ public class MapsActivity extends AppCompatActivity
     // [START maps_current_place_open_places_dialog]
     private void openPlacesDialog() {
         // Ask the user to choose the place where they are now.
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // The "which" argument contains the position of the selected item.
-                LatLng markerLatLng = likelyPlaceLatLngs[which];
-                String markerSnippet = likelyPlaceAddresses[which];
-                if (likelyPlaceAttributions[which] != null) {
-                    markerSnippet = markerSnippet + "\n" + likelyPlaceAttributions[which];
-                }
-
-                // Add a marker for the selected place, with an info window
-                // showing information about that place.
-                map.addMarker(new MarkerOptions()
-                        .title(likelyPlaceNames[which])
-                        .position(markerLatLng)
-                        .snippet(markerSnippet));
-
-                // Position the map's camera at the location of the marker.
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng,
-                        DEFAULT_ZOOM));
+        DialogInterface.OnClickListener listener = (dialog, which) -> {
+            // The "which" argument contains the position of the selected item.
+            LatLng markerLatLng = likelyPlaceLatLngs[which];
+            String markerSnippet = likelyPlaceAddresses[which];
+            if (likelyPlaceAttributions[which] != null) {
+                markerSnippet = markerSnippet + "\n" + likelyPlaceAttributions[which];
             }
+
+            // Add a marker for the selected place, with an info window
+            // showing information about that place.
+            map.addMarker(new MarkerOptions()
+                    .title(likelyPlaceNames[which])
+                    .position(markerLatLng)
+                    .snippet(markerSnippet));
+
+            // Position the map's camera at the location of the marker.
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng,
+                    DEFAULT_ZOOM));
         };
 
         // Display the dialog.
