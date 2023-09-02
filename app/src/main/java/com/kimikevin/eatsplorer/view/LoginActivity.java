@@ -60,10 +60,6 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnSignIn.setOnClickListener(view -> validateData());
     }
 
-    //TODO: add login auth(email and password sign in and oauth)
-    //TODO: Add database
-
-    //TODO: link database
 
     // navigate to HomeActivity upon successful login
     private void validateData(){
