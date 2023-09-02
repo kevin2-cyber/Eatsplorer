@@ -43,7 +43,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.BuildConfig;
 import com.kimikevin.eatsplorer.databinding.ActivityMapsBinding;
-import com.kimikevin.eatsplorer.model.entity.User;
 
 import java.util.Arrays;
 import java.util.List;
@@ -450,7 +449,7 @@ public class MapsActivity extends AppCompatActivity
 
     private void checkUser() {
         // check if user is logged in or not
-        User user = (User) auth.getCurrentUser();
+        FirebaseUser user = auth.getCurrentUser();
 
         if (user != null) {
 

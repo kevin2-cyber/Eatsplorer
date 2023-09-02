@@ -18,9 +18,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityLoginBinding;
-import com.kimikevin.eatsplorer.model.entity.User;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                     bar.setVisibility(View.GONE);
 
                     // get user info
-                    User user = (User) auth.getCurrentUser();
+                    FirebaseUser user = auth.getCurrentUser();
                     assert user != null;
                     String email = user.getEmail();
                     Toast.makeText(this,"logged in as " + email,
