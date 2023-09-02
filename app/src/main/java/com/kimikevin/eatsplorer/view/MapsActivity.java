@@ -30,7 +30,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -42,7 +41,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.BuildConfig;
-import com.kimikevin.eatsplorer.databinding.ActivityMapsBinding;
 
 import java.util.Arrays;
 import java.util.List;
