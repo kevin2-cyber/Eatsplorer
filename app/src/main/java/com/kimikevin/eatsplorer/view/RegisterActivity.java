@@ -17,9 +17,9 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityRegisterBinding;
+import com.kimikevin.eatsplorer.model.entity.User;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -90,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     // dismiss progress
                     bar.setVisibility(View.GONE);
-                    FirebaseUser user = auth.getCurrentUser();
+                    User user = (User) auth.getCurrentUser();
                     assert user != null;
                     String email = user.getEmail();
                     Toast.makeText(this, "Account created with " + email, Toast.LENGTH_LONG).show();
