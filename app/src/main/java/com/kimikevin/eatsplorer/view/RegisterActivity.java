@@ -49,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         bar = new ProgressBar(this);
         bar.setVisibility(View.GONE);
 
+        // navigate to LoginActivity
         binding.tvSignIn.setOnClickListener(view -> {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
