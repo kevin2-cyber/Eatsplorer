@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -105,6 +106,7 @@ public class MapsActivity extends AppCompatActivity
         // [END_EXCLUDE]
 
         // Retrieve the content view that renders the map.
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_maps);
 
         // init auth
