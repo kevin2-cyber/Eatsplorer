@@ -7,7 +7,7 @@
     <style name="Theme.Eatsplorer" parent="Base.Theme.Eatsplorer">
         <item name="android:fontFamily">@font/samsung</item>
         <item name="font">@font/samsung_bold</item>
-        <item name="android:statusBarColor">@color/athens_gray_dark</item>
+<!--        <item name="android:statusBarColor">@color/athens_gray_dark</item>-->
 
 <!--        &lt;!&ndash; enable window content transitions &ndash;&gt;-->
 <!--        <item name="android:windowActivityTransitions">true</item>-->

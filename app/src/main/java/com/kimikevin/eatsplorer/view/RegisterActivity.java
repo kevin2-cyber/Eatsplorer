@@ -1,5 +1,6 @@
 package com.kimikevin.eatsplorer.view;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -32,12 +33,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(binding.getRoot());
 
 

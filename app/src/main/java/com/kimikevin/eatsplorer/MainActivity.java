@@ -1,5 +1,6 @@
 package com.kimikevin.eatsplorer;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
@@ -51,37 +52,32 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setTheme(R.style.Theme_Eatsplorer);
+        EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
-                final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
-                        splashScreenView,
-                        View.TRANSLATION_Y,
-                        0f,
-                        -splashScreenView.getHeight()
-                );
-                slideUp.setInterpolator(new AnticipateInterpolator());
-                slideUp.setDuration(200L);
+        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
+            final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
+                    splashScreenView,
+                    View.TRANSLATION_Y,
+                    0f,
+                    -splashScreenView.getHeight()
+            );
+            slideUp.setInterpolator(new AnticipateInterpolator());
+            slideUp.setDuration(200L);
 
-                // Call SplashScreenView.remove at the end of your custom animation.
-                slideUp.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        splashScreenView.remove();
-                    }
-                });
-
-                // Run your animation.
-                slideUp.start();
+            // Call SplashScreenView.remove at the end of your custom animation.
+            slideUp.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    splashScreenView.remove();
+                }
             });
-        }
+
+            // Run your animation.
+            slideUp.start();
+        });
 
         setContentView(binding.getRoot());
 
