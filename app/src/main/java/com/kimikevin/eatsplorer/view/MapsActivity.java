@@ -106,6 +106,7 @@ public class MapsActivity extends AppCompatActivity
         // [END_EXCLUDE]
 
         // Retrieve the content view that renders the map.
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_maps);
 
         // init auth

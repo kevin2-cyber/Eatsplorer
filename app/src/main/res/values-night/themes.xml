@@ -3,6 +3,9 @@
     <style name="Base.Theme.Eatsplorer" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorPrimary">@color/red_ribbon</item>
+        <item name="colorOnPrimary">@color/txt_red</item>
     </style>
     <style name="Theme.Eatsplorer" parent="Base.Theme.Eatsplorer">
         <item name="android:fontFamily">@font/samsung</item>

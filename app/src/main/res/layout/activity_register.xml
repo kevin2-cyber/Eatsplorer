@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
     tools:context=".view.RegisterActivity">
 
 
@@ -20,6 +18,7 @@
         android:textColor="@color/blue_vogue"
         android:textSize="28sp"
         android:textStyle="bold"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,7 +30,7 @@
         android:layout_marginBottom="3dp"
         android:fontFamily="@font/samsung"
         android:text="Sign You up"
-        android:textColor="@color/red_ribbon"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tv_your"
@@ -70,7 +69,7 @@
         android:layout_marginStart="2dp"
         android:fontFamily="@font/samsung"
         android:text="Sign In here"
-        android:textColor="@color/red_ribbon"
+        android:textColor="?attr/colorOnPrimary"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_account"
         app:layout_constraintStart_toEndOf="@+id/tv_account" />
@@ -85,6 +84,7 @@
         android:text="Full name"
         android:textColor="@color/blue_vogue"
         android:textSize="16sp"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_account" />
 
@@ -101,6 +101,8 @@
         android:inputType="textPersonName"
         android:paddingStart="20dp"
         android:paddingEnd="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:textColor="@color/txt_black"
         android:textColorHint="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,6 +119,7 @@
         android:text="Email Address"
         android:textColor="@color/blue_vogue"
         android:textSize="16sp"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toTopOf="@+id/et_email_address"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -124,6 +127,8 @@
         android:id="@+id/et_email_address"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="44dp"
         android:autofillHints="emailAddress"
         android:background="@drawable/et_background"
@@ -144,20 +149,22 @@
         android:id="@+id/tv_password_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="12dp"
         android:fontFamily="@font/samsung"
         android:text="Password"
         android:textColor="@color/blue_vogue"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_full_name" />
+        app:layout_constraintBottom_toTopOf="@+id/et_pass"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/et_pass"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginBottom="26dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="12dp"
         android:autofillHints="password"
         android:background="@drawable/et_background"
         android:hint="*******"
@@ -167,18 +174,14 @@
         android:textColor="@color/txt_black"
         android:textColorHint="@android:color/darker_gray"
         app:layout_constraintBottom_toTopOf="@+id/btn_register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_password_txt"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/show_pass_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="24dp"
         android:alpha=".5"
         android:contentDescription="@string/app_name"
         android:src="@drawable/baseline_visibility_24"
@@ -196,6 +199,8 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
