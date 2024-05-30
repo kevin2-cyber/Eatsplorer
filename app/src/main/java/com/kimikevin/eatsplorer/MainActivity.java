@@ -9,13 +9,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.AnticipateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -57,35 +54,31 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
 
-        getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
-            final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
-                    splashScreenView,
-                    View.TRANSLATION_Y,
-                    0f,
-                    -splashScreenView.getHeight()
-            );
-            slideUp.setInterpolator(new AnticipateInterpolator());
-            slideUp.setDuration(200L);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
+                final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
+                        splashScreenView,
+                        View.TRANSLATION_Y,
+                        0f,
+                        -splashScreenView.getHeight()
+                );
+                slideUp.setInterpolator(new AnticipateInterpolator());
+                slideUp.setDuration(200L);
 
-            // Call SplashScreenView.remove at the end of your custom animation.
-            slideUp.addListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    splashScreenView.remove();
-                }
+                // Call SplashScreenView.remove at the end of your custom animation.
+                slideUp.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        splashScreenView.remove();
+                    }
+                });
+
+                // Run your animation.
+                slideUp.start();
             });
-
-            // Run your animation.
-            slideUp.start();
-        });
+        }
 
         setContentView(binding.getRoot());
-
-//        // Inside your activity (if you did not enable transitions in your theme)
-//        getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
-//
-//        // Set an exit transition
-//        getWindow().setExitTransition(new Explode());
 
         // init auth
         auth = FirebaseAuth.getInstance();
@@ -127,9 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 onboardingViewPager.setCurrentItem(onboardingViewPager.getCurrentItem() + 1);
             } else {
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent
-//                        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-                );
+                startActivity(intent);
                 finish();
             }
         });
