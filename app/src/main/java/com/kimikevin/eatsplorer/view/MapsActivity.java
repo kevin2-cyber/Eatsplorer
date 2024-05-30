@@ -429,11 +429,11 @@ public class MapsActivity extends AppCompatActivity
                     DEFAULT_ZOOM));
         };
 
-//        // Display the dialog.
-//         new AlertDialog.Builder(this)
-//                .setTitle(R.string.pick_place)
-//                .setItems(likelyPlaceNames, listener)
-//                .show();
+        // Display the dialog.
+         new AlertDialog.Builder(this)
+                .setTitle(R.string.pick_place)
+                .setItems(likelyPlaceNames, listener)
+                .show();
 
 
     }
