@@ -42,10 +42,10 @@ public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.On
         return onboardings.size();
     }
 
-    static class OnboardingViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imageOnboarding;
-        private TextView tvTitle;
-        private TextView tvDescription;
+    public static class OnboardingViewHolder extends RecyclerView.ViewHolder {
+        private final ImageView imageOnboarding;
+        private final TextView tvTitle;
+        private final TextView tvDescription;
 
         public OnboardingViewHolder(@NonNull View itemView) {
             super(itemView);

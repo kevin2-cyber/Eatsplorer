@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -39,8 +38,6 @@ import com.google.android.libraries.places.api.model.PlaceLikelihood;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
 import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.kimikevin.eatsplorer.R;
@@ -55,7 +52,7 @@ public class MapsActivity extends AppCompatActivity
 
     private static final String TAG = MapsActivity.class.getSimpleName();
     private GoogleMap map;
-    private CameraPosition cameraPosition;
+    CameraPosition cameraPosition;
 
     // The entry point to the Places API.
     private PlacesClient placesClient;
@@ -87,7 +84,7 @@ public class MapsActivity extends AppCompatActivity
     private List[] likelyPlaceAttributions;
     private LatLng[] likelyPlaceLatLngs;
     private FirebaseAuth auth;
-    private Toolbar toolbar;
+    Toolbar toolbar;
 
     // [START maps_current_place_on_create]
     @Override
@@ -213,7 +210,7 @@ public class MapsActivity extends AppCompatActivity
             public View getInfoContents(@NonNull Marker marker) {
                 // Inflate the layouts for the info window, title and snippet.
                 View infoWindow = getLayoutInflater().inflate(R.layout.custom_info_contents,
-                        (FrameLayout) findViewById(R.id.map), false);
+                        findViewById(R.id.map), false);
 
                 TextView title = infoWindow.findViewById(R.id.title);
                 title.setText(marker.getTitle());
@@ -429,11 +426,11 @@ public class MapsActivity extends AppCompatActivity
                     DEFAULT_ZOOM));
         };
 
-//        // Display the dialog.
-//         new AlertDialog.Builder(this)
-//                .setTitle(R.string.pick_place)
-//                .setItems(likelyPlaceNames, listener)
-//                .show();
+        // Display the dialog.
+         new AlertDialog.Builder(this)
+                .setTitle(R.string.pick_place)
+                .setItems(likelyPlaceNames, listener)
+                .show();
 
 
     }
