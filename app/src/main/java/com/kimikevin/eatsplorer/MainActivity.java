@@ -17,6 +17,7 @@ import android.view.animation.AnticipateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -206,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
         if (user != null) {
             // user is already logged in
             startActivity(new Intent(this, MapsActivity.class));
+            Toast.makeText(this, LOG_TAG, Toast.LENGTH_LONG).show();
             finish();
         }
     }

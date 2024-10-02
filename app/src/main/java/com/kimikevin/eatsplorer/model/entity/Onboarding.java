@@ -9,14 +9,6 @@ public class Onboarding {
     private int image;
     private String description;
 
-    public Onboarding(String title, int image, String description) {
-        this.title = title;
-        this.image = image;
-        this.description = description;
-    }
-
-    public Onboarding(){}
-
     public String getTitle() {
         return title;
     }

@@ -3,19 +3,15 @@ package com.kimikevin.eatsplorer.view;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.TextView;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityHomeBinding;
 
-import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -40,6 +36,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void checkUser() {
         // check if user is logged in or not
         FirebaseUser user = auth.getCurrentUser();

@@ -36,9 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        binding.btnRegister.setOnClickListener(view -> {
-            validateData();
-        });
+        binding.btnRegister.setOnClickListener(view -> validateData());
 
         // configure progress dialog
         bar = new ProgressBar(this);
@@ -119,7 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public boolean onSupportNavigateUp() {
         // go back to previous activity, when back button of actionbar clicked
-        onBackPressed();
+        getOnBackPressedDispatcher();
         return super.onSupportNavigateUp();
     }
 }
