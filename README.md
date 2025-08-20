@@ -1,2 +1,2 @@
 # Eatsplorer
-A restaurant recommendation app with Android 
+A restaurant recommendation app with Android
