@@ -9,6 +9,8 @@ public class Onboarding {
     private int image;
     private String description;
 
+    public Onboarding(){}
+
     public String getTitle() {
         return title;
     }
