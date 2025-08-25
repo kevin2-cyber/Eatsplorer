@@ -13,6 +13,7 @@ public class Onboarding {
 
     public Onboarding(String title, int image) {
         this.title = title;
+        this.image = image;
     }
 
     public String getTitle() {
