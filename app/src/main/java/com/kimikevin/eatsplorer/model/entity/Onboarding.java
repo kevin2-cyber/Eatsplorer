@@ -11,7 +11,7 @@ public class Onboarding {
 
     public Onboarding(){}
 
-    public Onboarding(String title, int image) {
+    public Onboarding(String title, int image, String description) {
         this.title = title;
         this.image = image;
     }
