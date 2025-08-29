@@ -10,7 +10,7 @@ public class Onboarding {
     private String description;
 
     public Onboarding(){
-        this(title,image,description);
+
     }
 
     public Onboarding(String title, int image, String description) {
