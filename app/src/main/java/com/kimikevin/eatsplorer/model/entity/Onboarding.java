@@ -9,9 +9,7 @@ public class Onboarding {
     private int image;
     private String description;
 
-    public Onboarding(){
-
-    }
+    public Onboarding(){}
 
     public Onboarding(String title, int image, String description) {
         this.title = title;
