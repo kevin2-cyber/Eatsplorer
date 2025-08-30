@@ -11,12 +11,6 @@ public class Onboarding {
 
     public Onboarding(){}
 
-    public Onboarding(String title, int image, String description) {
-        this.title = title;
-        this.image = image;
-        this.description = description;
-    }
-
     public String getTitle() {
         return title;
     }
