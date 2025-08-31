@@ -55,6 +55,7 @@ dependencies {
     implementation 'com.google.android.libraries.places:places:4.4.1'
     implementation 'com.google.firebase:firebase-auth:24.0.1'
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.tbuonomo:dotsindicator:5.1.0'
 
     implementation platform('com.google.firebase:firebase-bom:34.2.0')
     testImplementation 'junit:junit:4.13.2'

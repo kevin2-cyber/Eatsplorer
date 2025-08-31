@@ -21,6 +21,7 @@ import com.kimikevin.eatsplorer.view.MapsActivity;
 import com.kimikevin.eatsplorer.view.RegisterActivity;
 import com.kimikevin.eatsplorer.view.adapter.OnboardingAdapter;
 import com.kimikevin.eatsplorer.view.anim.ZoomOutPageTransformer;
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     OnboardingAdapter onboardingAdapter;
 
     Button nextBtn, skipBtn;
-    LinearLayout onboardingIndicators;
+    DotsIndicator onboardingIndicators;
     ActivityMainBinding binding;
     FirebaseAuth auth;
     public static final String LOG_TAG = MainActivity.class.getSimpleName().toLowerCase(Locale.ROOT);
@@ -65,15 +66,19 @@ public class MainActivity extends AppCompatActivity {
         onboardingViewPager = binding.viewPager;
         onboardingViewPager.setAdapter(onboardingAdapter);
         onboardingViewPager.setPageTransformer(new ZoomOutPageTransformer());
+        onboardingIndicators.attachTo(onboardingViewPager);
 
-        setupOnboardingIndicators();
-        setCurrentOnboardingIndicator(0);
 
         onboardingViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                setCurrentOnboardingIndicator(position);
+//                setCurrentOnboardingIndicator(position);
+                if (position == onboardingAdapter.getItemCount() -1) {
+                    nextBtn.setText(R.string.get_started);
+                } else {
+                    nextBtn.setText(getString(R.string.next));
+                }
             }
         });
 
@@ -124,50 +129,50 @@ public class MainActivity extends AppCompatActivity {
         onboardingAdapter = new OnboardingAdapter(onboardings, this);
     }
 
-    private void setupOnboardingIndicators() {
-        ImageView[] indicators = new ImageView[onboardingAdapter.getItemCount()];
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(8,0,8,0);
-        for (int i = 0; i < indicators.length; i++) {
-            indicators[i] = new ImageView(getApplicationContext());
-            indicators[i].setImageDrawable(
-                    ContextCompat.getDrawable(
-                        getApplicationContext(),
-                        R.drawable.default_dot
-            ));
-            indicators[i].setLayoutParams(params);
-            onboardingIndicators.addView(indicators[i]);
-        }
-    }
+//    private void setupOnboardingIndicators() {
+//        ImageView[] indicators = new ImageView[onboardingAdapter.getItemCount()];
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+//                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+//        );
+//        params.setMargins(8,0,8,0);
+//        for (int i = 0; i < indicators.length; i++) {
+//            indicators[i] = new ImageView(getApplicationContext());
+//            indicators[i].setImageDrawable(
+//                    ContextCompat.getDrawable(
+//                        getApplicationContext(),
+//                        R.drawable.default_dot
+//            ));
+//            indicators[i].setLayoutParams(params);
+//            onboardingIndicators.addView(indicators[i]);
+//        }
+//    }
 
-    private void setCurrentOnboardingIndicator(int index) {
-        int childCount = onboardingIndicators.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            ImageView imageView = (ImageView) onboardingIndicators.getChildAt(i);
-            if (i == index) {
-                imageView.setImageDrawable(
-                        ContextCompat.getDrawable(
-                                getApplicationContext(),
-                                R.drawable.selected_dot
-                        )
-                );
-            } else {
-                imageView.setImageDrawable(
-                        ContextCompat.getDrawable(
-                                getApplicationContext(),
-                                R.drawable.default_dot
-                        )
-                );
-            }
-        }
-        if (index == onboardingAdapter.getItemCount() - 1) {
-            nextBtn.setText(R.string.get_started);
-        } else {
-            nextBtn.setText(getString(R.string.next));
-        }
-    }
+//    private void setCurrentOnboardingIndicator(int index) {
+//        int childCount = onboardingIndicators.getChildCount();
+//        for (int i = 0; i < childCount; i++) {
+//            ImageView imageView = (ImageView) onboardingIndicators.getChildAt(i);
+//            if (i == index) {
+//                imageView.setImageDrawable(
+//                        ContextCompat.getDrawable(
+//                                getApplicationContext(),
+//                                R.drawable.selected_dot
+//                        )
+//                );
+//            } else {
+//                imageView.setImageDrawable(
+//                        ContextCompat.getDrawable(
+//                                getApplicationContext(),
+//                                R.drawable.default_dot
+//                        )
+//                );
+//            }
+//        }
+//        if (index == onboardingAdapter.getItemCount() - 1) {
+//            nextBtn.setText(R.string.get_started);
+//        } else {
+//            nextBtn.setText(getString(R.string.next));
+//        }
+//    }
 
     private void checkUser() {
         // if user is already logged in go to profile activity

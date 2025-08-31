@@ -89,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
                     String email = user.getEmail();
                     Toast.makeText(this, "Account created with " + email, Toast.LENGTH_LONG).show();
 
-                    startActivity(new Intent(this, HomeActivity.class));
+                    startActivity(new Intent(this, MapsActivity.class));
                     finish();
                 })
                 .addOnFailureListener(e -> {
