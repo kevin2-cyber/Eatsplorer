@@ -5,15 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnticipateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,33 +45,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setTheme(R.style.Theme_Eatsplorer);
         EdgeToEdge.enable(this);
         super.onCreate(savedInstanceState);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
-                final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
-                        splashScreenView,
-                        View.TRANSLATION_Y,
-                        0f,
-                        -splashScreenView.getHeight()
-                );
-                slideUp.setInterpolator(new AnticipateInterpolator());
-                slideUp.setDuration(200L);
-
-                // Call SplashScreenView.remove at the end of your custom animation.
-                slideUp.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        splashScreenView.remove();
-                    }
-                });
-
-                // Run your animation.
-                slideUp.start();
-            });
-        }
 
         setContentView(binding.getRoot());
 
