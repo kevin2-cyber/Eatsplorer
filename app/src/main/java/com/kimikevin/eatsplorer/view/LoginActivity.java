@@ -3,6 +3,7 @@ package com.kimikevin.eatsplorer.view;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,10 +33,11 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_login);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
         // configure progressbar
         bar = new ProgressBar(this);

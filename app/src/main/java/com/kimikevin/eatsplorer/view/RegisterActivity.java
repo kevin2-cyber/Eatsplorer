@@ -2,6 +2,7 @@ package com.kimikevin.eatsplorer.view;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,10 +31,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_register);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
 
 
         binding.btnRegister.setOnClickListener(view -> validateData());

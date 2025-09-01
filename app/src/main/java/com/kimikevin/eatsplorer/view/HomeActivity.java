@@ -2,6 +2,7 @@ package com.kimikevin.eatsplorer.view;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
@@ -39,10 +40,11 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        binding = ActivityHomeBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_home);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
 
         // init auth
         auth = FirebaseAuth.getInstance();
