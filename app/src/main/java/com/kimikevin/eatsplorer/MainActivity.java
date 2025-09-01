@@ -2,214 +2,58 @@ package com.kimikevin.eatsplorer;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.core.splashscreen.SplashScreen;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AnticipateInterpolator;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
-import com.kimikevin.eatsplorer.model.entity.Onboarding;
-import com.kimikevin.eatsplorer.view.MapsActivity;
-import com.kimikevin.eatsplorer.view.RegisterActivity;
-import com.kimikevin.eatsplorer.view.adapter.OnboardingAdapter;
-import com.kimikevin.eatsplorer.view.anim.ZoomOutPageTransformer;
+import com.kimikevin.eatsplorer.view.HomeActivity;
+import com.kimikevin.eatsplorer.viewmodel.SplashViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
-
-
-    List<Onboarding> onboardings;
-
-    ViewPager2 onboardingViewPager;
-    OnboardingAdapter onboardingAdapter;
-
-    Button nextBtn, skipBtn;
-    LinearLayout onboardingIndicators;
+    SplashViewModel viewModel;
     ActivityMainBinding binding;
-    FirebaseAuth auth;
-    public static final String LOG_TAG = MainActivity.class.getSimpleName().toLowerCase(Locale.ROOT);
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setTheme(R.style.Theme_Eatsplorer);
         EdgeToEdge.enable(this);
+        SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            getSplashScreen().setOnExitAnimationListener(splashScreenView -> {
-                final ObjectAnimator slideUp = ObjectAnimator.ofFloat(
-                        splashScreenView,
-                        View.TRANSLATION_Y,
-                        0f,
-                        -splashScreenView.getHeight()
-                );
-                slideUp.setInterpolator(new AnticipateInterpolator());
-                slideUp.setDuration(200L);
-
-                // Call SplashScreenView.remove at the end of your custom animation.
-                slideUp.addListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        splashScreenView.remove();
-                    }
-                });
-
-                // Run your animation.
-                slideUp.start();
-            });
-        }
-
-        setContentView(binding.getRoot());
-
-        // init auth
-        auth = FirebaseAuth.getInstance();
-        checkUser();
-
-        nextBtn = binding.nextBtn;
-        skipBtn = binding.skipBtn;
-        onboardingIndicators = binding.onboardingIndicators;
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
 
-        setupOnboardingItems();
+        viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
 
-        // initializing the ViewPager object
-        onboardingViewPager = binding.viewPager;
-        onboardingViewPager.setAdapter(onboardingAdapter);
-        onboardingViewPager.setPageTransformer(new ZoomOutPageTransformer());
+        // Keep the splash screen on until the loading is complete
+        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
+        splashScreen.setKeepOnScreenCondition(() -> {
+            Boolean isLoading = viewModel.getLoadingStatus().getValue();
+            return isLoading == null || !isLoading;
+        });
 
-        setupOnboardingIndicators();
-        setCurrentOnboardingIndicator(0);
-
-        onboardingViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                setCurrentOnboardingIndicator(position);
+        // Observe the loading status to know when to transition
+        viewModel.getLoadingStatus().observe(this, isLoadingComplete -> {
+            if (Boolean.TRUE.equals(isLoadingComplete)) {
+                // Start the next activity or update the UI
+                proceedToMainContent();
             }
         });
 
-        skipBtn.setOnClickListener(view -> {
-            if(onboardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
-                onboardingViewPager.setCurrentItem(onboardings.size() -1);
-            } else {
-                skipBtn.setEnabled(false);
-            }
-        });
-
-        nextBtn.setOnClickListener(view -> {
-            if(onboardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
-                onboardingViewPager.setCurrentItem(onboardingViewPager.getCurrentItem() + 1);
-            } else {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-
     }
 
-    private void setupOnboardingItems() {
-        onboardings = new ArrayList<>();
-        String description = "Integer a viverra sit feugiat leo\nncommodo nunc.";
-
-        Onboarding first = new Onboarding();
-        first.setTitle("Satisfy your cravings \nwith ease");
-        first.setDescription(description);
-        first.setImage(R.drawable.onboarding_image_1);
-
-        Onboarding second = new Onboarding();
-        second.setTitle("Find your new favourite \nrestaurant with just a tap");
-        second.setDescription(description);
-        second.setImage(R.drawable.onboarding_image_2);
-
-        Onboarding third = new Onboarding();
-        third.setTitle("Fresh meals, delivered to your doorstep");
-        third.setDescription(description);
-        third.setImage(R.drawable.onboarding_image_3);
-
-        onboardings.add(first);
-        onboardings.add(second);
-        onboardings.add(third);
-
-        onboardingAdapter = new OnboardingAdapter(onboardings, this);
+    private void proceedToMainContent() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 
-    private void setupOnboardingIndicators() {
-        ImageView[] indicators = new ImageView[onboardingAdapter.getItemCount()];
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(8,0,8,0);
-        for (int i = 0; i < indicators.length; i++) {
-            indicators[i] = new ImageView(getApplicationContext());
-            indicators[i].setImageDrawable(
-                    ContextCompat.getDrawable(
-                        getApplicationContext(),
-                        R.drawable.default_dot
-            ));
-            indicators[i].setLayoutParams(params);
-            onboardingIndicators.addView(indicators[i]);
-        }
-    }
-
-    private void setCurrentOnboardingIndicator(int index) {
-        int childCount = onboardingIndicators.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            ImageView imageView = (ImageView) onboardingIndicators.getChildAt(i);
-            if (i == index) {
-                imageView.setImageDrawable(
-                        ContextCompat.getDrawable(
-                                getApplicationContext(),
-                                R.drawable.selected_dot
-                        )
-                );
-            } else {
-                imageView.setImageDrawable(
-                        ContextCompat.getDrawable(
-                                getApplicationContext(),
-                                R.drawable.default_dot
-                        )
-                );
-            }
-        }
-        if (index == onboardingAdapter.getItemCount() - 1) {
-            nextBtn.setText(R.string.get_started);
-        } else {
-            nextBtn.setText(getString(R.string.next));
-        }
-    }
-
-    private void checkUser() {
-        // if user is already logged in go to profile activity
-        // get current user
-        FirebaseUser user = auth.getCurrentUser();
-        if (user != null) {
-            // user is already logged in
-            startActivity(new Intent(this, MapsActivity.class));
-            Toast.makeText(this, LOG_TAG, Toast.LENGTH_LONG).show();
-            finish();
-        }
-    }
 
 }
