@@ -4,7 +4,6 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.kimikevin.eatsplorer.MainActivity;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityHomeBinding;
 import com.kimikevin.eatsplorer.model.entity.Onboarding;
@@ -133,6 +131,7 @@ public class HomeActivity extends AppCompatActivity {
             Log.d(LOG_TAG, " You are logged in as " + email);
             Toast.makeText(this, "You are logged in as " + email, Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, MapsActivity.class));
+            finish();
         } else {
 
             //user is null, user not logged in go to login activity
