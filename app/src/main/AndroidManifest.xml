@@ -31,13 +31,13 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${GMP_KEY}" />
+            android:value="${googleMapsApiKey}" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".view.MapsActivity"
+            android:name=".MainActivity"
             android:exported="false"
             android:label="@string/title_activity_maps"/>
         <activity
@@ -49,7 +49,7 @@
             android:exported="false"
             android:label="@string/title_activity_login"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MapsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

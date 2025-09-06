@@ -21,6 +21,10 @@ android {
         properties.load(project.rootProject.file("local.properties").newDataInputStream())
 
         buildConfigField "String", "GMP_KEY", "\"${properties.getProperty("GMP_KEY")}\""
+
+        manifestPlaceholders = [googleMapsApiKey: properties.getProperty("GMP_KEY")]
+
+        resConfigs "en", "fr", "es", "zh", "de", "ja", "ru", "ko", "pt", "in"
     }
 
     buildTypes {
