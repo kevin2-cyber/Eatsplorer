@@ -331,8 +331,8 @@ public class MapsActivity extends AppCompatActivity
 
         if (locationPermissionGranted) {
             // Use fields to define the data types to return.
-            List<Place.Field> placeFields = Arrays.asList(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.BUSINESS_STATUS,
-                    Place.Field.LAT_LNG);
+            List<Place.Field> placeFields = Arrays.asList(Place.Field.DISPLAY_NAME, Place.Field.ADR_FORMAT_ADDRESS, Place.Field.BUSINESS_STATUS,
+                    Place.Field.GOOGLE_MAPS_URI);
 
             // Use the builder to create a FindCurrentPlaceRequest.
             FindCurrentPlaceRequest request =
