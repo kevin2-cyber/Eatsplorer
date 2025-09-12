@@ -130,6 +130,7 @@ public class MapsActivity extends AppCompatActivity
      */
     private void showMissingPermissionError() {
         PermissionUtils.PermissionDeniedDialog
-                .newInstance(true).show(getSupportFragmentManager(), "dialog");
+                .newInstance(true)
+                .show(getSupportFragmentManager(), "dialog");
     }
 }
