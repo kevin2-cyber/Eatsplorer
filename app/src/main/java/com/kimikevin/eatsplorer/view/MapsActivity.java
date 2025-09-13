@@ -78,7 +78,8 @@ public class MapsActivity extends AppCompatActivity
         }
 
         // 2. Otherwise, request location permissions from the user.
-        PermissionUtils.requestLocationPermissions(this, LOCATION_PERMISSION_REQUEST_CODE, true);
+        PermissionUtils
+                .requestLocationPermissions(this, LOCATION_PERMISSION_REQUEST_CODE, true);
     }
 
     @Override
