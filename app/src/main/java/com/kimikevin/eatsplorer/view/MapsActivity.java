@@ -105,7 +105,8 @@ public class MapsActivity extends AppCompatActivity
 
         if (PermissionUtils
                 .isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_FINE_LOCATION)
-                || PermissionUtils.isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                || PermissionUtils
+                .isPermissionGranted(permissions, grantResults, Manifest.permission.ACCESS_COARSE_LOCATION)) {
             // Enable the my location layer if the permission has been granted.
             enableMyLocation();
         } else {
