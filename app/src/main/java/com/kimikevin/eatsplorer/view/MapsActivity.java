@@ -45,7 +45,8 @@ public class MapsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         MapsInitializer.initialize(this,
-                MapsInitializer.Renderer.LATEST, renderer -> Log.d("TAG", "onMapsSdkInitialized")
+                MapsInitializer.Renderer.LATEST, renderer -> Log
+                        .d("TAG", "onMapsSdkInitialized")
         );
 
         EdgeToEdge.enable(this);
