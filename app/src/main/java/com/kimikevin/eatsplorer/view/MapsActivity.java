@@ -1,7 +1,6 @@
 package com.kimikevin.eatsplorer.view;
 
 
-import static com.google.android.gms.maps.model.MapColorScheme.FOLLOW_SYSTEM;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
