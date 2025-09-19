@@ -1,7 +1,5 @@
 package com.kimikevin.eatsplorer.view;
 
-
-
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
