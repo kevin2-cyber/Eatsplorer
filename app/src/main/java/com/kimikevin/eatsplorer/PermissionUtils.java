@@ -23,9 +23,9 @@ public abstract class PermissionUtils {
      */
     public static void requestLocationPermissions(AppCompatActivity activity, int requestId,
                                                   boolean finishActivity) {
-        if (ActivityCompat
-                .shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION) ||
-                ActivityCompat.shouldShowRequestPermissionRationale(activity,
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                || ActivityCompat.shouldShowRequestPermissionRationale(activity,
                         Manifest.permission.ACCESS_COARSE_LOCATION)) {
             // Display a dialog with rationale.
             PermissionUtils.RationaleDialog.newInstance(requestId, finishActivity)

@@ -1,8 +1,5 @@
 package com.kimikevin.eatsplorer.view;
 
-
-import static com.google.android.gms.maps.model.MapColorScheme.FOLLOW_SYSTEM;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -17,15 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.kimikevin.eatsplorer.PermissionUtils;
 import com.kimikevin.eatsplorer.R;
 
@@ -45,7 +39,8 @@ public class MapsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         MapsInitializer.initialize(this,
-                MapsInitializer.Renderer.LATEST, renderer -> Log.d("TAG", "onMapsSdkInitialized")
+                MapsInitializer.Renderer.LATEST, renderer -> Log
+                        .d("TAG", "onMapsSdkInitialized")
         );
 
         EdgeToEdge.enable(this);
@@ -69,16 +64,19 @@ public class MapsActivity extends AppCompatActivity
 
     private void enableMyLocation() {
         // 1. Check if permissions are granted, if so, enable the my location layer
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED
-                || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                || ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
             return;
         }
 
         // 2. Otherwise, request location permissions from the user.
-        PermissionUtils.requestLocationPermissions(this, LOCATION_PERMISSION_REQUEST_CODE, true);
+        PermissionUtils
+                .requestLocationPermissions(this, LOCATION_PERMISSION_REQUEST_CODE, true);
     }
 
     @Override
@@ -103,9 +101,9 @@ public class MapsActivity extends AppCompatActivity
         }
 
         if (PermissionUtils.isPermissionGranted(permissions, grantResults,
-                Manifest.permission.ACCESS_FINE_LOCATION) || PermissionUtils
-                .isPermissionGranted(permissions, grantResults,
-                        Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                || PermissionUtils.isPermissionGranted(permissions, grantResults,
+                Manifest.permission.ACCESS_COARSE_LOCATION)) {
             // Enable the my location layer if the permission has been granted.
             enableMyLocation();
         } else {
@@ -130,6 +128,7 @@ public class MapsActivity extends AppCompatActivity
      */
     private void showMissingPermissionError() {
         PermissionUtils.PermissionDeniedDialog
-                .newInstance(true).show(getSupportFragmentManager(), "dialog");
+                .newInstance(true)
+                .show(getSupportFragmentManager(), "dialog");
     }
 }
