@@ -103,7 +103,6 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnSuccessListener(task -> {
                     // login successful
                     bar.setVisibility(View.GONE);
-
                     // get user info
                     FirebaseUser user = auth.getCurrentUser();
                     assert user != null;
