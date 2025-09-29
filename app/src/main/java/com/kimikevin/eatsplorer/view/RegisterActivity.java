@@ -83,7 +83,6 @@ public class RegisterActivity extends AppCompatActivity {
         // create account
         auth.createUserWithEmailAndPassword(email,password)
                 .addOnSuccessListener(task -> {
-
                     // dismiss progress
                     bar.setVisibility(View.GONE);
                     FirebaseUser user = auth.getCurrentUser();

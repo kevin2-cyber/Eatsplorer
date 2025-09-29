@@ -103,13 +103,12 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnSuccessListener(task -> {
                     // login successful
                     bar.setVisibility(View.GONE);
-
                     // get user info
                     FirebaseUser user = auth.getCurrentUser();
                     assert user != null;
                     String email = user.getEmail();
-                    Toast.makeText(this,"logged in as " + email,
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"logged in as " + email, Toast.LENGTH_LONG)
+                            .show();
 
                     // open profile
                     Intent intent = new Intent(this, MapsActivity.class);
@@ -119,8 +118,8 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnFailureListener(task -> {
                     // login failed
                     bar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(this,"Login failed due to " + task.getMessage(),
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"Login failed due to " + task.getMessage(), Toast.LENGTH_LONG)
+                            .show();
                 });
     }
 }
