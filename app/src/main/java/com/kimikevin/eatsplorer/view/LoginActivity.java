@@ -107,8 +107,8 @@ public class LoginActivity extends AppCompatActivity {
                     FirebaseUser user = auth.getCurrentUser();
                     assert user != null;
                     String email = user.getEmail();
-                    Toast.makeText(this,"logged in as " + email,
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"logged in as " + email, Toast.LENGTH_LONG)
+                            .show();
 
                     // open profile
                     Intent intent = new Intent(this, MapsActivity.class);
