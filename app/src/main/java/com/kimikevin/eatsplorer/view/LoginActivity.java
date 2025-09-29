@@ -118,8 +118,8 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnFailureListener(task -> {
                     // login failed
                     bar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(this,"Login failed due to " + task.getMessage(),
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"Login failed due to " + task.getMessage(), Toast.LENGTH_LONG)
+                            .show();
                 });
     }
 }
