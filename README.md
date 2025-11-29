@@ -103,3 +103,43 @@ Follow these steps to get the project running on your local machine.
 ```bash
 git clone [https://github.com/your-username/Eatsplorer.git](https://github.com/your-username/Eatsplorer.git)
 cd Eatsplorer
+```
+### 3. API Key Configuration
+This project requires a **Google Maps API Key** with the following APIs enabled:
+* *Places API (New)*
+* *Maps SDK for Android*
+
+**Secure your key:**
+1.  Open the file `local.properties` in the root of the project (create it if it doesn't exist).
+2.  Add your key:
+    ```properties
+    GOOGLE_API_KEY="YOUR_ACTUAL_API_KEY"
+    ```
+3.  The `AndroidManifest.xml` and Retrofit Client are configured to read this key automatically.
+
+### 4. Build and Run
+1.  Open the project in **Android Studio**.
+2.  Let Gradle sync (wait for the progress bar to finish).
+3.  Connect an Android device or start an Emulator.
+4.  Click the **Run** button (▶️).
+
+---
+
+## 🤝 Contributing
+
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1.  **Fork** the Project.
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
+3.  **Commit** your Changes (`git commit -m 'Add some AmazingFeature'`).
+4.  **Push** to the Branch (`git push origin feature/AmazingFeature`).
+5.  Open a **Pull Request**.
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+*Built with ❤️ by Kelvin Eduful*
