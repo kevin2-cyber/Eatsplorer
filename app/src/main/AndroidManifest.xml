@@ -3,8 +3,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eatsplorer">
         <activity
-            android:name=".view.HomeActivity"
+            android:name=".view.MapsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.OnboardingActivity"
             android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -39,7 +45,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:label="@string/title_activity_maps"/>
+            android:label="@string/title_activity_maps" />
         <activity
             android:name=".view.RegisterActivity"
             android:exported="false"
@@ -47,9 +53,9 @@
         <activity
             android:name=".view.LoginActivity"
             android:exported="false"
-            android:label="@string/title_activity_login"/>
+            android:label="@string/title_activity_login" />
         <activity
-            android:name=".view.MapsActivity"
+            android:name=".view.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,4 +64,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
