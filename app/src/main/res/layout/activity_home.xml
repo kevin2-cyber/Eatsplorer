@@ -1,83 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-    <androidx.constraintlayout.widget.ConstraintLayout
+<layout>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
+        android:background="#F5F5F5"
         tools:context=".view.HomeActivity">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="76dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white"
+            android:elevation="4dp"
+            app:title="@string/app_name"
+            app:titleTextAppearance="@style/TextAppearance.AppCompat.Title"
+            app:titleTextColor="#333333"
+            app:titleCentered="true"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_restaurants"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="88dp"
+            android:clipToPadding="false"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/restaurant_item"/>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
-
-        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
-            android:id="@+id/onboarding_indicators"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="214dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:paddingStart="120dp"
-            android:paddingEnd="10dp"
-            app:dotsCornerRadius="8dp"
-            app:dotsColor="@color/blue_vogue"
-            app:selectedDotColor="@color/red_ribbon"
-            app:dotsSize="15dp"
-            app:dotsSpacing="3dp"
-            app:dotsWidthFactor="2.5"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:progressMode="true"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-
-        <LinearLayout
-            android:id="@+id/ll_buttons"
-            android:layout_width="0dp"
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab_spin"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            android:gravity="center"
-            android:orientation="horizontal"
+            android:layout_margin="16dp"
+            android:text="Spin the Wheel"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#FF4500"
+            app:icon="@android:drawable/ic_menu_rotate"
+            app:iconTint="@android:color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-            <Button
-                android:id="@+id/skip_btn"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="140dp"
-                android:layout_height="49dp"
-                android:layout_marginEnd="30dp"
-                android:fontFamily="@font/samsung"
-                android:text="@string/skip"
-                android:textAllCaps="false"
-                android:textColor="#9F9F9F" />
-
-            <Button
-                android:id="@+id/next_btn"
-                android:layout_width="140dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="40dp"
-                android:background="@drawable/btn_background"
-                android:fontFamily="@font/samsung"
-                android:text="@string/next"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                tools:ignore="ButtonStyle" />
-
-        </LinearLayout>
-
+        <TextView
+            android:id="@+id/tv_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No restaurants found"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

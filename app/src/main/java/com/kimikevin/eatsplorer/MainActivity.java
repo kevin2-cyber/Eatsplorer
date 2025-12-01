@@ -11,7 +11,7 @@ import android.os.Bundle;
 
 
 import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
-import com.kimikevin.eatsplorer.view.HomeActivity;
+import com.kimikevin.eatsplorer.view.OnboardingActivity;
 import com.kimikevin.eatsplorer.viewmodel.SplashViewModel;
 
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void proceedToMainContent() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, OnboardingActivity.class);
         startActivity(intent);
         finish();
     }

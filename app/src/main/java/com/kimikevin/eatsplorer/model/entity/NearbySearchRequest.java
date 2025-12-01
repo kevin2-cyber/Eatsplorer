@@ -10,7 +10,7 @@ public class NearbySearchRequest {
     private LocationRestriction locationRestriction;
 
     public NearbySearchRequest(double latitude, double longitude, double radiusMeters) {
-        this.includedTypes = new String[] {"restaurant, food"};
+        this.includedTypes = new String[] {"restaurant"};
         this.maxResultCount = 20;
         this.locationRestriction = new LocationRestriction(
                 new Circle(new Center(latitude, longitude), radiusMeters)

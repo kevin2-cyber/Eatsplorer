@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    // navigate to HomeActivity upon successful login
+    // navigate to OnboardingActivity upon successful login
     private void validateData(){
         // get data
         email = binding.etEmail.getText().toString().trim();
