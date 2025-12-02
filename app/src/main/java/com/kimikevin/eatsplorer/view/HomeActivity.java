@@ -25,7 +25,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.kimikevin.eatsplorer.PermissionUtils;
+import com.kimikevin.eatsplorer.view.util.PermissionUtils;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityHomeBinding;
 import com.kimikevin.eatsplorer.model.entity.Restaurant;

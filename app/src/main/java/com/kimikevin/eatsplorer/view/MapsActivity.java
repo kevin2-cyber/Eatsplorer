@@ -20,7 +20,7 @@ import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.kimikevin.eatsplorer.PermissionUtils;
+import com.kimikevin.eatsplorer.view.util.PermissionUtils;
 import com.kimikevin.eatsplorer.R;
 
 public class MapsActivity extends AppCompatActivity
