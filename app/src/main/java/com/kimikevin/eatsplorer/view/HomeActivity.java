@@ -21,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -31,12 +32,11 @@ import com.kimikevin.eatsplorer.model.entity.Restaurant;
 import com.kimikevin.eatsplorer.view.adapter.RestaurantAdapter;
 import com.kimikevin.eatsplorer.viewmodel.HomeViewModel;
 
-import java.util.List;
-
 public class HomeActivity extends AppCompatActivity
         implements ActivityCompat.OnRequestPermissionsResultCallback {
     private HomeViewModel viewModel;
     private ActivityHomeBinding binding;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RestaurantAdapter adapter;
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -58,14 +58,16 @@ public class HomeActivity extends AppCompatActivity
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         binding.setLifecycleOwner(this);
 
+        swipeRefreshLayout = binding.swipeRefresh;
+
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
 
         setupRecyclerView();
         setupObservers();
+        swipeRefreshLayout.setOnRefreshListener(this::getDeviceLocation);
         setupListeners();
-
         enableLocation();
 
     }
@@ -101,7 +103,9 @@ public class HomeActivity extends AppCompatActivity
             return;
         }
 
-        binding.progressBar.setVisibility(VISIBLE);
+        if (!swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(true);
+        }
 
         fusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
             if(location != null) {
@@ -134,7 +138,7 @@ public class HomeActivity extends AppCompatActivity
     private void setupObservers() {
         // 1. Observe the List of Restaurants
         viewModel.restaurants.observe(this, list -> {
-            binding.progressBar.setVisibility(GONE);
+            swipeRefreshLayout.setRefreshing(false);
             if (list == null || list.isEmpty()) {
                 binding.tvError.setVisibility(VISIBLE);
                 binding.tvError.setText("No restaurants found nearby.");
@@ -144,17 +148,15 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
-        // 2. Observe Loading State (Show/Hide Spinner)
-        viewModel.isLoading.observe(this, isLoading -> binding.progressBar.setVisibility(isLoading ? VISIBLE : GONE));
-
-        // 3. Observe Errors (Show Toast)
+        // 2. Observe Errors (Show Toast)
         viewModel.errorMessage.observe(this, message -> {
             if (message != null) {
+                swipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             }
         });
 
-        // 4. Observe the "Spin Winner" (Show Dialog)
+        // 3. Observe the "Spin Winner" (Show Dialog)
         viewModel.spinWinner.observe(this, winner -> {
             if (winner != null) {
                 showWinnerDialog(winner);
