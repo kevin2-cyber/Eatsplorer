@@ -1,4 +1,4 @@
-package com.kimikevin.eatsplorer;
+package com.kimikevin.eatsplorer.view.util;
 
 import android.Manifest;
 import android.app.Dialog;
