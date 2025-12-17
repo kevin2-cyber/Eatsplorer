@@ -17,31 +17,27 @@ import com.kimikevin.eatsplorer.viewmodel.SplashViewModel;
 
 
 public class MainActivity extends AppCompatActivity {
-    SplashViewModel viewModel;
-    ActivityMainBinding binding;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        EdgeToEdge.enable(this);
-        SplashScreen.installSplashScreen(this);
+       SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
 
-        viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
+        SplashViewModel viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
 
         // Keep the splash screen on until the loading is complete
-        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         splashScreen.setKeepOnScreenCondition(() -> {
-            Boolean isLoading = viewModel.getLoadingStatus().getValue();
-            return isLoading == null || !isLoading;
+            Boolean ready = viewModel.isDataReady().getValue();
+            return ready == null || !ready;
         });
 
         // Observe the loading status to know when to transition
-        viewModel.getLoadingStatus().observe(this, isLoadingComplete -> {
-            if (Boolean.TRUE.equals(isLoadingComplete)) {
+        viewModel.isDataReady().observe(this, isDataReady -> {
+            if (Boolean.TRUE.equals(isDataReady)) {
                 // Start the next activity or update the UI
                 proceedToMainContent();
             }

@@ -1,31 +1,45 @@
 package com.kimikevin.eatsplorer.viewmodel;
 
+import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import java.util.logging.Logger;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SplashViewModel extends ViewModel {
-    private final MutableLiveData<Boolean> isLoadingComplete = new MutableLiveData<>(false);
-    private final Logger logger = Logger.getLogger(SplashViewModel.class.getName());
+    private static final String TAG = "SplashViewModel";
+    private final MutableLiveData<Boolean> _isDataReady = new MutableLiveData<>(false);
+
+    // Professional Tip: Use ExecutorService for background work instead of raw 'new Thread()'
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public SplashViewModel() {
-        loadData();
+        checkAppInitialization();
     }
 
-    private void loadData() {
-        new Thread(() -> {
+    private void checkAppInitialization() {
+        executorService.execute(() -> {
             try {
-                Thread.sleep(1000);
-                isLoadingComplete.postValue(true);
+                // Simulate heavy initialization (e.g., checking user session, warming cache)
+                Thread.sleep(1500);
+                _isDataReady.postValue(true);
             } catch (InterruptedException e) {
-                logger.info(e.toString());
+                Log.e(TAG, "Initialization interrupted", e);
+                // In case of error, you might still want to proceed or show an error state
+                _isDataReady.postValue(true);
             }
-        }).start();
+        });
     }
 
-    public LiveData<Boolean> getLoadingStatus() {
-        return isLoadingComplete;
+    public LiveData<Boolean> isDataReady() {
+        return _isDataReady;
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        // Crucial: Clean up threads to prevent memory leaks
+        executorService.shutdown();
     }
 }

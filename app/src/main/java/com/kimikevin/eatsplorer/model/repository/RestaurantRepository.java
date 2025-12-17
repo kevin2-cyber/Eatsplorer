@@ -2,6 +2,7 @@ package com.kimikevin.eatsplorer.model.repository;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.kimikevin.eatsplorer.BuildConfig;
@@ -59,7 +60,7 @@ public class RestaurantRepository {
         apiService.searchNearby(API_KEY, PlacesService.LIST_FIELD_MASK, requestBody)
                 .enqueue(new Callback<>() {
                     @Override
-                    public void onResponse(Call<NearbySearchResponse> call, Response<NearbySearchResponse> response) {
+                    public void onResponse(@NonNull Call<NearbySearchResponse> call, @NonNull Response<NearbySearchResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             List<Restaurant> cleanList = RestaurantMapper.mapToDomain(response.body().places);
                             liveData.postValue(cleanList);
@@ -71,7 +72,7 @@ public class RestaurantRepository {
                     }
 
                     @Override
-                    public void onFailure(Call<NearbySearchResponse> call, Throwable t) {
+                    public void onFailure(@NonNull Call<NearbySearchResponse> call, @NonNull Throwable t) {
                         Log.e(TAG, "Network Failure: " + t.getMessage());
                         errorData.postValue("Network Failure: " + t.getMessage());
                     }
@@ -82,7 +83,7 @@ public class RestaurantRepository {
         apiService.getPlaceDetails(placeId, API_KEY, PlacesService.DETAILS_FIELD_MASK, "en")
                 .enqueue(new Callback<>() {
                     @Override
-                    public void onResponse(Call<PlaceDetailsResponse> call, Response<PlaceDetailsResponse> response) {
+                    public void onResponse(@NonNull Call<PlaceDetailsResponse> call, @NonNull Response<PlaceDetailsResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             liveData.postValue(response.body());
                         } else {
@@ -91,7 +92,7 @@ public class RestaurantRepository {
                     }
 
                     @Override
-                    public void onFailure(Call<PlaceDetailsResponse> call, Throwable t) {
+                    public void onFailure(@NonNull Call<PlaceDetailsResponse> call, @NonNull Throwable t) {
                         errorData.postValue("Network Failure: " + t.getMessage());
                         Log.e(TAG, "Network Failure: " + t.getMessage());
                     }
