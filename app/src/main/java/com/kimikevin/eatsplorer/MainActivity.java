@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         SplashViewModel viewModel = new ViewModelProvider(this).get(SplashViewModel.class);
+        binding.setLifecycleOwner(this);
 
         // Keep the splash screen on until the loading is complete
         splashScreen.setKeepOnScreenCondition(() -> {
