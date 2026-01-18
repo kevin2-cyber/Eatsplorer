@@ -7,13 +7,9 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
-import android.widget.Toast;
 
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityOnboardingBinding;
 import com.kimikevin.eatsplorer.model.entity.Onboarding;
@@ -33,7 +29,6 @@ public class OnboardingActivity extends AppCompatActivity {
 
     Button nextBtn, skipBtn;
     DotsIndicator onboardingIndicators;
-    FirebaseAuth auth;
 
     ActivityOnboardingBinding binding;
     public static final String LOG_TAG = OnboardingActivity.class.getSimpleName().toLowerCase(Locale.ROOT);
@@ -45,10 +40,6 @@ public class OnboardingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_onboarding);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_onboarding);
-
-        // init auth
-        auth = FirebaseAuth.getInstance();
-        checkUser();
 
         nextBtn = binding.nextBtn;
         skipBtn = binding.skipBtn;
@@ -87,7 +78,7 @@ public class OnboardingActivity extends AppCompatActivity {
             if(onboardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
                 onboardingViewPager.setCurrentItem(onboardingViewPager.getCurrentItem() + 1);
             } else {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -118,27 +109,5 @@ public class OnboardingActivity extends AppCompatActivity {
         onboardings.add(third);
 
         onboardingAdapter = new OnboardingAdapter(onboardings, this);
-    }
-
-    private void checkUser() {
-        // check if user is logged in or not
-        FirebaseUser user = auth.getCurrentUser();
-
-        if (user != null) {
-
-            // user is not null, user is logged in, get user info
-            String email = user.getEmail();
-
-            // set to text view
-            Log.d(LOG_TAG, " You are logged in as " + email);
-            Toast.makeText(this, "You are logged in as " + email, Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(this, MapsActivity.class));
-            finish();
-        } else {
-
-            //user is null, user not logged in go to login activity
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-        }
     }
 }
