@@ -19,7 +19,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.kimikevin.eatsplorer.BuildConfig;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityDetailBinding;
@@ -52,7 +51,7 @@ public class DetailActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false); // Hide default title
         }
-        binding.detailToolbar.setNavigationOnClickListener(v -> onBackPressed());
+        binding.detailToolbar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher());
         Restaurant restaurant = (Restaurant) getIntent().getSerializableExtra("RESTAURANT");
 
         if (restaurant == null) {
