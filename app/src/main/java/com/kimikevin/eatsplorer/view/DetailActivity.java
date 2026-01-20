@@ -51,7 +51,7 @@ public class DetailActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false); // Hide default title
         }
-        binding.detailToolbar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher());
+        binding.detailToolbar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
         Restaurant restaurant = (Restaurant) getIntent().getSerializableExtra("RESTAURANT");
 
         if (restaurant == null) {
