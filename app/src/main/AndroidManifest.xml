@@ -16,9 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eatsplorer">
         <activity
-            android:name=".view.MapsActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.DetailActivity"
             android:exported="false" />
         <activity

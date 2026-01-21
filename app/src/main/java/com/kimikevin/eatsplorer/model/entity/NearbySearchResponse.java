@@ -12,6 +12,7 @@ public class NearbySearchResponse {
         public String id;
         public DisplayName displayName;
         public String formattedAddress;
+        public Location location;
         public DisplayName primaryTypeDisplayName;
         public List<Photo> photos;
         public Double rating;
@@ -42,6 +43,11 @@ public class NearbySearchResponse {
             public String name;
             public int widthPx;
             public int heightPx;
+        }
+
+        public static class Location {
+            public double latitude;
+            public double longitude;
         }
     }
 }

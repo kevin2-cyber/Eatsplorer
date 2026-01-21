@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,12 +20,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.kimikevin.eatsplorer.R;
+import com.kimikevin.eatsplorer.model.entity.Restaurant;
 import com.kimikevin.eatsplorer.view.util.PermissionUtils;
+import com.kimikevin.eatsplorer.viewmodel.HomeViewModel;
 
 
 public class MapsFragment extends Fragment
@@ -50,6 +58,8 @@ public class MapsFragment extends Fragment
     );
     private boolean permissionDenied = false;
     private GoogleMap map;
+    private FusedLocationProviderClient fusedLocationClient;
+    private HomeViewModel viewModel;
 
 
     @Override
@@ -70,6 +80,8 @@ public class MapsFragment extends Fragment
                 getChildFragmentManager().findFragmentById(R.id.map);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
+
+        viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
     }
 
     @NonNull
@@ -85,6 +97,32 @@ public class MapsFragment extends Fragment
         map = googleMap;
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+        fusedLocationClient.getLastLocation().addOnSuccessListener(requireActivity(), location -> {
+            if (location != null) {
+                LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f));
+                viewModel.fetchNearbyRestaurants(location.getLatitude(), location.getLongitude());
+            } else {
+                Toast.makeText(requireContext(), "Unable to get location", Toast.LENGTH_SHORT).show();
+                double sfLat = 37.7749; // San Francisco latitude
+                double sfLng = -122.4194; // San Francisco longitude
+                viewModel.fetchNearbyRestaurants(sfLat, sfLng);
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(sfLat, sfLng), 12f));
+            }
+        });
+
+        viewModel.restaurants.observe(getViewLifecycleOwner(), restaurants -> {
+            map.clear();
+            for (Restaurant restaurant : restaurants) {
+                LatLng restaurantLatLng = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
+                map.addMarker(new MarkerOptions()
+                        .position(restaurantLatLng)
+                        .title(restaurant.getName())
+                );
+            }
+        });
+
         enableMyLocation();
     }
 

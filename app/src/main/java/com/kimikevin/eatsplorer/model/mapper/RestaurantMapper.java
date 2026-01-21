@@ -18,8 +18,11 @@ public class RestaurantMapper {
             String photo = (item.photos != null && !item.photos.isEmpty()) ? item.photos.get(0).name : null;
             double rating = (item.rating != null) ? item.rating : 0.0;
             String address = (item.formattedAddress != null) ? item.formattedAddress : "Unknown Address";
+            double latitude = (item.location != null) ? item.location.latitude : 0.0;
+            double longitude = (item.location != null) ? item.location.longitude : 0.0;
 
-            domainList.add(new Restaurant(item.id, name, category, photo, rating, address));
+
+            domainList.add(new Restaurant(item.id, name, category, photo, rating, address, latitude, longitude));
         }
         return domainList;
     }
