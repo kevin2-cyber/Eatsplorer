@@ -4,6 +4,7 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -117,8 +118,10 @@ public class DetailActivity extends AppCompatActivity {
 
     private void updateContactInfo(PlaceDetailsResponse details) {
         binding.contactContainer.setVisibility(VISIBLE);
+        PackageManager pm = this.getPackageManager();
+        boolean isPhone = pm.hasSystemFeature(PackageManager.FEATURE_TELEPHONY);
 
-        if (details.nationalPhoneNumber != null) {
+        if (details.nationalPhoneNumber != null || isPhone) {
             binding.btnCall.setVisibility(VISIBLE);
             binding.btnCall.setText("Call " + details.nationalPhoneNumber);
 
