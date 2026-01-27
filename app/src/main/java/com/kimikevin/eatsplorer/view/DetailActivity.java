@@ -3,7 +3,9 @@ package com.kimikevin.eatsplorer.view;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -123,9 +125,13 @@ public class DetailActivity extends AppCompatActivity {
             binding.btnCall.setText("Call " + details.nationalPhoneNumber);
 
             binding.btnCall.setOnClickListener(v -> {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + details.nationalPhoneNumber));
-                startActivity(intent);
+                try {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + details.nationalPhoneNumber));
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(this, "No app to handle this action.", Toast.LENGTH_SHORT).show();
+                }
             });
         } else {
             binding.btnCall.setVisibility(GONE);
@@ -135,9 +141,13 @@ public class DetailActivity extends AppCompatActivity {
             binding.btnWebsite.setVisibility(View.VISIBLE);
 
             binding.btnWebsite.setOnClickListener(v -> {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(details.websiteUri));
-                startActivity(intent);
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(details.websiteUri));
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(this, "No app to handle this action.", Toast.LENGTH_SHORT).show();
+                }
             });
         } else {
             binding.btnWebsite.setVisibility(View.GONE);
