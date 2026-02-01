@@ -99,19 +99,32 @@ public class MapsFragment extends Fragment
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-        fusedLocationClient.getLastLocation().addOnSuccessListener(requireActivity(), location -> {
-            if (location != null) {
-                LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f));
-                viewModel.fetchNearbyRestaurants(location.getLatitude(), location.getLongitude());
-            } else {
-                Toast.makeText(requireContext(), "Unable to get location", Toast.LENGTH_SHORT).show();
-                double sfLat = 37.7749; // San Francisco latitude
-                double sfLng = -122.4194; // San Francisco longitude
-                viewModel.fetchNearbyRestaurants(sfLat, sfLng);
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(sfLat, sfLng), 12f));
-            }
-        });
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+            fusedLocationClient.getLastLocation().addOnSuccessListener(requireActivity(), location -> {
+                if (location != null) {
+                    LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f));
+                    viewModel.fetchNearbyRestaurants(location.getLatitude(), location.getLongitude());
+                } else {
+                    Toast.makeText(requireContext(), "Unable to get location", Toast.LENGTH_SHORT).show();
+                    double sfLat = 37.7749; // San Francisco latitude
+                    double sfLng = -122.4194; // San Francisco longitude
+                    viewModel.fetchNearbyRestaurants(sfLat, sfLng);
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(sfLat, sfLng), 12f));
+                }
+            });
+            return;
+        }
+
 
         viewModel.restaurants.observe(getViewLifecycleOwner(), restaurants -> {
             map.clear();
@@ -174,5 +187,11 @@ public class MapsFragment extends Fragment
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true)
                 .show(getChildFragmentManager(), "dialog");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        map = null;
     }
 }

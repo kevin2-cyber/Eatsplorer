@@ -5,7 +5,6 @@ import static android.view.View.VISIBLE;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -28,10 +27,13 @@ import com.kimikevin.eatsplorer.model.entity.PlaceDetailsResponse;
 import com.kimikevin.eatsplorer.model.entity.Restaurant;
 import com.kimikevin.eatsplorer.viewmodel.DetailViewModel;
 
+import java.util.Locale;
+
 public class DetailActivity extends AppCompatActivity {
 
     private ActivityDetailBinding binding;
     private DetailViewModel viewModel;
+    private Toast mToast;
     private static final String API_KEY = BuildConfig.GMP_KEY;
 
     @Override
@@ -54,10 +56,20 @@ public class DetailActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false); // Hide default title
         }
         binding.detailToolbar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+
+        binding.detailToolbar.post(() -> {
+            for (int i = 0; i < binding.detailToolbar.getChildCount(); i++) {
+                View child = binding.detailToolbar.getChildAt(i);
+                if (child instanceof android.widget.ImageButton) {
+                    child.setTooltipText(null);
+                    break;
+                }
+            }
+        });
         Restaurant restaurant = (Restaurant) getIntent().getSerializableExtra("RESTAURANT");
 
         if (restaurant == null) {
-            Toast.makeText(this, "Error loading restaurant", Toast.LENGTH_SHORT).show();
+            showToast("Error loading restaurant");
             finish();
             return;
         }
@@ -77,7 +89,8 @@ public class DetailActivity extends AppCompatActivity {
         binding.tvCategory.setText(restaurant.getCategory());
 
         if (restaurant.getRating() > 0) {
-            binding.tvRating.setText(restaurant.getRating() + " ★");
+            // restaurant.getRating() + " ★"
+            binding.tvRating.setText(String.format(Locale.getDefault(), "%.1f ★", restaurant.getRating()));
             binding.tvRating.setVisibility(VISIBLE);
         } else {
             binding.tvRating.setVisibility(GONE);
@@ -98,13 +111,11 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void setupObservers(){
-        // observe loading state
-        viewModel.isLoading.observe(this, isLoading -> binding.progressBar.setVisibility(isLoading ? VISIBLE : GONE));
 
         // observe errors
         viewModel.errorMessage.observe(this, error -> {
             if (error != null) {
-                Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+                showToast(error);
                 binding.contactContainer.setVisibility(GONE);
             }
         });
@@ -122,7 +133,7 @@ public class DetailActivity extends AppCompatActivity {
 
         if (details.nationalPhoneNumber != null) {
             binding.btnCall.setVisibility(VISIBLE);
-            binding.btnCall.setText("Call " + details.nationalPhoneNumber);
+            binding.btnCall.setText(String.format(Locale.getDefault(), "Call %s", details.nationalPhoneNumber));
 
             binding.btnCall.setOnClickListener(v -> {
                 try {
@@ -130,7 +141,7 @@ public class DetailActivity extends AppCompatActivity {
                     intent.setData(Uri.parse("tel:" + details.nationalPhoneNumber));
                     startActivity(intent);
                 } catch (ActivityNotFoundException e) {
-                    Toast.makeText(this, "No app to handle this action.", Toast.LENGTH_SHORT).show();
+                    showToast("No app to handle this action.");
                 }
             });
         } else {
@@ -146,11 +157,28 @@ public class DetailActivity extends AppCompatActivity {
                     intent.setData(Uri.parse(details.websiteUri));
                     startActivity(intent);
                 } catch (ActivityNotFoundException e) {
-                    Toast.makeText(this, "No app to handle this action.", Toast.LENGTH_SHORT).show();
+                    showToast("No app to handle this action.");
                 }
             });
         } else {
             binding.btnWebsite.setVisibility(View.GONE);
         }
+    }
+    
+    private void showToast(String message) {
+        if (mToast != null) {
+            mToast.cancel();
+        }
+        mToast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
+        mToast.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mToast != null) {
+            mToast.cancel();
+        }
+        binding = null;
+        super.onDestroy();
     }
 }

@@ -35,6 +35,7 @@ import com.kimikevin.eatsplorer.view.adapter.RestaurantAdapter;
 import com.kimikevin.eatsplorer.view.util.PermissionUtils;
 import com.kimikevin.eatsplorer.viewmodel.HomeViewModel;
 
+
 public class RestaurantListFragment extends Fragment
         implements ActivityCompat.OnRequestPermissionsResultCallback{
 
@@ -141,11 +142,11 @@ public class RestaurantListFragment extends Fragment
 
     private void setupObservers() {
         // 1. Observe the List of Restaurants
-        viewModel.restaurants.observe(this, list -> {
+        viewModel.restaurants.observe(getViewLifecycleOwner(), list -> {
             swipeRefreshLayout.setRefreshing(false);
             if (list == null || list.isEmpty()) {
                 binding.tvError.setVisibility(VISIBLE);
-                binding.tvError.setText("No restaurants found nearby.");
+                binding.tvError.setText(R.string.no_restaurants);
             } else {
                 binding.tvError.setVisibility(GONE);
                 adapter.submitList(list); // Updates RecyclerView efficiently
@@ -153,7 +154,7 @@ public class RestaurantListFragment extends Fragment
         });
 
         // 2. Observe Errors (Show Toast)
-        viewModel.errorMessage.observe(this, message -> {
+        viewModel.errorMessage.observe(getViewLifecycleOwner(), message -> {
             if (message != null) {
                 swipeRefreshLayout.setRefreshing(false);
                 Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();
@@ -161,7 +162,7 @@ public class RestaurantListFragment extends Fragment
         });
 
         // 3. Observe the "Spin Winner" (Show Dialog)
-        viewModel.spinWinner.observe(this, winner -> {
+        viewModel.spinWinner.observe(getViewLifecycleOwner(), winner -> {
             if (winner != null) {
                 showWinnerDialog(winner);
             }
@@ -186,5 +187,11 @@ public class RestaurantListFragment extends Fragment
                 .setNegativeButton("Spin Again", (dialog, which) -> viewModel.spinTheWheel())
                 .setNeutralButton("Cancel", null)
                 .show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        binding = null;
     }
 }
