@@ -18,25 +18,25 @@ import androidx.fragment.app.DialogFragment;
  */
 public abstract class PermissionUtils {
     /**
-     * Requests the fine and coarse location permissions. If a rationale with an additional
-     * explanation should be shown to the user, displays a dialog that triggers the request.
-     */
-    public static void requestLocationPermissions(AppCompatActivity activity, int requestId,
-                                                  boolean finishActivity) {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                || ActivityCompat.shouldShowRequestPermissionRationale(activity,
-                        Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            // Display a dialog with rationale.
-            PermissionUtils.RationaleDialog.newInstance(requestId, finishActivity)
-                    .show(activity.getSupportFragmentManager(), "dialog");
-        } else {
-            // Location permission has not been granted yet, request it.
-            ActivityCompat.requestPermissions(activity,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                    requestId);
-        }
-    }
+//     * Requests the fine and coarse location permissions. If a rationale with an additional
+//     * explanation should be shown to the user, displays a dialog that triggers the request.
+//     */
+////    public static void requestLocationPermissions(AppCompatActivity activity, int requestId,
+////                                                  boolean finishActivity) {
+////        if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
+////                Manifest.permission.ACCESS_FINE_LOCATION)
+////                || ActivityCompat.shouldShowRequestPermissionRationale(activity,
+////                        Manifest.permission.ACCESS_COARSE_LOCATION)) {
+////            // Display a dialog with rationale.
+////            PermissionUtils.RationaleDialog.newInstance(requestId, finishActivity)
+////                    .show(activity.getSupportFragmentManager(), "dialog");
+////        } else {
+////            // Location permission has not been granted yet, request it.
+////            ActivityCompat.requestPermissions(activity,
+////                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+////                    requestId);
+////        }
+////    }
 
     /**
      * Checks if the result contains a {@link PackageManager#PERMISSION_GRANTED} result for a
