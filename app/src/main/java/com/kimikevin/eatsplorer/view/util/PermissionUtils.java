@@ -21,6 +21,7 @@ public abstract class PermissionUtils {
      * Requests the fine and coarse location permissions. If a rationale with an additional
      * explanation should be shown to the user, displays a dialog that triggers the request.
      */
+    @Deprecated
     public static void requestLocationPermissions(AppCompatActivity activity, int requestId,
                                                   boolean finishActivity) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
@@ -44,6 +45,7 @@ public abstract class PermissionUtils {
      *
      * @see androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
      */
+    @Deprecated
     public static boolean isPermissionGranted(String[] grantPermissions, int[] grantResults,
                                               String permission) {
         for (int i = 0; i < grantPermissions.length; i++) {
