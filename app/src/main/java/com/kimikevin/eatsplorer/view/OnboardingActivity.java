@@ -2,6 +2,9 @@ package com.kimikevin.eatsplorer.view;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
@@ -9,6 +12,7 @@ import android.os.Bundle;
 import android.widget.Button;
 
 
+import com.kimikevin.eatsplorer.MainActivity;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.ActivityOnboardingBinding;
 import com.kimikevin.eatsplorer.model.entity.Onboarding;
@@ -38,6 +42,12 @@ public class OnboardingActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         binding = ActivityOnboardingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.onboarding, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
 
         nextBtn = binding.nextBtn;
@@ -77,8 +87,11 @@ public class OnboardingActivity extends AppCompatActivity {
             if(onboardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
                 onboardingViewPager.setCurrentItem(onboardingViewPager.getCurrentItem() + 1);
             } else {
-                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(intent);
+                getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE)
+                        .edit()
+                        .putBoolean(MainActivity.KEY_ONBOARDING_COMPLETE, true)
+                        .apply();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             }
         });
