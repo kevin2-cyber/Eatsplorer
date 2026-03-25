@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:id="@+id/onboarding"
     tools:context=".view.OnboardingActivity">
 
     <androidx.viewpager2.widget.ViewPager2
@@ -24,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="214dp"
+        android:layout_marginBottom="20dp"
         android:paddingStart="120dp"
         android:paddingEnd="10dp"
         app:dotsColor="@color/md_theme_light_secondary"
@@ -32,9 +33,8 @@
         app:dotsSize="15dp"
         app:dotsSpacing="3dp"
         app:dotsWidthFactor="2.5"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ll_buttons"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:progressMode="true"
         app:selectedDotColor="@color/md_theme_light_primary" />
