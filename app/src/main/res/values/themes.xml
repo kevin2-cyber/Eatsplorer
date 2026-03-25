@@ -1,34 +1,38 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
+    <!-- Base application theme (light). -->
     <style name="Base.Theme.Eatsplorer" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="colorPrimary">@color/red_ribbon</item>
-        <item name="colorOnPrimary">@color/txt_red</item>
+        <!-- Primary: brand red -->
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+        <!-- Secondary: deep navy blue -->
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        <!-- Tertiary: muted blue used for action (call) buttons -->
+        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
+        <!-- Error -->
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
+        <!-- Background / Surface -->
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <!-- Outline -->
+        <item name="colorOutline">@color/md_theme_light_outline</item>
     </style>
 
     <style name="Theme.Eatsplorer" parent="Base.Theme.Eatsplorer">
         <item name="android:fontFamily">@font/samsung</item>
         <item name="font">@font/samsung_bold</item>
-<!--        <item name="android:statusBarColor">@color/athens_gray_dark</item>-->
-
-<!--        &lt;!&ndash; enable window content transitions &ndash;&gt;-->
-<!--        <item name="android:windowActivityTransitions">true</item>-->
-
-<!--        &lt;!&ndash; specify enter and exit transitions &ndash;&gt;-->
-<!--        <item name="android:windowEnterTransition">@transition/explode</item>-->
-<!--        <item name="android:windowExitTransition">@transition/explode</item>-->
-
-<!--        &lt;!&ndash; specify shared element transitions &ndash;&gt;-->
-<!--        <item name="android:windowSharedElementEnterTransition">-->
-<!--            @transition/change_image_transform</item>-->
-<!--        <item name="android:windowSharedElementExitTransition">-->
-<!--            @transition/change_image_transform</item>-->
     </style>
-
-
-<!--    <style name="ThemeOverlay.Eatsplorer.FullscreenContainer" parent="">-->
-<!--        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>-->
-<!--        <item name="fullscreenTextColor">@color/light_blue_A200</item>-->
-<!--    </style>-->
 </resources>
