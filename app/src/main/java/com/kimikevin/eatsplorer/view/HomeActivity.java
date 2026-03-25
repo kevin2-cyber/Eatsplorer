@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
 
@@ -33,20 +32,22 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
-        binding.setLifecycleOwner(this);
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
+        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        ViewCompat.setOnApplyWindowInsetsListener(binding.home, (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0);
             return insets;
         });
 
+        setContentView(binding.getRoot());
+        setupBottomNavigation();
+
+    }
+
+    private void setupBottomNavigation() {
         BottomNavigationView bottomNavigationView = binding.bottomNavigationView;
         bottomNavigationView.setOnItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.navigation_list);
-
     }
 
     private void switchFragment(Fragment fragment) {

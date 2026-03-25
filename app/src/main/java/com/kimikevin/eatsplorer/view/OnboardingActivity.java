@@ -2,7 +2,6 @@ package com.kimikevin.eatsplorer.view;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
@@ -37,9 +36,9 @@ public class OnboardingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_onboarding);
+        binding = ActivityOnboardingBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_onboarding);
 
         nextBtn = binding.nextBtn;
         skipBtn = binding.skipBtn;
