@@ -31,6 +31,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.kimikevin.eatsplorer.R;
+import com.kimikevin.eatsplorer.databinding.FragmentMapsBinding;
 import com.kimikevin.eatsplorer.model.entity.Restaurant;
 import com.kimikevin.eatsplorer.view.util.PermissionUtils;
 import com.kimikevin.eatsplorer.viewmodel.HomeViewModel;
@@ -61,6 +62,7 @@ public class MapsFragment extends Fragment
     private GoogleMap map;
     private FusedLocationProviderClient fusedLocationClient;
     private HomeViewModel viewModel;
+    FragmentMapsBinding binding;
 
 
     @Override
@@ -87,10 +89,11 @@ public class MapsFragment extends Fragment
 
     @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_maps, container, false);
+        binding = FragmentMapsBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
