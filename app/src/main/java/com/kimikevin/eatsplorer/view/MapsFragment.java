@@ -37,9 +37,7 @@ import com.kimikevin.eatsplorer.view.util.PermissionUtils;
 import com.kimikevin.eatsplorer.viewmodel.HomeViewModel;
 
 
-public class MapsFragment extends Fragment
-        implements
-        OnMapReadyCallback,
+public class MapsFragment extends Fragment implements OnMapReadyCallback,
         GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
         ActivityCompat.OnRequestPermissionsResultCallback {
