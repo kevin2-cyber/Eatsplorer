@@ -1,32 +1,38 @@
-# Build Fix Plan after Dependency Updates
+# Gradle Groovy to Kotlin DSL Migration Plan
 
-The project fails to build due to incorrect Gradle configuration in `settings.gradle`, `libs.versions.toml`, and `app/build.gradle`. Specifically, the Version Catalog (`libs.versions.toml`) is misconfigured, with many libraries placed in the `[plugins]` section, and the `alias` keyword is misused in build scripts.
+This plan outlines the migration of the project's Gradle build scripts from Groovy (`.gradle`) to Kotlin DSL (`.gradle.kts`). This migration provides better IDE support, type safety, and consistency with modern Android development practices.
 
 ## Proposed Changes
 
 ### [Gradle Configuration]
 
-#### [MODIFY] [settings.gradle](file:///Users/kimikevin/Desktop/github/Eatsplorer/settings.gradle)
-- Wrap plugin alias in parentheses: `alias(libs.plugins.gradle.toolchains.foojay.resolver.convention)`.
+#### [NEW] [settings.gradle.kts](file:///Users/kimikevin/Desktop/github/Eatsplorer/settings.gradle.kts)
+#### [DELETE] [settings.gradle](file:///Users/kimikevin/Desktop/github/Eatsplorer/settings.gradle)
+- Convert repository declarations to Kotlin syntax.
+- Convert plugin declarations to Kotlin syntax.
+- Convert project inclusion to Kotlin syntax.
 
-#### [MODIFY] [libs.versions.toml](file:///Users/kimikevin/Desktop/github/Eatsplorer/gradle/libs.versions.toml)
-- Correct the `[versions]` section to use actual version strings instead of artifact names.
-- Move mislabeled libraries (Compose UI, Material3, Runtime, Firebase) from `[plugins]` to `[libraries]`.
-- Consolidate versions according to the user's update list.
+#### [NEW] [build.gradle.kts](file:///Users/kimikevin/Desktop/github/Eatsplorer/build.gradle.kts) (Root)
+#### [DELETE] [build.gradle](file:///Users/kimikevin/Desktop/github/Eatsplorer/build.gradle) (Root)
+- Convert `buildscript` block, including GitHub Packages repository configuration.
+- Convert `plugins` block using `alias` with `apply false`.
 
-#### [MODIFY] [app/build.gradle](file:///Users/kimikevin/Desktop/github/Eatsplorer/app/build.gradle)
-- Wrap plugin aliases in parentheses in the `plugins {}` block.
-- Correct the `dependencies {}` block:
-    - Remove the `alias` keyword from dependency declarations.
-    - Update references to use the corrected Version Catalog entries.
-    - Ensure BOMs are used correctly with `platform()`.
-    - Use consistency between TOML and build file (e.g., Room version).
+#### [NEW] [app/build.gradle.kts](file:///Users/kimikevin/Desktop/github/Eatsplorer/app/build.gradle.kts)
+#### [DELETE] [app/build.gradle](file:///Users/kimikevin/Desktop/github/Eatsplorer/app/build.gradle)
+- Convert `plugins` block.
+- Convert `android` block:
+    - Update properties to use assignments (`=`) instead of Groovy property access.
+    - Update function calls (e.g., `proguardFiles`, `manifestPlaceholders`).
+    - Use `JavaVersion.VERSION_17` for compatibility.
+- Convert `dependencies` block:
+    - Wrap all dependency declarations in parentheses.
+    - Properly use `implementation(platform(libs.xxx))`.
 
 ## Verification Plan
 
 ### Automated Tests
 - Run `./gradlew assembleDebug` to verify the build.
-- Run `gradle_sync` to ensure IDE synchronization.
+- Run `gradle_sync` to ensure IDE synchronization and that no DSL errors are present.
 
 ### Manual Verification
-- None required if the build passes.
+- Verify that the IDE correctly recognizes the `.gradle.kts` files and provides code completion.

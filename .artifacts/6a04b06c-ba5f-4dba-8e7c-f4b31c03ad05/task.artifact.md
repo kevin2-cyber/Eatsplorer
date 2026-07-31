@@ -1,7 +1,8 @@
 # Tasks
 
-- `[x]` Fix `settings.gradle` plugin syntax
-- `[x]` Fix `libs.versions.toml` structure and versions
-- `[x]` Fix `app/build.gradle` plugin and dependency syntax
-- `[/]` Run build and verify
-- `[ ]` Perform Gradle Sync
+- `[x]` Migrate `settings.gradle` to `settings.gradle.kts`
+- `[x]` Migrate root `build.gradle` to `build.gradle.kts`
+- `[x]` Migrate `app/build.gradle` to `app/build.gradle.kts`
+- `[x]` Remove legacy Groovy `.gradle` files
+- `[x]` Verify build with `./gradlew assembleDebug`
+- `[x]` Perform Gradle Sync
