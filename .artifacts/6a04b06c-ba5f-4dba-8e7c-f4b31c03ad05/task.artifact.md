@@ -1,8 +1,7 @@
-# Tasks
+# Tasks - Map Screen Enhancement
 
-- `[x]` Migrate `settings.gradle` to `settings.gradle.kts`
-- `[x]` Migrate root `build.gradle` to `build.gradle.kts`
-- `[x]` Migrate `app/build.gradle` to `app/build.gradle.kts`
-- `[x]` Remove legacy Groovy `.gradle` files
-- `[x]` Verify build with `./gradlew assembleDebug`
-- `[x]` Perform Gradle Sync
+- `[x]` Enhance `MapScreen.kt`
+    - `[x]` Add auto-zoom logic using `LatLngBounds`
+    - `[x]` Improve marker performance with `key`
+    - `[x]` Ensure navigation on click
+- `[x]` Verify build and functionality

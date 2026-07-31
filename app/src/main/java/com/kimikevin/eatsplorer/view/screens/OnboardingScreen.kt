@@ -29,19 +29,19 @@ fun OnboardingScreen(
 ) {
     val items = listOf(
         Onboarding().apply {
-            setTitle("Satisfy your cravings \nwith ease")
-            setDescription("Integer a viverra sit feugiat leo\nncommodo nunc.")
-            setImage(R.drawable.onboarding_image_1)
+            title = "Satisfy your cravings \nwith ease"
+            description = "Integer a viverra sit feugiat leo\nncommodo nunc."
+            image = R.drawable.onboarding_image_1
         },
         Onboarding().apply {
-            setTitle("Find your new favourite \nrestaurant with just a tap")
-            setDescription("Integer a viverra sit feugiat leo\nncommodo nunc.")
-            setImage(R.drawable.onboarding_image_2)
+            title = "Find your new favourite \nrestaurant with just a tap"
+            description = "Integer a viverra sit feugiat leo\nncommodo nunc."
+            image = R.drawable.onboarding_image_2
         },
         Onboarding().apply {
-            setTitle("Fresh meals, delivered to your doorstep")
-            setDescription("Integer a viverra sit feugiat leo\nncommodo nunc.")
-            setImage(R.drawable.onboarding_image_3)
+            title = "Fresh meals, delivered to your doorstep"
+            description = "Integer a viverra sit feugiat leo\nncommodo nunc."
+            image = R.drawable.onboarding_image_3
         }
     )
 
@@ -108,7 +108,7 @@ fun OnboardingItemView(item: Onboarding) {
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = item.getImage()),
+            painter = painterResource(id = item.image),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
@@ -117,7 +117,7 @@ fun OnboardingItemView(item: Onboarding) {
         )
         Spacer(modifier = Modifier.height(32.dp))
         Text(
-            text = item.getTitle(),
+            text = item.title,
             style = MaterialTheme.typography.headlineMedium.copy(
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp
@@ -127,7 +127,7 @@ fun OnboardingItemView(item: Onboarding) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = item.getDescription(),
+            text = item.description,
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(horizontal = 24.dp)

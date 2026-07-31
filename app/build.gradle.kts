@@ -30,7 +30,8 @@ android {
         buildConfigField("String", "GMP_KEY", "\"${properties.getProperty("GMP_KEY", "")}\"")
 
         manifestPlaceholders["googleMapsApiKey"] = properties.getProperty("GMP_KEY", "")
-        resourceConfigurations += listOf("en", "fr", "es", "zh", "de", "ja", "ru", "ko", "pt", "in")
+//        resourceConfigurations += listOf("en", "fr", "es", "zh", "de", "ja", "ru", "ko", "pt", "in")
+        androidResources.localeFilters += listOf("en", "fr", "es", "zh", "de", "ja", "ru", "ko", "pt", "in")
     }
 
     buildTypes {
@@ -88,7 +89,6 @@ dependencies {
     implementation(libs.places)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.analytics)
-    implementation(libs.dotsindicator)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.core.ktx)

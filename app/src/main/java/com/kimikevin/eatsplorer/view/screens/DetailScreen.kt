@@ -15,17 +15,18 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.kimikevin.eatsplorer.BuildConfig
 import com.kimikevin.eatsplorer.model.entity.Restaurant
 import com.kimikevin.eatsplorer.viewmodel.DetailViewModel
+import androidx.core.net.toUri
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,9 +35,9 @@ fun DetailScreen(
     viewModel: DetailViewModel,
     onBack: () -> Unit
 ) {
-    val details by viewModel.details.observeAsState()
-    val isLoading by viewModel.isLoading.observeAsState(false)
-    val errorMessage by viewModel.errorMessage.observeAsState()
+    val details by viewModel.details.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
     LaunchedEffect(restaurant.id) {
@@ -105,7 +106,7 @@ fun DetailScreen(
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
 
-                Divider(modifier = Modifier.padding(vertical = 16.dp))
+                HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp), thickness = 1.dp, color = MaterialTheme.colorScheme.outlineVariant)
 
                 if (isLoading) {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
@@ -121,7 +122,7 @@ fun DetailScreen(
                         Button(
                             onClick = {
                                 val intent = Intent(Intent.ACTION_DIAL).apply {
-                                    data = Uri.parse("tel:${details!!.nationalPhoneNumber}")
+                                    data = "tel:${details!!.nationalPhoneNumber}".toUri()
                                 }
                                 context.startActivity(intent)
                             },
@@ -154,9 +155,4 @@ fun DetailScreen(
             }
         }
     }
-}
-
-@Composable
-fun Divider(modifier: Modifier = Modifier) {
-    HorizontalDivider(modifier = modifier, thickness = 1.dp, color = MaterialTheme.colorScheme.outlineVariant)
 }

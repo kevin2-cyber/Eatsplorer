@@ -1,5 +1,6 @@
 package com.kimikevin.eatsplorer.view.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,30 +10,39 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Casino
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.google.android.gms.location.LocationServices
 import com.kimikevin.eatsplorer.BuildConfig
 import com.kimikevin.eatsplorer.R
 import com.kimikevin.eatsplorer.model.entity.Restaurant
 import com.kimikevin.eatsplorer.viewmodel.HomeViewModel
 
+@SuppressLint("MissingPermission")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RestaurantListScreen(
     viewModel: HomeViewModel,
     onRestaurantClick: (Restaurant) -> Unit
 ) {
-    val restaurants: List<Restaurant> by viewModel.restaurants.observeAsState(emptyList())
-    val isLoading by viewModel.isLoading.observeAsState(false)
-    val errorMessage by viewModel.errorMessage.observeAsState()
-    val spinWinner: Restaurant? by viewModel.spinWinner.observeAsState()
+    val restaurants by viewModel.restaurants.collectAsStateWithLifecycle()
+    val isLoading by viewModel.isLoading.collectAsStateWithLifecycle()
+    val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
+    val spinWinner by viewModel.spinWinner.collectAsStateWithLifecycle()
+
+    val context = LocalContext.current
+    val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
+    val pullToRefreshState = rememberPullToRefreshState()
 
     var showWinnerDialog by remember { mutableStateOf(false) }
 
@@ -49,23 +59,36 @@ fun RestaurantListScreen(
             }
         }
     ) { padding ->
-        Box(modifier = Modifier.padding(padding).fillMaxSize()) {
-            if (isLoading == true) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            } else if (errorMessage != null && restaurants.isEmpty()) {
-                Text(
-                    text = errorMessage!!.toString(),
-                    modifier = Modifier.align(Alignment.Center).padding(16.dp),
-                    color = MaterialTheme.colorScheme.error
-                )
-            } else if (restaurants.isEmpty()) {
-                Text(
-                    text = stringResource(R.string.no_restaurants),
-                    modifier = Modifier.align(Alignment.Center)
-                )
+        PullToRefreshBox(
+            modifier = Modifier.fillMaxSize(),
+            state = pullToRefreshState,
+            isRefreshing = isLoading,
+            onRefresh = {
+                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                    location?.let {
+                        viewModel.fetchNearbyRestaurants(it.latitude, it.longitude)
+                    }
+                }
+            }
+        ) {
+            if (restaurants.isEmpty()) {
+                if (isLoading) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                } else if (errorMessage != null) {
+                    Text(
+                        text = errorMessage!!,
+                        modifier = Modifier.align(Alignment.Center).padding(16.dp),
+                        color = MaterialTheme.colorScheme.error
+                    )
+                } else {
+                    Text(
+                        text = stringResource(R.string.no_restaurants),
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
             } else {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(restaurants) { restaurant ->
+                    items(restaurants, key = { it.id }) { restaurant ->
                         RestaurantItem(restaurant, onRestaurantClick)
                     }
                 }
@@ -73,7 +96,10 @@ fun RestaurantListScreen(
 
             if (showWinnerDialog && spinWinner != null) {
                 AlertDialog(
-                    onDismissRequest = { showWinnerDialog = false },
+                    onDismissRequest = {
+                        showWinnerDialog = false
+                        viewModel.clearSpinWinner()
+                    },
                     title = { Text("🎰 Tonight's Choice!") },
                     text = {
                         Text("We picked a high-rated spot for you:\n\n${spinWinner!!.name}\nRating: ${spinWinner!!.rating} ⭐")
@@ -82,6 +108,7 @@ fun RestaurantListScreen(
                         TextButton(onClick = {
                             showWinnerDialog = false
                             onRestaurantClick(spinWinner!!)
+                            viewModel.clearSpinWinner()
                         }) {
                             Text("Let's Go!")
                         }

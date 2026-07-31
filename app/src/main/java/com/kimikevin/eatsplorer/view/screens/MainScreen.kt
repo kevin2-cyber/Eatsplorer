@@ -10,7 +10,6 @@ import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -20,6 +19,10 @@ import androidx.navigation.compose.*
 import com.google.android.gms.location.LocationServices
 import com.kimikevin.eatsplorer.viewmodel.DetailViewModel
 import com.kimikevin.eatsplorer.viewmodel.HomeViewModel
+
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
 
 sealed class Screen(val route: String, val title: String, val icon: @Composable () -> Unit) {
     object List : Screen("list", "List", { Icon(Icons.AutoMirrored.Filled.List, contentDescription = null) })
@@ -46,8 +49,18 @@ fun MainScreen(
         locationPermissionGranted = permissions.values.all { it }
         if (locationPermissionGranted) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                location?.let {
-                    homeViewModel.fetchNearbyRestaurants(it.latitude, it.longitude)
+                if (location != null) {
+                    homeViewModel.fetchNearbyRestaurants(location.latitude, location.longitude)
+                } else {
+                    // Fallback to fresh location request if lastLocation is null
+                    fusedLocationClient.getCurrentLocation(
+                        Priority.PRIORITY_HIGH_ACCURACY,
+                        CancellationTokenSource().token
+                    ).addOnSuccessListener { freshLocation ->
+                        freshLocation?.let {
+                            homeViewModel.fetchNearbyRestaurants(it.latitude, it.longitude)
+                        }
+                    }
                 }
             }
         }
@@ -119,7 +132,7 @@ fun MainScreen(
                 }
                 composable("detail/{restaurantId}") { backStackEntry ->
                     val restaurantId = backStackEntry.arguments?.getString("restaurantId")
-                    val restaurants by homeViewModel.restaurants.observeAsState(emptyList())
+                    val restaurants by homeViewModel.restaurants.collectAsStateWithLifecycle()
                     val restaurant = restaurants.find { it.id == restaurantId }
                     
                     if (restaurant != null) {

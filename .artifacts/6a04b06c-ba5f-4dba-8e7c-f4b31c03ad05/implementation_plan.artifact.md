@@ -1,38 +1,25 @@
-# Gradle Groovy to Kotlin DSL Migration Plan
+# Map Screen Enhancement Plan
 
-This plan outlines the migration of the project's Gradle build scripts from Groovy (`.gradle`) to Kotlin DSL (`.gradle.kts`). This migration provides better IDE support, type safety, and consistency with modern Android development practices.
+The goal is to ensure restaurants are correctly displayed on the map and clicking them navigates to the `DetailScreen`. We will also improve the map experience by auto-zooming to the restaurants and hiding unrelated map features.
 
 ## Proposed Changes
 
-### [Gradle Configuration]
+### [UI Layer]
 
-#### [NEW] [settings.gradle.kts](file:///Users/kimikevin/Desktop/github/Eatsplorer/settings.gradle.kts)
-#### [DELETE] [settings.gradle](file:///Users/kimikevin/Desktop/github/Eatsplorer/settings.gradle)
-- Convert repository declarations to Kotlin syntax.
-- Convert plugin declarations to Kotlin syntax.
-- Convert project inclusion to Kotlin syntax.
-
-#### [NEW] [build.gradle.kts](file:///Users/kimikevin/Desktop/github/Eatsplorer/build.gradle.kts) (Root)
-#### [DELETE] [build.gradle](file:///Users/kimikevin/Desktop/github/Eatsplorer/build.gradle) (Root)
-- Convert `buildscript` block, including GitHub Packages repository configuration.
-- Convert `plugins` block using `alias` with `apply false`.
-
-#### [NEW] [app/build.gradle.kts](file:///Users/kimikevin/Desktop/github/Eatsplorer/app/build.gradle.kts)
-#### [DELETE] [app/build.gradle](file:///Users/kimikevin/Desktop/github/Eatsplorer/app/build.gradle)
-- Convert `plugins` block.
-- Convert `android` block:
-    - Update properties to use assignments (`=`) instead of Groovy property access.
-    - Update function calls (e.g., `proguardFiles`, `manifestPlaceholders`).
-    - Use `JavaVersion.VERSION_17` for compatibility.
-- Convert `dependencies` block:
-    - Wrap all dependency declarations in parentheses.
-    - Properly use `implementation(platform(libs.xxx))`.
+#### [MODIFY] [MapScreen.kt](file:///Users/kimikevin/Desktop/github/Eatsplorer/app/src/main/java/com/kimikevin/eatsplorer/view/screens/MapScreen.kt)
+- **Auto-Zoom**: Use `LatLngBounds` to calculate a bounding box for all loaded restaurants and animate the camera to fit them.
+- **Marker Keying**: Use `key(restaurant.id)` when creating markers to ensure stability and performance.
+- **Navigation**: Ensure `onInfoWindowClick` navigates to the `DetailScreen`.
+- **Map Styling**: (Optional but recommended) Hide generic Points of Interest (POIs) if the user truly wants "only" the restaurants visible.
+- **Marker State**: Use `rememberMarkerState` with the restaurant's position.
 
 ## Verification Plan
 
 ### Automated Tests
 - Run `./gradlew assembleDebug` to verify the build.
-- Run `gradle_sync` to ensure IDE synchronization and that no DSL errors are present.
 
 ### Manual Verification
-- Verify that the IDE correctly recognizes the `.gradle.kts` files and provides code completion.
+- Launch the app and navigate to the Map tab.
+- Verify that the map automatically zooms/pans to show the fetched restaurants.
+- Click a marker to show the info window, then click the info window to navigate to the `DetailScreen`.
+- Confirm that back navigation from `DetailScreen` returns to the Map tab.
