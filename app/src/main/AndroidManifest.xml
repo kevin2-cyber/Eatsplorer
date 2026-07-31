@@ -21,12 +21,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Eatsplorer"
         tools:targetApi="33">
-        <activity
-            android:name=".view.DetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.OnboardingActivity"
-            android:exported="false"/>
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
