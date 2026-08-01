@@ -1,6 +1,8 @@
 package com.kimikevin.eatsplorer.view.screens
 
-import androidx.compose.foundation.Image
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
@@ -11,16 +13,18 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.kimikevin.eatsplorer.R
 import com.kimikevin.eatsplorer.model.entity.Onboarding
+import com.kimikevin.eatsplorer.view.theme.SamsungFontFamily
 import kotlinx.coroutines.launch
 
 @Composable
@@ -28,72 +32,127 @@ fun OnboardingScreen(
     onFinished: () -> Unit
 ) {
     val items = listOf(
-        Onboarding().apply {
-            title = "Satisfy your cravings \nwith ease"
-            description = "Integer a viverra sit feugiat leo\nncommodo nunc."
-            image = R.drawable.onboarding_image_1
-        },
-        Onboarding().apply {
-            title = "Find your new favourite \nrestaurant with just a tap"
-            description = "Integer a viverra sit feugiat leo\nncommodo nunc."
-            image = R.drawable.onboarding_image_2
-        },
-        Onboarding().apply {
-            title = "Fresh meals, delivered to your doorstep"
-            description = "Integer a viverra sit feugiat leo\nncommodo nunc."
-            image = R.drawable.onboarding_image_3
-        }
+        Onboarding(
+            title = "Discover local gems\naround you",
+            description = "Explore top-rated dining spots and satisfy your cravings with just a few taps.",
+            image = R.drawable.adrien
+        ),
+        Onboarding(
+            title = "Interactive map\nexploration",
+            description = "Visualize every restaurant on our interactive map and find the perfect route to your next meal.",
+            image = R.drawable.volkan
+        ),
+        Onboarding(
+            title = "Can't decide?\nSpin the wheel!",
+            description = "Let fate handle the decision. Our smart wheel picks a highly-rated spot tailored for you.",
+            image = R.drawable.kayleigh
+        )
     )
 
     val pagerState = rememberPagerState(pageCount = { items.size })
     val scope = rememberCoroutineScope()
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize()) {
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.fillMaxSize()
         ) { page ->
             OnboardingItemView(items[page])
         }
 
-        Row(
+        // Navigation Area overlaid at the bottom
+        Column(
             modifier = Modifier
+                .align(Alignment.BottomCenter)
                 .fillMaxWidth()
-                .padding(24.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+                .padding(horizontal = 32.dp)
+                .padding(bottom = 48.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Indicators
-            Row {
+            Row(
+                modifier = Modifier.padding(bottom = 32.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 repeat(items.size) { iteration ->
-                    val color = if (pagerState.currentPage == iteration) MaterialTheme.colorScheme.primary else Color.LightGray
+                    val isSelected = pagerState.currentPage == iteration
+                    val width by animateDpAsState(
+                        targetValue = if (isSelected) 32.dp else 12.dp,
+                        animationSpec = tween(durationMillis = 300),
+                        label = "indicatorWidth"
+                    )
+                    val color by animateColorAsState(
+                        targetValue = if (isSelected) Color.White else Color.White.copy(alpha = 0.4f),
+                        animationSpec = tween(durationMillis = 300),
+                        label = "indicatorColor"
+                    )
                     Box(
                         modifier = Modifier
-                            .padding(2.dp)
+                            .padding(horizontal = 4.dp)
                             .clip(CircleShape)
                             .background(color)
-                            .size(12.dp)
+                            .size(width = width, height = 12.dp)
                     )
                 }
             }
 
-            Row {
-                if (pagerState.currentPage < items.size - 1) {
+            if (pagerState.currentPage == items.size - 1) {
+                Button(
+                    onClick = onFinished,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    shape = MaterialTheme.shapes.medium,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White,
+                        contentColor = Color.Black
+                    )
+                ) {
+                    Text(
+                        text = stringResource(R.string.get_started).uppercase(),
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            fontWeight = FontWeight.Bold,
+                            letterSpacing = 1.sp
+                        )
+                    )
+                }
+            } else {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     TextButton(onClick = {
                         scope.launch { pagerState.scrollToPage(items.size - 1) }
                     }) {
-                        Text(stringResource(R.string.skip))
+                        Text(
+                            text = stringResource(R.string.skip),
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                color = Color.White.copy(alpha = 0.8f)
+                            )
+                        )
                     }
-                }
 
-                Button(onClick = {
-                    if (pagerState.currentPage < items.size - 1) {
-                        scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) }
-                    } else {
-                        onFinished()
+                    Button(
+                        onClick = {
+                            scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) }
+                        },
+                        modifier = Modifier.height(56.dp),
+                        shape = MaterialTheme.shapes.medium,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.White,
+                            contentColor = Color.Black
+                        )
+                    ) {
+                        Text(
+                            text = stringResource(R.string.next).uppercase(),
+                            style = MaterialTheme.typography.labelLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                letterSpacing = 1.sp
+                            )
+                        )
                     }
-                }) {
-                    Text(if (pagerState.currentPage == items.size - 1) stringResource(R.string.get_started) else stringResource(R.string.next))
                 }
             }
         }
@@ -102,35 +161,65 @@ fun OnboardingScreen(
 
 @Composable
 fun OnboardingItemView(item: Onboarding) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Image(
-            painter = painterResource(id = item.image),
+    Box(modifier = Modifier.fillMaxSize()) {
+        // Full-screen background image using Coil for optimized loading
+        AsyncImage(
+            model = item.image,
             contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+        
+        // Readability scrim (gradient from transparent to semi-transparent black)
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp),
-            contentScale = ContentScale.Fit
+                .fillMaxSize()
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(
+                            Color.Transparent,
+                            Color.Black.copy(alpha = 0.4f),
+                            Color.Black.copy(alpha = 0.8f)
+                        ),
+                        startY = 0f
+                    )
+                )
         )
-        Spacer(modifier = Modifier.height(32.dp))
-        Text(
-            text = item.title,
-            style = MaterialTheme.typography.headlineMedium.copy(
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp
-            ),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 24.dp)
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = item.description,
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(horizontal = 24.dp)
-        )
+        
+        // Content overlay
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(32.dp)
+                .padding(bottom = 160.dp), // Space for indicators and buttons
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            Text(
+                text = item.title,
+                style = MaterialTheme.typography.headlineLarge.copy(
+                    fontFamily = SamsungFontFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 36.sp,
+                    lineHeight = 44.sp,
+                    color = Color.White
+                ),
+                textAlign = TextAlign.Center
+            )
+            
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            Text(
+                text = item.description,
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontFamily = SamsungFontFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 18.sp,
+                    lineHeight = 28.sp,
+                    color = Color.White.copy(alpha = 0.8f)
+                ),
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }

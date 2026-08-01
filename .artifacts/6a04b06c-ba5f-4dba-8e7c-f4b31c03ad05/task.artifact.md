@@ -1,6 +1,6 @@
-# Tasks - Custom Font Integration
+# Tasks - Coil vs Glide Management
 
-- `[x]` Update `Type.kt`
-    - `[x]` Define `SamsungFontFamily`
-    - `[x]` Update `Typography` styles
-- `[x]` Verify build with `./gradlew assembleDebug`
+- `[x]` Remove Glide from `libs.versions.toml`
+- `[x]` Confirm Glide removal from `app/build.gradle.kts`
+- `[x]` Update `OnboardingScreen.kt` to use Coil's `AsyncImage` for optimized background loading
+- `[x]` Verify build and sync

@@ -1,5 +1,6 @@
 package com.kimikevin.eatsplorer.viewmodel;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -36,6 +37,7 @@ public class SplashViewModel extends ViewModel {
         return _isDataReady;
     }
 
+    @SuppressLint("EmptySuperCall")
     @Override
     protected void onCleared() {
         super.onCleared();
