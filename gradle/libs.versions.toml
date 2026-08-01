@@ -1,0 +1,68 @@
+[versions]
+activity = "1.13.0"
+agp = "9.3.1"
+coil-compose = "2.7.0"
+compose-bom = "2026.06.01"
+core-ktx = "1.19.0"
+core-splashscreen = "1.2.0"
+espresso-core = "3.7.0"
+firebase-bom = "34.17.0"
+firebaseAuth = "24.2.0"
+googleServices = "4.5.0"
+gradle-toolchains-foojay-resolver-convention = "1.0.0"
+junit = "1.3.0"
+junit-version = "4.13.2"
+kotlin = "2.4.10"
+lifecycle = "2.11.0"
+loggingInterceptor = "5.4.0"
+maps-compose = "8.4.0"
+material = "1.14.0"
+navigationCompose = "2.9.8"
+places = "5.3.0"
+playServicesLocation = "21.4.0"
+playServicesMaps = "20.0.0"
+retrofit2 = "3.0.0"
+secrets-gradle-plugin = "2.0.1"
+compose-material3 = "1.4.0"
+compose-ui = "1.11.4"
+firebase-analytics = "23.2.0"
+
+[libraries]
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "activity" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "core-splashscreen" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-compose" }
+converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit2" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebase-analytics" }
+google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
+junit = { group = "junit", name = "junit", version.ref = "junit-version" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInterceptor" }
+maps-compose = { group = "com.google.maps.android", name = "maps-compose", version.ref = "maps-compose" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit2" }
+secrets-gradle-plugin = { group = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", name = "secrets-gradle-plugin", version.ref = "secrets-gradle-plugin" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose-ui" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "compose-ui" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose-ui" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }
+androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+google-android-libraries-mapsplatform-secrets-gradle-plugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets-gradle-plugin" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+foojay-resolver = { id = "org.gradle.toolchains.foojay-resolver-convention", version.ref = "gradle-toolchains-foojay-resolver-convention" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+jetbrains-kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
