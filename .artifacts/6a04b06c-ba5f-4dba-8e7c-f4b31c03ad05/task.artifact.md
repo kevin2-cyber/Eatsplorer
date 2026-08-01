@@ -1,7 +1,6 @@
-# Tasks - Map Screen Enhancement
+# Tasks - Custom Font Integration
 
-- `[x]` Enhance `MapScreen.kt`
-    - `[x]` Add auto-zoom logic using `LatLngBounds`
-    - `[x]` Improve marker performance with `key`
-    - `[x]` Ensure navigation on click
-- `[x]` Verify build and functionality
+- `[x]` Update `Type.kt`
+    - `[x]` Define `SamsungFontFamily`
+    - `[x]` Update `Typography` styles
+- `[x]` Verify build with `./gradlew assembleDebug`

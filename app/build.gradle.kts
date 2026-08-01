@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.ApplicationExtension
 import java.util.Properties
 
 plugins {
@@ -30,7 +31,6 @@ android {
         buildConfigField("String", "GMP_KEY", "\"${properties.getProperty("GMP_KEY", "")}\"")
 
         manifestPlaceholders["googleMapsApiKey"] = properties.getProperty("GMP_KEY", "")
-//        resourceConfigurations += listOf("en", "fr", "es", "zh", "de", "ja", "ru", "ko", "pt", "in")
         androidResources.localeFilters += listOf("en", "fr", "es", "zh", "de", "ja", "ru", "ko", "pt", "in")
     }
 
@@ -71,17 +71,11 @@ android {
 
 dependencies {
     implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.swiperefreshlayout)
-
-    implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
 
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
 
-    implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.play.services.maps)
@@ -102,7 +96,6 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.compose.runtime.livedata)
     implementation(platform(libs.firebase.bom))
 
     testImplementation(libs.junit)

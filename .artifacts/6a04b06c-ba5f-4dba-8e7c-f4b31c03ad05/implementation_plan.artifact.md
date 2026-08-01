@@ -1,25 +1,22 @@
-# Map Screen Enhancement Plan
+# Custom Font Integration Plan
 
-The goal is to ensure restaurants are correctly displayed on the map and clicking them navigates to the `DetailScreen`. We will also improve the map experience by auto-zooming to the restaurants and hiding unrelated map features.
+The goal is to integrate the custom fonts (`samsung.otf` and `samsung_bold.ttf`) into the Jetpack Compose `Typography` configuration to ensure consistent branding across the app.
 
 ## Proposed Changes
 
 ### [UI Layer]
 
-#### [MODIFY] [MapScreen.kt](file:///Users/kimikevin/Desktop/github/Eatsplorer/app/src/main/java/com/kimikevin/eatsplorer/view/screens/MapScreen.kt)
-- **Auto-Zoom**: Use `LatLngBounds` to calculate a bounding box for all loaded restaurants and animate the camera to fit them.
-- **Marker Keying**: Use `key(restaurant.id)` when creating markers to ensure stability and performance.
-- **Navigation**: Ensure `onInfoWindowClick` navigates to the `DetailScreen`.
-- **Map Styling**: (Optional but recommended) Hide generic Points of Interest (POIs) if the user truly wants "only" the restaurants visible.
-- **Marker State**: Use `rememberMarkerState` with the restaurant's position.
+#### [MODIFY] [Type.kt](file:///Users/kimikevin/Desktop/github/Eatsplorer/app/src/main/java/com/kimikevin/eatsplorer/view/theme/Type.kt)
+- Define a `FontFamily` called `SamsungFontFamily` that includes:
+    - `samsung.otf` as the default weight.
+    - `samsung_bold.ttf` as the bold weight.
+- Update the `Typography` object to use `SamsungFontFamily` for all major text styles (`bodyLarge`, `titleLarge`, `headlineMedium`, etc.).
+- Clean up commented-out boilerplate code.
 
 ## Verification Plan
 
 ### Automated Tests
-- Run `./gradlew assembleDebug` to verify the build.
+- Run `./gradlew assembleDebug` to verify that the font resources are correctly linked and the code compiles.
 
 ### Manual Verification
-- Launch the app and navigate to the Map tab.
-- Verify that the map automatically zooms/pans to show the fetched restaurants.
-- Click a marker to show the info window, then click the info window to navigate to the `DetailScreen`.
-- Confirm that back navigation from `DetailScreen` returns to the Map tab.
+- Deploy the app and visually confirm that the new font is applied to the UI (e.g., in the Restaurant List or Detail Screen).
