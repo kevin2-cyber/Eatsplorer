@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
 
         if (!onboardingComplete) {
             splashScreen.setKeepOnScreenCondition {
-                splashViewModel.isDataReady().value != true
+                !splashViewModel.isDataReady.value
             }
         }
 
