@@ -3,7 +3,6 @@
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.4.10-ED8B00?style=for-the-badge&logo=kotlin&logoColor=white)
 ![Jetpack Compose](https://img.shields.io/badge/Jetpack_Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
-![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 ![Google Maps](https://img.shields.io/badge/Google_Maps-4285F4?style=for-the-badge&logo=google-maps&logoColor=white)
 
 > **Eat. Explore. Repeat.**
@@ -102,8 +101,6 @@ Triggered **only** when a user taps a card. Fetches contact data billed at a hig
 | **Image Loading** | Coil Compose 2.7.0 | Async image rendering in Compose |
 | **Maps** | Maps Compose 8.4.0 | Google Maps rendered in Compose |
 | **Location** | Google Play Services Location 21.4.0 | Fine + coarse location |
-| **Auth** | Firebase Auth 24.2.0 | User authentication |
-| **Analytics** | Firebase Analytics 23.2.0 | Usage tracking |
 | **Splash Screen** | AndroidX SplashScreen 1.2.0 | Animated launch screen |
 | **API Key Security** | Secrets Gradle Plugin 2.0.1 | Keys in `local.properties` |
 
@@ -126,8 +123,6 @@ Triggered **only** when a user taps a card. Fetches contact data billed at a hig
 - [Android Studio Meerkat](https://developer.android.com/studio) or newer.
 - JDK 17.
 - A Google Cloud Platform account with the **Places API (New)** and **Maps SDK for Android** enabled.
-- A Firebase project (for Auth and Analytics).
-
 ### Clone the Repository
 
 ```bash
@@ -143,11 +138,6 @@ cd Eatsplorer
    GOOGLE_API_KEY="YOUR_ACTUAL_API_KEY"
    ```
 3. The Secrets Gradle Plugin reads this key and injects it into `BuildConfig` and `AndroidManifest.xml` automatically.
-
-### Firebase Setup
-
-1. Download `google-services.json` from your Firebase project console.
-2. Place it in the `app/` directory.
 
 ### Build and Run
 
