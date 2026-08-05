@@ -1,11 +1,14 @@
 package com.kimikevin.eatsplorer
 
+import android.graphics.Color.TRANSPARENT
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
 import androidx.core.content.edit
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.kimikevin.eatsplorer.view.screens.MainScreen
@@ -23,14 +26,19 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(
+                lightScrim = TRANSPARENT,
+                darkScrim = TRANSPARENT,
+            )
+        )
 
         val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
         var onboardingComplete by mutableStateOf(prefs.getBoolean(KEY_ONBOARDING_COMPLETE, false))
 
         if (!onboardingComplete) {
             splashScreen.setKeepOnScreenCondition {
-                splashViewModel.isDataReady().value != true
+                !splashViewModel.isDataReady.value
             }
         }
 

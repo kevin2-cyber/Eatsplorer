@@ -3,6 +3,7 @@ package com.kimikevin.eatsplorer.view.screens
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
@@ -98,19 +99,20 @@ fun OnboardingScreen(
             }
 
             if (pagerState.currentPage == items.size - 1) {
-                Button(
+                OutlinedButton(
                     onClick = onFinished,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(56.dp),
+                        .height(64.dp)
+                        .padding(bottom = 16.dp),
                     shape = MaterialTheme.shapes.medium,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.White,
-                        contentColor = Color.Black
-                    )
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = Color.White,
+                    ),
+                    border = BorderStroke(1.dp, Color.White)
                 ) {
                     Text(
-                        text = stringResource(R.string.get_started).uppercase(),
+                        text = stringResource(R.string.get_started),
                         style = MaterialTheme.typography.labelLarge.copy(
                             fontWeight = FontWeight.Bold,
                             letterSpacing = 1.sp
@@ -119,7 +121,8 @@ fun OnboardingScreen(
                 }
             } else {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(bottom = 16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -134,19 +137,19 @@ fun OnboardingScreen(
                         )
                     }
 
-                    Button(
+                    OutlinedButton(
                         onClick = {
                             scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) }
                         },
-                        modifier = Modifier.height(56.dp),
+                        modifier = Modifier.height(48.dp),
                         shape = MaterialTheme.shapes.medium,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.White,
-                            contentColor = Color.Black
-                        )
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = Color.White,
+                        ),
+                        border = BorderStroke(1.dp, Color.White)
                     ) {
                         Text(
-                            text = stringResource(R.string.next).uppercase(),
+                            text = stringResource(R.string.next),
                             style = MaterialTheme.typography.labelLarge.copy(
                                 fontWeight = FontWeight.Bold,
                                 letterSpacing = 1.sp
