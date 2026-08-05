@@ -1,8 +1,9 @@
-# 🍽️ Eatsplorer - Android Restaurant Discovery App
+# Eatsplorer - Android Restaurant Discovery App
 
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Retrofit](https://img.shields.io/badge/Retrofit-2C8EBB?style=for-the-badge&logo=square&logoColor=white)
+![Kotlin](https://img.shields.io/badge/Kotlin-2.4.10-ED8B00?style=for-the-badge&logo=kotlin&logoColor=white)
+![Jetpack Compose](https://img.shields.io/badge/Jetpack_Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 ![Google Maps](https://img.shields.io/badge/Google_Maps-4285F4?style=for-the-badge&logo=google-maps&logoColor=white)
 
 > **Eat. Explore. Repeat.**
@@ -10,78 +11,106 @@
 
 ---
 
-## 📱 Project Overview
-**Eatsplorer** is not just another directory; it's a discovery tool for indecisive foodies. Unlike standard apps that filter merely by cuisine, Eatsplorer focuses on the **Vibe** (e.g., "Date Night," "Digital Nomad").
+## Project Overview
+
+**Eatsplorer** is not just another directory — it's a discovery tool for indecisive foodies. Unlike standard apps that filter merely by cuisine, Eatsplorer focuses on the **Vibe** (e.g., "Date Night," "Digital Nomad").
 
 It features a **"Spin the Wheel"** decision-maker for groups and uses a smart data-fetching strategy to minimize API costs while delivering rich content.
 
-## ✨ Key Features
-* **🎯 Vibe-First Search:** Filter restaurants by mood (Romantic, Quiet, Lively) rather than just "Italian" or "Burgers."
-* **🎰 Spin the Wheel:** Can't decide? The app randomly selects a highly-rated nearby spot for you.
-* **📍 Smart Map Exploration:** Interactive Google Maps integration to view spots around you.
-* **⚡ Instant Details:** Tap a card to reveal contact info (Phone, Website) instantly.
-* **📉 Data Saver Mode:** Uses specific Google API "Field Masking" to reduce data usage and costs.
+## Key Features
+
+- **Vibe-First Search:** Filter restaurants by mood (Romantic, Quiet, Lively) rather than just "Italian" or "Burgers."
+- **Spin the Wheel:** Can't decide? The app randomly selects a highly-rated nearby spot for you.
+- **Smart Map Exploration:** Interactive Google Maps integration with Maps Compose to view spots around you.
+- **Instant Details:** Tap a card to reveal contact info (phone, website, opening hours) on demand.
+- **Data Saver Mode:** Uses Google API Field Masking to reduce data usage and keep API costs low.
+- **Onboarding Flow:** First-launch walkthrough with persistent state via SharedPreferences.
 
 ---
 
-## 🏗️ Architecture & Design
+## Architecture & Design
 
-The app is built using **Native Android (Java)** following the **MVVM (Model-View-ViewModel)** architecture to ensure separation of concerns and testability.
+The app is built with **Jetpack Compose** and **Kotlin** following the **MVVM** architecture pattern.
 
-### 1. The MVVM Pattern
-* **View (UI):** XML Layouts & Activities using **ViewBinding** to display data safely.
-* **ViewModel:** Holds UI state and survives screen rotations. It exposes data via **LiveData**.
-* **Repository:** The "Single Source of Truth." It orchestrates data fetching and decides whether to use the Network (API) or Local Cache.
+### MVVM Pattern
 
-### 2. Data Flow (Request Lifecycle)
-1.  **User Action:** User taps "Search" or "Spin the Wheel".
-2.  **Repository Logic:** The app checks internal cache. If empty, it triggers a Retrofit network call.
-3.  **API Request:** A `POST` request is sent to `places.googleapis.com` using specific **Field Masks** (see below).
-4.  **UI Update:** The response is parsed into POJOs, passed to the ViewModel, and the RecyclerView updates automatically via **DiffUtil** for smooth animations.
+- **View (UI):** Compose screens using `StateFlow` collected via `collectAsStateWithLifecycle`.
+- **ViewModel:** Holds and manages UI state using `MutableStateFlow`. Survives configuration changes and drives all screen logic.
+- **Repository:** The single source of truth. Orchestrates Retrofit network calls and exposes results through Kotlin's `Result<T>` type.
 
----
+### Package Structure
 
-## 💰 Technical Highlight: Cost Optimization Strategy
-One of the core engineering challenges was managing the pricing tiers of the **Google Places API (New)**. This app implements a **Split-Fetch Strategy** to keep costs low.
+```
+com.kimikevin.eatsplorer
+├── MainActivity.kt               # Entry point, splash screen, onboarding gate
+├── model/
+│   ├── entity/                   # Data classes & Retrofit service interface
+│   ├── mapper/                   # RestaurantMapper (API → domain model)
+│   └── repository/               # RestaurantRepository (singleton)
+├── viewmodel/
+│   ├── HomeViewModel.kt          # Search & wheel-spin logic
+│   ├── DetailViewModel.kt        # Place detail fetching
+│   └── SplashViewModel.kt        # Splash screen state
+└── view/
+    ├── screens/                  # Compose screens
+    │   ├── MainScreen.kt         # Navigation host & bottom tab routing
+    │   ├── RestaurantListScreen.kt
+    │   ├── MapScreen.kt
+    │   ├── DetailScreen.kt
+    │   └── OnboardingScreen.kt
+    └── theme/                    # Material3 theme (Color, Type, Theme)
+```
 
-### A. The "Browsing" Fetch (Low Cost)
-Used for the main list (`RecyclerView`). We only request data from the **Essentials (Pro)** tier.
-* **API Endpoint:** `v1/places:searchNearby`
-* **Field Mask:**
-    ```text
-    places.id,
-    places.displayName,
-    places.formattedAddress,
-    places.photos,
-    places.primaryTypeDisplayName
-    ```
+### Data Flow
 
-### B. The "Detail" Fetch (Premium)
-Used **only** when a user *taps* a card. This fetches contact data which is billed at a higher rate.
-* **API Endpoint:** `v1/places/{placeId}`
-* **Field Mask:**
-    ```text
-    nationalPhoneNumber,
-    websiteUri,
-    regularOpeningHours
-    ```
+1. **User Action:** User taps "Search" or "Spin the Wheel" on a Compose screen.
+2. **ViewModel:** Calls the repository via a `viewModelScope` coroutine and updates `StateFlow` state.
+3. **Repository:** Sends a Retrofit `POST` to `places.googleapis.com` with a Field Mask.
+4. **UI Update:** Compose automatically recomposes when the `StateFlow` emits the new state.
 
 ---
 
-## 🛠️ Tech Stack
+## Cost Optimization Strategy
 
-| Component | Library/Tool | Usage |
+Managing Google Places API pricing tiers is a core engineering concern. The app uses a **Split-Fetch Strategy** to keep costs low.
+
+### Browsing Fetch (Low Cost)
+
+Used for the main restaurant list. Only requests fields from the Essentials tier.
+
+- **Endpoint:** `v1/places:searchNearby`
+- **Field Mask:** `places.id, places.displayName, places.formattedAddress, places.photos, places.primaryTypeDisplayName`
+
+### Detail Fetch (On-Demand)
+
+Triggered **only** when a user taps a card. Fetches contact data billed at a higher rate.
+
+- **Endpoint:** `v1/places/{placeId}`
+- **Field Mask:** `nationalPhoneNumber, websiteUri, regularOpeningHours`
+
+---
+
+## Tech Stack
+
+| Component | Library / Tool | Details |
 | :--- | :--- | :--- |
-| **Language** | **Java 17** | Core application logic. |
-| **Architecture** | **MVVM** | `ViewModel`, `LiveData`, and `Repository` pattern. |
-| **Network** | **Retrofit + Gson** | API calls to Google Places (New API). |
-| **List Rendering** | **RecyclerView + DiffUtil** | Efficient list updates and animations. |
-| **Image Loading** | **Glide** | Caching and rendering restaurant photos. |
-| **Maps** | **Google Maps SDK** | Rendering the map interface. |
+| **Language** | Kotlin 2.4.10 | Coroutines, `Result<T>`, suspend functions |
+| **UI** | Jetpack Compose BOM 2026.06.01 | Material3, `StateFlow`, no XML layouts |
+| **Architecture** | MVVM | ViewModel + StateFlow + Repository |
+| **Navigation** | Navigation Compose 2.9.8 | Type-safe sealed-class routes |
+| **Network** | Retrofit 3.0.0 + OkHttp 5.4.0 | Google Places API (New) |
+| **Image Loading** | Coil Compose 2.7.0 | Async image rendering in Compose |
+| **Maps** | Maps Compose 8.4.0 | Google Maps rendered in Compose |
+| **Location** | Google Play Services Location 21.4.0 | Fine + coarse location |
+| **Auth** | Firebase Auth 24.2.0 | User authentication |
+| **Analytics** | Firebase Analytics 23.2.0 | Usage tracking |
+| **Splash Screen** | AndroidX SplashScreen 1.2.0 | Animated launch screen |
+| **API Key Security** | Secrets Gradle Plugin 2.0.1 | Keys in `local.properties` |
 
 ---
 
-## 📸 Screenshots
+## Screenshots
+
 *(Place your screenshots in a `screenshots` folder in your repository)*
 
 | Home Screen | Spin the Wheel | Detail View |
@@ -90,56 +119,59 @@ Used **only** when a user *taps* a card. This fetches contact data which is bill
 
 ---
 
-## 🚀 Setup & Installation
+## Setup & Installation
 
-Follow these steps to get the project running on your local machine.
+### Prerequisites
 
-### 1. Prerequisites
-* [Android Studio Koala](https://developer.android.com/studio) (or newer).
-* Java Development Kit (JDK) 17.
-* A Google Cloud Platform account (for API keys).
+- [Android Studio Meerkat](https://developer.android.com/studio) or newer.
+- JDK 17.
+- A Google Cloud Platform account with the **Places API (New)** and **Maps SDK for Android** enabled.
+- A Firebase project (for Auth and Analytics).
 
-### 2. Clone the Repository
+### Clone the Repository
+
 ```bash
-git clone [https://github.com/your-username/Eatsplorer.git](https://github.com/your-username/Eatsplorer.git)
+git clone https://github.com/your-username/Eatsplorer.git
 cd Eatsplorer
 ```
-### 3. API Key Configuration
-This project requires a **Google Maps API Key** with the following APIs enabled:
-* *Places API (New)*
-* *Maps SDK for Android*
 
-**Secure your key:**
-1.  Open the file `local.properties` in the root of the project (create it if it doesn't exist).
-2.  Add your key:
-    ```properties
-    GOOGLE_API_KEY="YOUR_ACTUAL_API_KEY"
-    ```
-3.  The `AndroidManifest.xml` and Retrofit Client are configured to read this key automatically.
+### API Key Configuration
 
-### 4. Build and Run
-1.  Open the project in **Android Studio**.
-2.  Let Gradle sync (wait for the progress bar to finish).
-3.  Connect an Android device or start an Emulator.
-4.  Click the **Run** button (▶️).
+1. Open (or create) `local.properties` in the project root.
+2. Add your Google API key:
+   ```properties
+   GOOGLE_API_KEY="YOUR_ACTUAL_API_KEY"
+   ```
+3. The Secrets Gradle Plugin reads this key and injects it into `BuildConfig` and `AndroidManifest.xml` automatically.
 
----
+### Firebase Setup
 
-## 🤝 Contributing
+1. Download `google-services.json` from your Firebase project console.
+2. Place it in the `app/` directory.
 
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+### Build and Run
 
-1.  **Fork** the Project.
-2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
-3.  **Commit** your Changes (`git commit -m 'Add some AmazingFeature'`).
-4.  **Push** to the Branch (`git push origin feature/AmazingFeature`).
-5.  Open a **Pull Request**.
+1. Open the project in Android Studio.
+2. Wait for Gradle to sync.
+3. Connect an Android device (API 30+) or start an emulator.
+4. Click **Run** (▶).
 
 ---
 
-## 📄 License
+## Contributing
+
+1. Fork the project.
+2. Create your feature branch: `git checkout -b feature/AmazingFeature`
+3. Commit your changes: `git commit -m 'Add some AmazingFeature'`
+4. Push to the branch: `git push origin feature/AmazingFeature`
+5. Open a Pull Request.
+
+---
+
+## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
-*Built with ❤️ by Kelvin Eduful*
+
+*Built with love by Kelvin Eduful*
