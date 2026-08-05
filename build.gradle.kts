@@ -22,5 +22,5 @@ plugins {
     alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin) apply false
     alias(libs.plugins.jetbrains.kotlin.plugin.compose) apply false
     alias(libs.plugins.google.gms.google.services) apply false
-    alias(libs.plugins.kotlin.android) apply false
+
 }

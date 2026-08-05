@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
 
 class SplashViewModel : ViewModel() {
     private val _isDataReady = MutableStateFlow(false)
@@ -19,7 +20,7 @@ class SplashViewModel : ViewModel() {
     private fun checkAppInitialization() {
         viewModelScope.launch {
             // Simulate heavy initialization (e.g., checking user session, warming cache)
-            delay(1500)
+            delay(1500.milliseconds)
             _isDataReady.value = true
         }
     }
