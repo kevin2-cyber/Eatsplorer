@@ -1,6 +1,7 @@
 package com.kimikevin.eatsplorer.viewmodel;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -13,7 +14,7 @@ public class DetailViewModel extends ViewModel {
     private final MutableLiveData<PlaceDetailsResponse> _details = new MutableLiveData<>();
     public LiveData<PlaceDetailsResponse> details = _details;
 
-    private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>(false);
+    private final MediatorLiveData<Boolean> _isLoading = new MediatorLiveData<>();
     public LiveData<Boolean> isLoading = _isLoading;
 
     private final MutableLiveData<String> _errorMessage = new MutableLiveData<>();
@@ -21,13 +22,14 @@ public class DetailViewModel extends ViewModel {
 
     public DetailViewModel() {
         repository = RestaurantRepository.getInstance();
+        _isLoading.setValue(false);
+        _isLoading.addSource(_details, d -> _isLoading.setValue(false));
+        _isLoading.addSource(_errorMessage, e -> _isLoading.setValue(false));
     }
 
     // fetch restaurant details
     public void fetchRestaurantDetails(String placeId) {
         _isLoading.setValue(true);
-
         repository.getPlaceDetails(placeId, _details, _errorMessage);
     }
-
 }

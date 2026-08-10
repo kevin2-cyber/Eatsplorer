@@ -71,9 +71,14 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         setupRecyclerView();
+        setupSwipeRefresh();
         observeViewModel();
 
         checkLocationPermissionAndFetch();
+    }
+
+    private void setupSwipeRefresh() {
+        binding.swipeRefresh.setOnRefreshListener(this::checkLocationPermissionAndFetch);
     }
 
     private void checkLocationPermissionAndFetch() {
@@ -109,7 +114,7 @@ public class HomeFragment extends Fragment {
         adapter = new RestaurantAdapter(restaurant -> {
             // Using Safe Args to navigate
             NavDirections action =
-                    HomeFragmentDirections.actionHomeFragmentToDetailFragment(restaurant.id());
+                    HomeFragmentDirections.actionHomeFragmentToDetailFragment(restaurant);
             Navigation.findNavController(binding.getRoot()).navigate(action);
         });
         binding.rvRestaurants.setAdapter(adapter);
@@ -120,6 +125,10 @@ public class HomeFragment extends Fragment {
             if (restaurants != null) {
                 adapter.setRestaurants(restaurants);
             }
+        });
+
+        viewModel.isLoading.observe(getViewLifecycleOwner(), isLoading -> {
+            binding.swipeRefresh.setRefreshing(isLoading != null && isLoading);
         });
     }
 

@@ -63,10 +63,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         enableMyLocation();
 
         mMap.setOnInfoWindowClickListener(marker -> {
-            String placeId = (String) marker.getTag();
-            if (placeId != null) {
+            Restaurant restaurant = (Restaurant) marker.getTag();
+            if (restaurant != null) {
                 MapFragmentDirections.ActionMapFragmentToDetailFragment action =
-                        MapFragmentDirections.actionMapFragmentToDetailFragment(placeId);
+                        MapFragmentDirections.actionMapFragmentToDetailFragment(restaurant);
                 Navigation.findNavController(requireView()).navigate(action);
             }
         });
@@ -81,7 +81,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                             .title(restaurant.name())
                             .snippet(restaurant.category()));
                     if (marker != null) {
-                        marker.setTag(restaurant.id());
+                        marker.setTag(restaurant);
                     }
                 }
                 

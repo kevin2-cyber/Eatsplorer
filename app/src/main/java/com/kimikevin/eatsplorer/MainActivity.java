@@ -47,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
             NavigationUI.setupWithNavController(binding.bottomNavigation, navController);
 
-            // Hide bottom navigation on onboarding screen
+            // Hide bottom navigation on onboarding and detail screens
             navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-                if (destination.getId() == R.id.onboardingFragment) {
+                if (destination.getId() == R.id.onboardingFragment || destination.getId() == R.id.detailFragment) {
                     binding.bottomNavigation.setVisibility(View.GONE);
                 } else {
                     binding.bottomNavigation.setVisibility(View.VISIBLE);

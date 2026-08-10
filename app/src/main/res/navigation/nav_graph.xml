@@ -51,7 +51,7 @@
         android:label="Detail"
         tools:layout="@layout/fragment_detail">
         <argument
-            android:name="placeId"
-            app:argType="string" />
+            android:name="restaurant"
+            app:argType="com.kimikevin.eatsplorer.model.entity.Restaurant" />
     </fragment>
 </navigation>
