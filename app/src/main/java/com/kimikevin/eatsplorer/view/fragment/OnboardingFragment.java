@@ -60,6 +60,7 @@ public class OnboardingFragment extends Fragment {
         setupOnboardingItems();
 
         onboardingPager = binding.viewPager;
+        onboardingPager.setOffscreenPageLimit(onboardings.size() - 1);
         onboardingPager.setAdapter(onboardingAdapter);
         onboardingIndicators.attachTo(onboardingPager);
 
@@ -106,27 +107,26 @@ public class OnboardingFragment extends Fragment {
 
     private void setupOnboardingItems() {
         onboardings = new ArrayList<>();
-        String description = "Integer a viverra sit feugiat leo\nncommodo nunc.";
 
         Onboarding first = new Onboarding();
-        first.setTitle("Satisfy your cravings \nwith ease");
-        first.setDescription(description);
+        first.setTitle("Discover restaurants you'll love");
+        first.setDescription("Browse hundreds of local restaurants, read real reviews, and find your next favourite spot — all in one place.");
         first.setImage(R.drawable.adrien);
 
         Onboarding second = new Onboarding();
-        second.setTitle("Find your new favourite \nrestaurant with just a tap");
-        second.setDescription(description);
+        second.setTitle("Order in seconds, not minutes");
+        second.setDescription("A few taps and your meal is on its way. Track your order in real time from kitchen to door.");
         second.setImage(R.drawable.volkan);
 
         Onboarding third = new Onboarding();
-        third.setTitle("Fresh meals, delivered to your doorstep");
-        third.setDescription(description);
+        third.setTitle("Fresh food, at your door");
+        third.setDescription("Hot, fresh meals delivered fast. Because great food shouldn't keep you waiting.");
         third.setImage(R.drawable.kayleigh);
 
         onboardings.add(first);
         onboardings.add(second);
         onboardings.add(third);
 
-        onboardingAdapter = new OnboardingAdapter(onboardings, requireActivity());
+        onboardingAdapter = new OnboardingAdapter(onboardings);
     }
 }
