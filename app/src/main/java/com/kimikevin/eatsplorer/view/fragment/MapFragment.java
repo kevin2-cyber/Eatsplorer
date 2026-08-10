@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,11 +18,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.FragmentMapBinding;
+import com.kimikevin.eatsplorer.model.entity.Restaurant;
+import com.kimikevin.eatsplorer.viewmodel.HomeViewModel;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private FragmentMapBinding binding;
     private GoogleMap mMap;
+    private HomeViewModel viewModel;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+    }
 
     @Nullable
     @Override
@@ -45,10 +55,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        viewModel.restaurants.observe(getViewLifecycleOwner(), restaurants -> {
+            if (restaurants != null && !restaurants.isEmpty()) {
+                mMap.clear();
+                for (Restaurant restaurant : restaurants) {
+                    LatLng position = new LatLng(restaurant.latitude(), restaurant.longitude());
+                    mMap.addMarker(new MarkerOptions()
+                            .position(position)
+                            .title(restaurant.name())
+                            .snippet(restaurant.category()));
+                }
+                
+                // Optionally move camera to the first restaurant if it's the first load
+                Restaurant first = restaurants.get(0);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                        new LatLng(first.latitude(), first.longitude()), 12f));
+            }
+        });
     }
 
     @Override

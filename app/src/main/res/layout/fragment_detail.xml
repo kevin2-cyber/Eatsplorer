@@ -16,6 +16,7 @@
             android:id="@+id/iv_restaurant_detail"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:contentDescription="@string/place_details_image_content_description"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/backgrounds/scenic" />
