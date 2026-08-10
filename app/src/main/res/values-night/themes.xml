@@ -1,5 +1,5 @@
-<resources>
-    <!-- Base application theme (dark). -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
     <style name="Base.Theme.Eatsplorer" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary: desaturated red for dark mode -->
         <item name="colorPrimary">@color/md_theme_dark_primary</item>
