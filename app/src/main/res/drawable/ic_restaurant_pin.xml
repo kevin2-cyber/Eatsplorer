@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="44dp"
+    android:viewportWidth="32"
+    android:viewportHeight="44">
+
+    <!-- Red teardrop/pin body -->
+    <path
+        android:fillColor="#D32F2F"
+        android:pathData="M16,0 C7.16,0 0,7.16 0,16 C0,27 16,44 16,44 C16,44 32,27 32,16 C32,7.16 24.84,0 16,0 Z" />
+
+    <!-- White circle window -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M16,9 A7,7 0 1,0 16,23 A7,7 0 1,0 16,9 Z" />
+
+    <!-- Red fork — left tine group -->
+    <path
+        android:fillColor="#D32F2F"
+        android:pathData="M12,11.5 L12,15 C12,16.1 12.9,17 14,17 L14,20.5 L14.8,20.5 L14.8,17 C15.9,17 16.8,16.1 16.8,15 L16.8,11.5 L16,11.5 L16,15 L14.8,15 L14.8,11.5 L14,11.5 L14,15 L12.8,15 L12.8,11.5 Z" />
+
+    <!-- Red knife — right side -->
+    <path
+        android:fillColor="#D32F2F"
+        android:pathData="M18.5,11.5 C20.5,12.5 21,14 21,15.5 C21,16.8 20.2,17.5 18.5,17.5 L18.5,20.5 L19.3,20.5 L19.3,11.5 Z" />
+
+</vector>
