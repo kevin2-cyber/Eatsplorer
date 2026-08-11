@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -84,7 +85,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
-        // Build icon here — Maps SDK is fully initialised at this point
+        // Build icon here — Map SDK is fully initialised at this point
         BitmapDescriptor icon = buildMarkerIcon();
 
         mMap.setOnMarkerClickListener(marker -> {
@@ -126,6 +127,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             mMap.setMyLocationEnabled(true);
         } catch (SecurityException ignored) {}
 
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         fusedLocationClient.getLastLocation().addOnCompleteListener(task -> {
             if (!isAdded() || mMap == null) return;
             double lat, lng;
