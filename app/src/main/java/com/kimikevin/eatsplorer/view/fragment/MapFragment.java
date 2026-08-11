@@ -20,7 +20,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import androidx.navigation.Navigation;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.FragmentMapBinding;
 import com.kimikevin.eatsplorer.model.entity.Restaurant;
@@ -40,7 +39,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         binding = FragmentMapBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -48,7 +48,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        
+
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         if (mapFragment != null) {
@@ -59,16 +59,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.getUiSettings().setMapToolbarEnabled(false);
 
         enableMyLocation();
 
-        mMap.setOnInfoWindowClickListener(marker -> {
+        mMap.setOnMarkerClickListener(marker -> {
             Restaurant restaurant = (Restaurant) marker.getTag();
             if (restaurant != null) {
-                MapFragmentDirections.ActionMapFragmentToDetailFragment action =
-                        MapFragmentDirections.actionMapFragmentToDetailFragment(restaurant);
-                Navigation.findNavController(requireView()).navigate(action);
+                RestaurantBottomSheetFragment.newInstance(restaurant)
+                        .show(getChildFragmentManager(), "restaurant_sheet");
             }
+            return true;
         });
 
         viewModel.restaurants.observe(getViewLifecycleOwner(), restaurants -> {
@@ -78,25 +79,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     LatLng position = new LatLng(restaurant.latitude(), restaurant.longitude());
                     Marker marker = mMap.addMarker(new MarkerOptions()
                             .position(position)
-                            .title(restaurant.name())
-                            .snippet(restaurant.category()));
+                            .title(restaurant.name()));
                     if (marker != null) {
                         marker.setTag(restaurant);
                     }
                 }
-                
-                // Optionally move camera to the first restaurant if it's the first load
                 Restaurant first = restaurants.get(0);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                        new LatLng(first.latitude(), first.longitude()), 12f));
+                        new LatLng(first.latitude(), first.longitude()), 13f));
             }
         });
     }
 
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                == PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                        == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         }
     }

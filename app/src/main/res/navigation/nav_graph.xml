@@ -23,10 +23,17 @@
         android:label="Home"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.kimikevin.eatsplorer.view.fragment.FavoritesFragment"
+        android:label="Favourites"
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/action_favoritesFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
 
@@ -35,11 +42,6 @@
         android:name="com.kimikevin.eatsplorer.view.fragment.MapFragment"
         android:label="Map"
         tools:layout="@layout/fragment_map">
-        <argument
-            android:name="placeId"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true" />
         <action
             android:id="@+id/action_mapFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
