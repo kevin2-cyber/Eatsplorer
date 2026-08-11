@@ -36,6 +36,8 @@ import com.kimikevin.eatsplorer.databinding.FragmentMapBinding;
 import com.kimikevin.eatsplorer.model.entity.Restaurant;
 import com.kimikevin.eatsplorer.viewmodel.HomeViewModel;
 
+import java.util.List;
+
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private FragmentMapBinding binding;
@@ -44,12 +46,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient fusedLocationClient;
     private BitmapDescriptor restaurantMarkerIcon;
 
+    // Holds restaurants that arrived before the map was ready
+    private List<Restaurant> pendingRestaurants;
+
     private final ActivityResultLauncher<String[]> locationPermissionRequest =
             registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
                 Boolean fineGranted = result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false);
                 Boolean coarseGranted = result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false);
                 if ((fineGranted != null && fineGranted) || (coarseGranted != null && coarseGranted)) {
-                    onLocationPermissionGranted();
+                    fetchLocation();
                 }
             });
 
@@ -74,6 +79,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         restaurantMarkerIcon = buildMarkerIcon();
 
+        // Register observer immediately so we never miss a data emission
+        viewModel.restaurants.observe(getViewLifecycleOwner(), restaurants -> {
+            if (restaurants == null || restaurants.isEmpty()) return;
+            if (mMap == null) {
+                // Map not ready yet — hold the data and draw once the map is ready
+                pendingRestaurants = restaurants;
+            } else {
+                drawMarkers(restaurants);
+            }
+        });
+
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         if (mapFragment != null) {
@@ -96,30 +112,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             return true;
         });
 
-        observeRestaurants();
-        checkLocationAndLoad();
-    }
+        // Draw any restaurants that arrived while the map was still loading
+        if (pendingRestaurants != null) {
+            drawMarkers(pendingRestaurants);
+            pendingRestaurants = null;
+        }
 
-    private void observeRestaurants() {
-        viewModel.restaurants.observe(getViewLifecycleOwner(), restaurants -> {
-            if (restaurants == null || restaurants.isEmpty() || mMap == null) return;
-            mMap.clear();
-            for (Restaurant restaurant : restaurants) {
-                LatLng position = new LatLng(restaurant.latitude(), restaurant.longitude());
-                Marker marker = mMap.addMarker(new MarkerOptions()
-                        .position(position)
-                        .title(restaurant.name())
-                        .icon(restaurantMarkerIcon));
-                if (marker != null) {
-                    marker.setTag(restaurant);
-                }
-            }
-        });
-    }
-
-    private void checkLocationAndLoad() {
+        // Now get location and fetch fresh nearby restaurants
         if (hasLocationPermission()) {
-            onLocationPermissionGranted();
+            fetchLocation();
         } else {
             locationPermissionRequest.launch(new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION,
@@ -128,7 +129,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    private void onLocationPermissionGranted() {
+    private void fetchLocation() {
         if (mMap == null) return;
         try {
             mMap.setMyLocationEnabled(true);
@@ -144,11 +145,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        fusedLocationClient.getLastLocation().addOnSuccessListener(requireActivity(), location -> {
+        fusedLocationClient.getLastLocation().addOnCompleteListener(task -> {
+            if (!isAdded() || mMap == null) return;
             double lat, lng;
-            if (location != null) {
-                lat = location.getLatitude();
-                lng = location.getLongitude();
+            if (task.isSuccessful() && task.getResult() != null) {
+                lat = task.getResult().getLatitude();
+                lng = task.getResult().getLongitude();
             } else {
                 lat = 6.5244;
                 lng = 3.3792;
@@ -156,6 +158,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 13f));
             viewModel.fetchNearbyRestaurants(lat, lng);
         });
+    }
+
+    private void drawMarkers(List<Restaurant> restaurants) {
+        mMap.clear();
+        for (Restaurant restaurant : restaurants) {
+            LatLng position = new LatLng(restaurant.latitude(), restaurant.longitude());
+            Marker marker = mMap.addMarker(new MarkerOptions()
+                    .position(position)
+                    .title(restaurant.name())
+                    .icon(restaurantMarkerIcon));
+            if (marker != null) {
+                marker.setTag(restaurant);
+            }
+        }
     }
 
     private boolean hasLocationPermission() {
@@ -185,5 +201,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         super.onDestroyView();
         binding = null;
         mMap = null;
+        pendingRestaurants = null;
     }
 }
