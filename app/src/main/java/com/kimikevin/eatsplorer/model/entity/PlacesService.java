@@ -8,7 +8,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface PlacesService {
-    String LIST_FIELD_MASK = "places.id,places.displayName,places.formattedAddress,places.photos,places.primaryTypeDisplayName,places.rating";
+    String LIST_FIELD_MASK = "places.id,places.displayName,places.formattedAddress,places.location,places.photos,places.primaryTypeDisplayName,places.rating";
 
     @POST("v1/places:searchNearby")
     Call<NearbySearchResponse> searchNearby(
