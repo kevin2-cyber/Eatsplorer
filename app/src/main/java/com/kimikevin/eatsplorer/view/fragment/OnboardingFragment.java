@@ -2,11 +2,17 @@ package com.kimikevin.eatsplorer.view.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.animation.ValueAnimator;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.transition.AutoTransition;
+import androidx.transition.TransitionManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import androidx.navigation.NavDirections;
@@ -16,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.kimikevin.eatsplorer.MainActivity;
 import com.kimikevin.eatsplorer.R;
@@ -56,10 +63,10 @@ public class OnboardingFragment extends Fragment {
         nextBtn = binding.nextBtn;
         skipBtn = binding.skipBtn;
         onboardingIndicators = binding.onboardingIndicators;
+        onboardingPager = binding.viewPager;
 
         setupOnboardingItems();
 
-        onboardingPager = binding.viewPager;
         onboardingPager.setOffscreenPageLimit(onboardings.size() - 1);
         onboardingPager.setAdapter(onboardingAdapter);
         onboardingIndicators.attachTo(onboardingPager);
@@ -68,19 +75,14 @@ public class OnboardingFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                if (position == onboardingAdapter.getItemCount() -1) {
-                    nextBtn.setText(R.string.get_started);
-                } else {
-                    nextBtn.setText(getString(R.string.next));
-                }
+                boolean isLastPage = (position == onboardingAdapter.getItemCount() - 1);
+                updateNavigationButtons(isLastPage);
             }
         });
 
         skipBtn.setOnClickListener(skipBtnView -> {
             if(onboardingPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
                 onboardingPager.setCurrentItem(onboardings.size() -1);
-            } else {
-                skipBtn.setEnabled(false);
             }
         });
 
@@ -128,5 +130,62 @@ public class OnboardingFragment extends Fragment {
         onboardings.add(third);
 
         onboardingAdapter = new OnboardingAdapter(onboardings);
+    }
+
+    private void updateNavigationButtons(boolean isLastPage) {
+        // 1. Tell Android to automatically animate all layout bounds and visibility changes
+        AutoTransition transition = new AutoTransition();
+        transition.setDuration(300); // 300ms is standard for UI movement
+        TransitionManager.beginDelayedTransition(binding.llButtons, transition);
+
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.nextBtn.getLayoutParams();
+
+        // 2. Define the target colors based on the state
+        int targetBgColor = isLastPage ? ContextCompat.getColor(requireContext(), R.color.white) : Color.TRANSPARENT;
+        int targetTextColor = isLastPage ? Color.BLACK : ContextCompat.getColor(requireContext(), R.color.white);
+
+        // Grab the current colors so the animation starts exactly where the user is
+        int currentBgColor = binding.nextBtn.getBackgroundTintList() != null
+                ? binding.nextBtn.getBackgroundTintList().getDefaultColor()
+                : Color.TRANSPARENT;
+        int currentTextColor = binding.nextBtn.getCurrentTextColor();
+
+        if (isLastPage) {
+            binding.skipBtn.setVisibility(View.GONE);
+            binding.nextBtn.setText(R.string.get_started);
+
+            params.setMarginStart(0);
+
+            params.width = (int) (280 * getResources().getDisplayMetrics().density);
+
+            binding.nextBtn.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.white)));
+            binding.nextBtn.setTextColor(Color.BLACK);
+            binding.nextBtn.setStrokeWidth(0);
+            binding.nextBtn.setTextAppearance(R.style.TextAppearance_Eatsplorer_Onboarding_Solid);
+        } else {
+            binding.skipBtn.setVisibility(View.VISIBLE);
+            binding.nextBtn.setText(R.string.next);
+
+            // Restore original 40dp margin and 140dp width when swiping back
+            params.setMarginStart((int) (40 * getResources().getDisplayMetrics().density));
+            params.width = (int) (140 * getResources().getDisplayMetrics().density);
+
+            binding.nextBtn.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+            binding.nextBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
+            binding.nextBtn.setStrokeWidth((int) (1 * getResources().getDisplayMetrics().density));
+            binding.nextBtn.setTextAppearance(R.style.TextAppearance_Eatsplorer_Onboarding_Outlined);
+        }
+
+        binding.nextBtn.setLayoutParams(params);
+
+        ValueAnimator colorAnimator = ValueAnimator.ofArgb(currentBgColor, targetBgColor);
+        colorAnimator.setDuration(300);
+        colorAnimator.addUpdateListener(animator -> binding.nextBtn.setBackgroundTintList(ColorStateList.valueOf((int) animator.getAnimatedValue())));
+        colorAnimator.start();
+
+        ValueAnimator textAnimator = ValueAnimator.ofArgb(currentTextColor, targetTextColor);
+        textAnimator.setDuration(300);
+        textAnimator.addUpdateListener(animator -> binding.nextBtn.setTextColor((int) animator.getAnimatedValue()));
+        textAnimator.start();
     }
 }
