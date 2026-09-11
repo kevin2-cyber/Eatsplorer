@@ -2,6 +2,7 @@ package com.kimikevin.eatsplorer.view.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.animation.ValueAnimator;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.transition.AutoTransition;
+import androidx.transition.TransitionManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import androidx.navigation.NavDirections;
@@ -130,7 +133,22 @@ public class OnboardingFragment extends Fragment {
     }
 
     private void updateNavigationButtons(boolean isLastPage) {
+        // 1. Tell Android to automatically animate all layout bounds and visibility changes
+        AutoTransition transition = new AutoTransition();
+        transition.setDuration(300); // 300ms is standard for UI movement
+        TransitionManager.beginDelayedTransition(binding.llButtons, transition);
+
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.nextBtn.getLayoutParams();
+
+        // 2. Define the target colors based on the state
+        int targetBgColor = isLastPage ? ContextCompat.getColor(requireContext(), R.color.white) : Color.TRANSPARENT;
+        int targetTextColor = isLastPage ? Color.BLACK : ContextCompat.getColor(requireContext(), R.color.white);
+
+        // Grab the current colors so the animation starts exactly where the user is
+        int currentBgColor = binding.nextBtn.getBackgroundTintList() != null
+                ? binding.nextBtn.getBackgroundTintList().getDefaultColor()
+                : Color.TRANSPARENT;
+        int currentTextColor = binding.nextBtn.getCurrentTextColor();
 
         if (isLastPage) {
             binding.skipBtn.setVisibility(View.GONE);
@@ -159,5 +177,15 @@ public class OnboardingFragment extends Fragment {
         }
 
         binding.nextBtn.setLayoutParams(params);
+
+        ValueAnimator colorAnimator = ValueAnimator.ofArgb(currentBgColor, targetBgColor);
+        colorAnimator.setDuration(300);
+        colorAnimator.addUpdateListener(animator -> binding.nextBtn.setBackgroundTintList(ColorStateList.valueOf((int) animator.getAnimatedValue())));
+        colorAnimator.start();
+
+        ValueAnimator textAnimator = ValueAnimator.ofArgb(currentTextColor, targetTextColor);
+        textAnimator.setDuration(300);
+        textAnimator.addUpdateListener(animator -> binding.nextBtn.setTextColor((int) animator.getAnimatedValue()));
+        textAnimator.start();
     }
 }
