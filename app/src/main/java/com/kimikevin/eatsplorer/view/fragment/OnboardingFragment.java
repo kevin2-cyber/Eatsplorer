@@ -56,10 +56,10 @@ public class OnboardingFragment extends Fragment {
         nextBtn = binding.nextBtn;
         skipBtn = binding.skipBtn;
         onboardingIndicators = binding.onboardingIndicators;
+        onboardingPager = binding.viewPager;
 
         setupOnboardingItems();
 
-        onboardingPager = binding.viewPager;
         onboardingPager.setOffscreenPageLimit(onboardings.size() - 1);
         onboardingPager.setAdapter(onboardingAdapter);
         onboardingIndicators.attachTo(onboardingPager);
@@ -80,7 +80,7 @@ public class OnboardingFragment extends Fragment {
             if(onboardingPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
                 onboardingPager.setCurrentItem(onboardings.size() -1);
             } else {
-                skipBtn.setEnabled(false);
+                skipBtn.setVisibility(View.GONE);
             }
         });
 

@@ -35,4 +35,9 @@
         <item name="android:fontFamily">@font/samsung</item>
         <item name="font">@font/samsung_bold</item>
     </style>
+
+    <style name="ShapeAppearance.RoundedCorners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item> <!-- Adjust radius here -->
+    </style>
 </resources>
