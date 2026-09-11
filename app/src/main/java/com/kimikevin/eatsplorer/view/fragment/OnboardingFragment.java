@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.material.button.MaterialButton;
 import com.kimikevin.eatsplorer.MainActivity;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.FragmentOnboardingBinding;
@@ -69,6 +71,8 @@ public class OnboardingFragment extends Fragment {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 if (position == onboardingAdapter.getItemCount() -1) {
+                    positionNextBtn();
+                    skipBtn.setVisibility(View.GONE);
                     nextBtn.setText(R.string.get_started);
                 } else {
                     nextBtn.setText(getString(R.string.next));
@@ -79,8 +83,6 @@ public class OnboardingFragment extends Fragment {
         skipBtn.setOnClickListener(skipBtnView -> {
             if(onboardingPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
                 onboardingPager.setCurrentItem(onboardings.size() -1);
-            } else {
-                skipBtn.setVisibility(View.GONE);
             }
         });
 
@@ -128,5 +130,26 @@ public class OnboardingFragment extends Fragment {
         onboardings.add(third);
 
         onboardingAdapter = new OnboardingAdapter(onboardings);
+    }
+
+    private void positionNextBtn() {
+        ConstraintLayout parentLayout = binding.onboarding;
+        int parentWidth = parentLayout.getWidth();
+        int parentHeight = parentLayout.getHeight();
+
+        Button button = binding.nextBtn;
+
+        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+
+        );
+
+        layoutParams.setMargins(parentWidth, parentHeight, parentWidth, parentHeight);
+        layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        layoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+
+        button.setLayoutParams(layoutParams);
+        parentLayout.addView(button);
     }
 }
