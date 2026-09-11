@@ -2,11 +2,13 @@ package com.kimikevin.eatsplorer.view.fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -19,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.google.android.material.button.MaterialButton;
 import com.kimikevin.eatsplorer.MainActivity;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.FragmentOnboardingBinding;
@@ -135,11 +136,13 @@ public class OnboardingFragment extends Fragment {
             binding.skipBtn.setVisibility(View.GONE);
             binding.nextBtn.setText(R.string.get_started);
 
-            // Remove start margin so gravity="center" centers the button accurately
             params.setMarginStart(0);
 
-            // Expand width (e.g., 280dp)
             params.width = (int) (280 * getResources().getDisplayMetrics().density);
+
+            binding.nextBtn.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.white)));
+            binding.nextBtn.setTextColor(Color.BLACK);
+            binding.nextBtn.setStrokeWidth(0);
         } else {
             binding.skipBtn.setVisibility(View.VISIBLE);
             binding.nextBtn.setText(R.string.next);
@@ -147,6 +150,10 @@ public class OnboardingFragment extends Fragment {
             // Restore original 40dp margin and 140dp width when swiping back
             params.setMarginStart((int) (40 * getResources().getDisplayMetrics().density));
             params.width = (int) (140 * getResources().getDisplayMetrics().density);
+
+            binding.nextBtn.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
+            binding.nextBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
+            binding.nextBtn.setStrokeWidth((int) (1 * getResources().getDisplayMetrics().density));
         }
 
         binding.nextBtn.setLayoutParams(params);
