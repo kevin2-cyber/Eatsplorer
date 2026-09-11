@@ -40,4 +40,20 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">24dp</item> <!-- Adjust radius here -->
     </style>
+
+    <style name="TextAppearance.Eatsplorer.Onboarding.Solid" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/samsung</item>
+        <item name="android:fontFamily">@font/samsung</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Eatsplorer.Onboarding.Outlined" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/samsung</item>
+        <item name="android:fontFamily">@font/samsung</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
 </resources>

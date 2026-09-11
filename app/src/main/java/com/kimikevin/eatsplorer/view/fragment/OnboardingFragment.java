@@ -143,6 +143,7 @@ public class OnboardingFragment extends Fragment {
             binding.nextBtn.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.white)));
             binding.nextBtn.setTextColor(Color.BLACK);
             binding.nextBtn.setStrokeWidth(0);
+            binding.nextBtn.setTextAppearance(R.style.TextAppearance_Eatsplorer_Onboarding_Solid);
         } else {
             binding.skipBtn.setVisibility(View.VISIBLE);
             binding.nextBtn.setText(R.string.next);
@@ -154,6 +155,7 @@ public class OnboardingFragment extends Fragment {
             binding.nextBtn.setBackgroundTintList(ColorStateList.valueOf(Color.TRANSPARENT));
             binding.nextBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
             binding.nextBtn.setStrokeWidth((int) (1 * getResources().getDisplayMetrics().density));
+            binding.nextBtn.setTextAppearance(R.style.TextAppearance_Eatsplorer_Onboarding_Outlined);
         }
 
         binding.nextBtn.setLayoutParams(params);
