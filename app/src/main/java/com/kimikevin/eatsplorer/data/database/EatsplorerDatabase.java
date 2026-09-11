@@ -1,4 +1,4 @@
-package com.kimikevin.eatsplorer;
+package com.kimikevin.eatsplorer.data.database;
 
 import android.content.Context;
 
@@ -10,19 +10,19 @@ import com.kimikevin.eatsplorer.model.dao.FavoriteDao;
 import com.kimikevin.eatsplorer.model.entity.FavoriteRestaurant;
 
 @Database(entities = {FavoriteRestaurant.class}, version = 1, exportSchema = false)
-public abstract class AppDatabase extends RoomDatabase {
+public abstract class EatsplorerDatabase extends RoomDatabase {
 
-    private static volatile AppDatabase instance;
+    private static volatile EatsplorerDatabase instance;
 
     public abstract FavoriteDao favoriteDao();
 
-    public static AppDatabase getInstance(Context context) {
+    public static EatsplorerDatabase getInstance(Context context) {
         if (instance == null) {
-            synchronized (AppDatabase.class) {
+            synchronized (EatsplorerDatabase.class) {
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                             context.getApplicationContext(),
-                            AppDatabase.class,
+                            EatsplorerDatabase.class,
                             "eatsplorer.db"
                     ).build();
                 }

@@ -133,14 +133,14 @@ public class OnboardingFragment extends Fragment {
     }
 
     private void updateNavigationButtons(boolean isLastPage) {
-        // 1. Tell Android to automatically animate all layout bounds and visibility changes
+        // Tell Android to automatically animate all layout bounds and visibility changes
         AutoTransition transition = new AutoTransition();
         transition.setDuration(300); // 300ms is standard for UI movement
         TransitionManager.beginDelayedTransition(binding.llButtons, transition);
 
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.nextBtn.getLayoutParams();
 
-        // 2. Define the target colors based on the state
+        // Define the target colors based on the state
         int targetBgColor = isLastPage ? ContextCompat.getColor(requireContext(), R.color.white) : Color.TRANSPARENT;
         int targetTextColor = isLastPage ? Color.BLACK : ContextCompat.getColor(requireContext(), R.color.white);
 

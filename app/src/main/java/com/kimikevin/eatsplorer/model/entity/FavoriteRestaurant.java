@@ -2,7 +2,6 @@ package com.kimikevin.eatsplorer.model.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "favorites")
@@ -18,11 +17,6 @@ public class FavoriteRestaurant {
     public String address;
     public double latitude;
     public double longitude;
-
-//    @Ignore
-//    public FavoriteRestaurant() {
-//        id = "";
-//    }
 
     public static FavoriteRestaurant fromRestaurant(Restaurant r) {
         FavoriteRestaurant fav = new FavoriteRestaurant();
