@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.google.android.material.button.MaterialButton;
 import com.kimikevin.eatsplorer.MainActivity;
@@ -70,13 +71,8 @@ public class OnboardingFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                if (position == onboardingAdapter.getItemCount() -1) {
-                    positionNextBtn();
-                    skipBtn.setVisibility(View.GONE);
-                    nextBtn.setText(R.string.get_started);
-                } else {
-                    nextBtn.setText(getString(R.string.next));
-                }
+                boolean isLastPage = (position == onboardingAdapter.getItemCount() - 1);
+                updateNavigationButtons(isLastPage);
             }
         });
 
@@ -132,24 +128,27 @@ public class OnboardingFragment extends Fragment {
         onboardingAdapter = new OnboardingAdapter(onboardings);
     }
 
-    private void positionNextBtn() {
-        ConstraintLayout parentLayout = binding.onboarding;
-        int parentWidth = parentLayout.getWidth();
-        int parentHeight = parentLayout.getHeight();
+    private void updateNavigationButtons(boolean isLastPage) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.nextBtn.getLayoutParams();
 
-        Button button = binding.nextBtn;
+        if (isLastPage) {
+            binding.skipBtn.setVisibility(View.GONE);
+            binding.nextBtn.setText(R.string.get_started);
 
-        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(
-                ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT
+            // Remove start margin so gravity="center" centers the button accurately
+            params.setMarginStart(0);
 
-        );
+            // Expand width (e.g., 280dp)
+            params.width = (int) (280 * getResources().getDisplayMetrics().density);
+        } else {
+            binding.skipBtn.setVisibility(View.VISIBLE);
+            binding.nextBtn.setText(R.string.next);
 
-        layoutParams.setMargins(parentWidth, parentHeight, parentWidth, parentHeight);
-        layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
-        layoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+            // Restore original 40dp margin and 140dp width when swiping back
+            params.setMarginStart((int) (40 * getResources().getDisplayMetrics().density));
+            params.width = (int) (140 * getResources().getDisplayMetrics().density);
+        }
 
-        button.setLayoutParams(layoutParams);
-        parentLayout.addView(button);
+        binding.nextBtn.setLayoutParams(params);
     }
 }
