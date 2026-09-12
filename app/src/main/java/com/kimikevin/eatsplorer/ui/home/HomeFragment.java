@@ -21,7 +21,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.kimikevin.eatsplorer.databinding.FragmentHomeBinding;
 import com.kimikevin.eatsplorer.data.local.entity.FavoriteRestaurant;
-import com.kimikevin.eatsplorer.ui.favorites.HomeFragmentDirections;
+import com.kimikevin.eatsplorer.ui.common.RestaurantAdapter;
 import com.kimikevin.eatsplorer.util.PermissionUtils;
 import com.kimikevin.eatsplorer.ui.favorites.FavoriteViewModel;
 

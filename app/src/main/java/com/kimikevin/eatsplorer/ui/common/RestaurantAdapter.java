@@ -1,4 +1,4 @@
-package com.kimikevin.eatsplorer.ui.home;
+package com.kimikevin.eatsplorer.ui.common;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

@@ -26,7 +26,6 @@ import android.widget.LinearLayout;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.FragmentOnboardingBinding;
 import com.kimikevin.eatsplorer.data.repository.PreferencesRepository;
-import com.kimikevin.eatsplorer.ui.favorites.OnboardingFragmentDirections;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import java.util.ArrayList;

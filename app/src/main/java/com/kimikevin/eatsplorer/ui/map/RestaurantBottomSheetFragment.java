@@ -16,7 +16,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.BottomSheetRestaurantBinding;
 import com.kimikevin.eatsplorer.model.Restaurant;
-import com.kimikevin.eatsplorer.ui.favorites.MapFragmentDirections;
 
 public class RestaurantBottomSheetFragment extends BottomSheetDialogFragment {
     private BottomSheetRestaurantBinding binding;
@@ -56,7 +55,7 @@ public class RestaurantBottomSheetFragment extends BottomSheetDialogFragment {
 
         binding.btnViewDetails.setOnClickListener(v -> {
             dismiss();
-            com.kimikevin.eatsplorer.ui.favorites.MapFragmentDirections.ActionMapFragmentToDetailFragment action =
+            MapFragmentDirections.ActionMapFragmentToDetailFragment action =
                     MapFragmentDirections.actionMapFragmentToDetailFragment(restaurant);
             Navigation.findNavController(requireParentFragment().requireView()).navigate(action);
         });

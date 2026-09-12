@@ -23,7 +23,6 @@ import com.bumptech.glide.request.target.Target;
 import com.kimikevin.eatsplorer.databinding.FragmentDetailBinding;
 import com.kimikevin.eatsplorer.data.remote.model.PlaceDetailsResponse;
 import com.kimikevin.eatsplorer.model.Restaurant;
-import com.kimikevin.eatsplorer.ui.favorites.DetailFragmentArgs;
 
 import java.util.Objects;
 

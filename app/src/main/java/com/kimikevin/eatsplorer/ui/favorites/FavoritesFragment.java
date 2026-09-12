@@ -14,7 +14,7 @@ import androidx.navigation.Navigation;
 
 import com.kimikevin.eatsplorer.databinding.FragmentFavoritesBinding;
 import com.kimikevin.eatsplorer.data.local.entity.FavoriteRestaurant;
-import com.kimikevin.eatsplorer.ui.home.RestaurantAdapter;
+import com.kimikevin.eatsplorer.ui.common.RestaurantAdapter;
 
 import java.util.List;
 import java.util.Set;
