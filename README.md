@@ -20,6 +20,7 @@ It features a **"Spin the Wheel"** decision-maker for groups and uses a smart da
 
 - **Vibe-First Search:** Filter restaurants by mood (Romantic, Quiet, Lively) rather than just "Italian" or "Burgers."
 - **Spin the Wheel:** Can't decide? The app randomly selects a highly-rated nearby spot for you.
+- **Local Favorites:** Save your top picks directly to your device for offline access using a Room database.
 - **Smart Map Exploration:** Interactive Google Maps integration to view spots around you.
 - **Instant Details:** Tap a card to reveal contact info (phone, website, opening hours) on demand.
 - **Data Saver Mode:** Uses Google API Field Masking to reduce data usage and keep API costs low.
@@ -29,31 +30,35 @@ It features a **"Spin the Wheel"** decision-maker for groups and uses a smart da
 
 ## Architecture & Design
 
-The app is built using **Java 17** and **XML Views**, following the **MVVM** architecture pattern with **View Binding** for safe and efficient UI interactions.
+The app is built using **Java 17** and **XML Views**, following the **MVVM** architecture pattern. It leverages **Hilt** for robust dependency injection and is structured using a **Package by Feature** approach to maximize modularity and maintainability.
 
-### MVVM Pattern
+### Key Architectural Concepts
 
-- **View (UI):** Activities and Fragments using **View Binding** to interact with XML layouts.
-- **ViewModel:** Holds and manages UI state using `LiveData`. Survives configuration changes and drives all screen logic.
-- **Repository:** The single source of truth. Orchestrates **Retrofit** network calls and handles data persistence.
+- **Package by Feature:** Instead of grouping files by their layer, the UI codebase is organized by feature (`ui.home`, `ui.detail`, `ui.map`, `ui.favorites`, `ui.onboarding`). This makes features highly cohesive and easier to scale.
+- **Dependency Injection (Hilt):** Hilt manages the instantiation and lifecycle of dependencies across the app, ensuring view models, repositories, and local/remote data sources are decoupled and easily testable.
+- **Data & Domain Separation:** 
+  - **`data`** handles all remote networking (Retrofit) and local persistence (Room, DataStore, Repositories, Mappers).
+  - **`model`** contains pure domain objects that are independent of the data source format and business logic details.
 
 ### Package Structure
 
-```
+```text
 com.kimikevin.eatsplorer
-├── MainActivity.java             # Entry point, splash screen, onboarding gate
-├── model/
-│   ├── entity/                   # Data models & Retrofit service interface
-│   ├── mapper/                   # RestaurantMapper (API → domain model)
-│   └── repository/               # RestaurantRepository (singleton)
-├── viewmodel/
-│   ├── HomeViewModel.java        # Search & wheel-spin logic
-│   ├── DetailViewModel.java      # Place detail fetching
-│   └── SplashViewModel.java      # Splash screen state
-└── view/
-    ├── adapter/                  # RecyclerView & ViewPager2 adapters
-    ├── fragment/                 # App screens (Home, Map, Detail, etc.)
-    └── ui/                       # Custom UI components
+├── EatsplorerApplication.java    # Application class (Hilt Initialization)
+├── data/
+│   ├── local/                    # Room Database, DAOs, and Entity models
+│   ├── remote/                   # Retrofit service interfaces and API models
+│   ├── repository/               # Repository implementations (Preferences, Favorites, etc.)
+│   └── mapper/                   # Mappers (Remote/Local models ↔ Domain models)
+├── di/                           # Hilt Dependency Injection modules
+├── model/                        # Pure domain objects (POJOs)
+└── ui/                           # Package by Feature (Views, ViewModels, Adapters)
+    ├── common/                   # Shared UI components across features
+    ├── detail/                   # Place detail screens and logic
+    ├── favorites/                # Saved restaurants UI and logic
+    ├── home/                     # Main search and wheel-spin logic
+    ├── map/                      # Google Maps integration
+    └── onboarding/               # First-launch experience and splash
 ```
 
 ---
@@ -64,6 +69,9 @@ com.kimikevin.eatsplorer
 | :--- | :--- | :--- |
 | **Language** | Java 17 | Robust, object-oriented development |
 | **UI Framework** | XML Views | Classic Android View system with View Binding |
+| **Dependency Injection** | Hilt | Standardized Dagger-based dependency injection |
+| **Local Database** | Room | SQLite object mapping for local favorites |
+| **Preferences** | DataStore + RxJava | Reactive data storage for user preferences |
 | **Navigation** | Navigation Component 2.9.8 | Fragment-based navigation with Safe Args |
 | **Network** | Retrofit 3.0.0 + OkHttp 5.4.0 | Google Places API (New) integration |
 | **Image Loading** | Glide 5.0.9 | Efficient image fetching and caching |
@@ -88,7 +96,7 @@ com.kimikevin.eatsplorer
 1. Open (or create) `local.properties` in the project root.
 2. Add your Google API key:
    ```properties
-   GOOGLE_API_KEY="YOUR_ACTUAL_API_KEY"
+   GMP_KEY="YOUR_ACTUAL_API_KEY"
    ```
 3. The Secrets Gradle Plugin reads this key and injects it into `BuildConfig` and `AndroidManifest.xml` automatically.
 
