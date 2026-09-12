@@ -30,6 +30,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;

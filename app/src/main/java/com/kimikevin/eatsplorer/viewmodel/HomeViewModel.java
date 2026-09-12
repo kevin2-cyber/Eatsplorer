@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
 public class HomeViewModel extends ViewModel {
     private final RestaurantRepository repository;
 
@@ -27,8 +32,9 @@ public class HomeViewModel extends ViewModel {
     private final MutableLiveData<String> _errorMessage = new MutableLiveData<>();
     public LiveData<String> errorMessage = _errorMessage;
 
-    public HomeViewModel() {
-        repository = RestaurantRepository.getInstance();
+    @Inject
+    public HomeViewModel(RestaurantRepository repository) {
+        this.repository = repository;
         _isLoading.setValue(false);
         _isLoading.addSource(_restaurants, r -> _isLoading.setValue(false));
         _isLoading.addSource(_errorMessage, e -> _isLoading.setValue(false));
@@ -40,26 +46,26 @@ public class HomeViewModel extends ViewModel {
         repository.searchNearby(lat, lng, _restaurants, _errorMessage);
     }
 
-    // spin the wheel
-    public void spinTheWheel() {
-        List<Restaurant> currentList = _restaurants.getValue();
-        if(currentList == null || currentList.isEmpty()) {
-            _errorMessage.setValue("No restaurants found near you");
-            return;
-        }
-
-        List<Restaurant> candidates = new ArrayList<>();
-        for (Restaurant restaurant : currentList) {
-            if (restaurant.rating() >= 4.0) {
-                candidates.add(restaurant);
-            }
-        }
-
-        if (candidates.isEmpty()) {
-            candidates = currentList;
-        }
-
-        int randomIndex = new Random().nextInt(candidates.size());
-        _spinWinner.setValue(candidates.get(randomIndex));
-    }
+//    // spin the wheel
+//    public void spinTheWheel() {
+//        List<Restaurant> currentList = _restaurants.getValue();
+//        if(currentList == null || currentList.isEmpty()) {
+//            _errorMessage.setValue("No restaurants found near you");
+//            return;
+//        }
+//
+//        List<Restaurant> candidates = new ArrayList<>();
+//        for (Restaurant restaurant : currentList) {
+//            if (restaurant.rating() >= 4.0) {
+//                candidates.add(restaurant);
+//            }
+//        }
+//
+//        if (candidates.isEmpty()) {
+//            candidates = currentList;
+//        }
+//
+//        int randomIndex = new Random().nextInt(candidates.size());
+//        _spinWinner.setValue(candidates.get(randomIndex));
+//    }
 }

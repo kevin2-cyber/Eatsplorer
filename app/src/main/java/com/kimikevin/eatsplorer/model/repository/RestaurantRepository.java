@@ -15,6 +15,9 @@ import com.kimikevin.eatsplorer.model.mapper.RestaurantMapper;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,22 +25,16 @@ import retrofit2.Response;
 /**
  * Repository class that abstracts the data source (Google Places API).
  */
+@Singleton
 public class RestaurantRepository {
     private static final String TAG = "RestaurantRepo";
     private static final String API_KEY = BuildConfig.GOOGLE_MAPS_API_KEY;
     
     private final PlacesService apiService;
-    private static RestaurantRepository instance;
 
-    private RestaurantRepository() {
+    @Inject
+    public RestaurantRepository() {
         apiService = RetrofitClient.getClient().create(PlacesService.class);
-    }
-
-    public static synchronized RestaurantRepository getInstance() {
-        if (instance == null) {
-            instance = new RestaurantRepository();
-        }
-        return instance;
     }
 
     /**

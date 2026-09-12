@@ -1,10 +1,8 @@
 package com.kimikevin.eatsplorer.model.repository;
 
-import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
-import com.kimikevin.eatsplorer.data.database.EatsplorerDatabase;
 import com.kimikevin.eatsplorer.model.dao.FavoriteDao;
 import com.kimikevin.eatsplorer.model.entity.FavoriteRestaurant;
 import com.kimikevin.eatsplorer.model.entity.Restaurant;
@@ -13,13 +11,16 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.inject.Inject;
+
 public class FavoriteRepository {
 
     private final FavoriteDao dao;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
-    public FavoriteRepository(Context context) {
-        dao = EatsplorerDatabase.getInstance(context).favoriteDao();
+    @Inject
+    public FavoriteRepository(FavoriteDao dao) {
+        this.dao = dao;
     }
 
     public LiveData<List<FavoriteRestaurant>> getAllFavorites() {

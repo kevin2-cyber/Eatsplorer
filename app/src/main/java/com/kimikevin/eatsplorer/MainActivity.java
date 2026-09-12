@@ -1,6 +1,5 @@
 package com.kimikevin.eatsplorer;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,10 +11,17 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.kimikevin.eatsplorer.databinding.ActivityMainBinding;
+import com.kimikevin.eatsplorer.repository.PreferencesRepository;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
-    public static final String PREFS_NAME = "eatsplorer_prefs";
-    public static final String KEY_ONBOARDING_COMPLETE = "onboarding_complete";
+
+    @Inject
+    PreferencesRepository preferencesRepository;
 
     private ActivityMainBinding binding;
 
@@ -27,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        boolean onboardingComplete = prefs.getBoolean(KEY_ONBOARDING_COMPLETE, false);
+        boolean onboardingComplete = preferencesRepository.isOnboardingComplete().blockingGet();
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);

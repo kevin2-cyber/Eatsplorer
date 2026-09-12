@@ -8,6 +8,11 @@ import androidx.lifecycle.ViewModel;
 import com.kimikevin.eatsplorer.model.entity.PlaceDetailsResponse;
 import com.kimikevin.eatsplorer.model.repository.RestaurantRepository;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
 public class DetailViewModel extends ViewModel {
     private final RestaurantRepository repository;
 
@@ -20,8 +25,9 @@ public class DetailViewModel extends ViewModel {
     private final MutableLiveData<String> _errorMessage = new MutableLiveData<>();
     public LiveData<String> errorMessage = _errorMessage;
 
-    public DetailViewModel() {
-        repository = RestaurantRepository.getInstance();
+    @Inject
+    public DetailViewModel(RestaurantRepository repository) {
+        this.repository = repository;
         _isLoading.setValue(false);
         _isLoading.addSource(_details, d -> _isLoading.setValue(false));
         _isLoading.addSource(_errorMessage, e -> _isLoading.setValue(false));

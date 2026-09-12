@@ -1,5 +1,7 @@
 package com.kimikevin.eatsplorer.view.fragment;
 
+import static com.kimikevin.eatsplorer.util.Utils.ARG_RESTAURANT;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +18,6 @@ import com.kimikevin.eatsplorer.databinding.BottomSheetRestaurantBinding;
 import com.kimikevin.eatsplorer.model.entity.Restaurant;
 
 public class RestaurantBottomSheetFragment extends BottomSheetDialogFragment {
-
-    private static final String ARG_RESTAURANT = "restaurant";
     private BottomSheetRestaurantBinding binding;
 
     public static RestaurantBottomSheetFragment newInstance(Restaurant restaurant) {

@@ -20,11 +20,12 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.FragmentDetailBinding;
 import com.kimikevin.eatsplorer.model.entity.PlaceDetailsResponse;
 import com.kimikevin.eatsplorer.model.entity.Restaurant;
 import com.kimikevin.eatsplorer.viewmodel.DetailViewModel;
+
+import java.util.Objects;
 
 public class DetailFragment extends Fragment {
 
@@ -55,6 +56,7 @@ public class DetailFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(DetailViewModel.class);
 
         // Get Restaurant from Safe Args
+        assert getArguments() != null;
         restaurant = DetailFragmentArgs.fromBundle(getArguments()).getRestaurant();
 
         if (restaurant != null) {
@@ -74,7 +76,7 @@ public class DetailFragment extends Fragment {
             binding.pbDetail.setVisibility(View.VISIBLE);
             Glide.with(this)
                     .load(restaurant.photoRef())
-                    .listener(new RequestListener<Drawable>() {
+                    .listener(new RequestListener<>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             binding.pbDetail.setVisibility(View.GONE);
@@ -100,7 +102,7 @@ public class DetailFragment extends Fragment {
 
         viewModel.isLoading.observe(getViewLifecycleOwner(), isLoading -> {
             // Keep progress bar if image is still loading, otherwise use ViewModel state
-            if (Boolean.TRUE.equals(isLoading)) {
+            if (Objects.equals(isLoading, Boolean.TRUE)) {
                 binding.pbDetail.setVisibility(View.VISIBLE);
             } else {
                 // If not loading data, hide unless image is still pending (handled by Glide listener)

@@ -1,10 +1,7 @@
 package com.kimikevin.eatsplorer.viewmodel;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.kimikevin.eatsplorer.model.entity.FavoriteRestaurant;
 import com.kimikevin.eatsplorer.model.entity.Restaurant;
@@ -12,14 +9,19 @@ import com.kimikevin.eatsplorer.model.repository.FavoriteRepository;
 
 import java.util.List;
 
-public class FavoriteViewModel extends AndroidViewModel {
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
+@HiltViewModel
+public class FavoriteViewModel extends ViewModel {
 
     private final FavoriteRepository repository;
     public final LiveData<List<FavoriteRestaurant>> favorites;
 
-    public FavoriteViewModel(@NonNull Application application) {
-        super(application);
-        repository = new FavoriteRepository(application);
+    @Inject
+    public FavoriteViewModel(FavoriteRepository repository) {
+        this.repository = repository;
         favorites = repository.getAllFavorites();
     }
 

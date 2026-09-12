@@ -1,6 +1,5 @@
 package com.kimikevin.eatsplorer.view.fragment;
 
-import static android.content.Context.MODE_PRIVATE;
 
 import android.animation.ValueAnimator;
 import android.content.res.ColorStateList;
@@ -28,12 +27,18 @@ import com.kimikevin.eatsplorer.MainActivity;
 import com.kimikevin.eatsplorer.R;
 import com.kimikevin.eatsplorer.databinding.FragmentOnboardingBinding;
 import com.kimikevin.eatsplorer.model.entity.Onboarding;
+import com.kimikevin.eatsplorer.repository.PreferencesRepository;
 import com.kimikevin.eatsplorer.view.adapter.OnboardingAdapter;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class OnboardingFragment extends Fragment {
     private FragmentOnboardingBinding binding;
     List<Onboarding> onboardings;
@@ -41,6 +46,9 @@ public class OnboardingFragment extends Fragment {
     OnboardingAdapter onboardingAdapter;
     Button nextBtn, skipBtn;
     DotsIndicator onboardingIndicators;
+
+    @Inject
+    PreferencesRepository preferencesRepository;
 
 
     @Override
@@ -90,10 +98,7 @@ public class OnboardingFragment extends Fragment {
             if(onboardingPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()) {
                 onboardingPager.setCurrentItem(onboardingPager.getCurrentItem() + 1);
             } else {
-                requireContext().getSharedPreferences(MainActivity.PREFS_NAME, MODE_PRIVATE)
-                        .edit()
-                        .putBoolean(MainActivity.KEY_ONBOARDING_COMPLETE, true)
-                        .apply();
+                preferencesRepository.setOnboardingComplete(true);
                 
                 NavDirections action = OnboardingFragmentDirections.actionOnboardingFragmentToHomeFragment();
                 Navigation.findNavController(nextBtnView).navigate(action);
