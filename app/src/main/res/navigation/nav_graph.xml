@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/onboardingFragment"
-        android:name="com.kimikevin.eatsplorer.view.fragment.OnboardingFragment"
+        android:name="com.kimikevin.eatsplorer.ui.onboarding.OnboardingFragment"
         android:label="Onboarding"
         tools:layout="@layout/fragment_onboarding">
         <action
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.kimikevin.eatsplorer.view.fragment.HomeFragment"
+        android:name="com.kimikevin.eatsplorer.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
         <action
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.kimikevin.eatsplorer.view.fragment.FavoritesFragment"
+        android:name="com.kimikevin.eatsplorer.ui.favorites.FavoritesFragment"
         android:label="Favourites"
         tools:layout="@layout/fragment_favorites">
         <action
@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.kimikevin.eatsplorer.view.fragment.MapFragment"
+        android:name="com.kimikevin.eatsplorer.ui.map.MapFragment"
         android:label="Map"
         tools:layout="@layout/fragment_map">
         <action
@@ -49,11 +49,11 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.kimikevin.eatsplorer.view.fragment.DetailFragment"
+        android:name="com.kimikevin.eatsplorer.ui.detail.DetailFragment"
         android:label="Detail"
         tools:layout="@layout/fragment_detail">
         <argument
             android:name="restaurant"
-            app:argType="com.kimikevin.eatsplorer.model.entity.Restaurant" />
+            app:argType="com.kimikevin.eatsplorer.model.Restaurant" />
     </fragment>
 </navigation>
