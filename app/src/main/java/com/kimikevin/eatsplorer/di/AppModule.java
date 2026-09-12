@@ -10,8 +10,8 @@ import androidx.datastore.preferences.rxjava3.RxPreferenceDataStoreBuilder;
 import androidx.datastore.rxjava3.RxDataStore;
 import androidx.room.Room;
 
-import com.kimikevin.eatsplorer.data.database.FavoriteDatabase;
-import com.kimikevin.eatsplorer.model.dao.FavoriteDao;
+import com.kimikevin.eatsplorer.data.local.FavoriteDatabase;
+import com.kimikevin.eatsplorer.data.local.dao.FavoriteDao;
 
 import javax.inject.Singleton;
 
