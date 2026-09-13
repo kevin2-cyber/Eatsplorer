@@ -41,7 +41,7 @@ public class RestaurantRepository {
     /**
      * Search for nearby restaurants based on latitude and longitude.
      */
-    public void searchNearby(double lat, double lng, MutableLiveData<List<Restaurant>> liveData, MutableLiveData<String> errorData) {
+    public void searchNearby(double lat, double lng, MutableLiveData<List<Restaurant>> restaurantLiveData, MutableLiveData<String> errorData) {
         NearbySearchRequest requestBody = new NearbySearchRequest(lat, lng, 5000);
         apiService.searchNearby(API_KEY, PlacesService.LIST_FIELD_MASK, requestBody)
                 .enqueue(new Callback<>() {
@@ -49,7 +49,7 @@ public class RestaurantRepository {
                     public void onResponse(@NonNull Call<NearbySearchResponse> call, @NonNull Response<NearbySearchResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
                             List<Restaurant> cleanList = RestaurantMapper.mapToDomain(response.body().getPlaces());
-                            liveData.postValue(cleanList);
+                            restaurantLiveData.postValue(cleanList);
                         } else {
                             handleError(response.code(), response.message(), errorData);
                         }
@@ -65,13 +65,13 @@ public class RestaurantRepository {
     /**
      * Fetch detailed information for a specific restaurant.
      */
-    public void getPlaceDetails(String placeId, MutableLiveData<PlaceDetailsResponse> liveData, MutableLiveData<String> errorData) {
+    public void getPlaceDetails(String placeId, MutableLiveData<PlaceDetailsResponse> placeDetailResponseLiveData, MutableLiveData<String> errorData) {
         apiService.getPlaceDetails(placeId, API_KEY, PlacesService.DETAILS_FIELD_MASK, "en")
                 .enqueue(new Callback<>() {
                     @Override
                     public void onResponse(@NonNull Call<PlaceDetailsResponse> call, @NonNull Response<PlaceDetailsResponse> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            liveData.postValue(response.body());
+                            placeDetailResponseLiveData.postValue(response.body());
                         } else {
                             handleError(response.code(), response.message(), errorData);
                         }
