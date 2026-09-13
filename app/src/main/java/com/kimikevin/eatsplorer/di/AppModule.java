@@ -42,7 +42,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public RxDataStore<Preferences> provideDataStore(@ApplicationContext Context context) {
+    public RxDataStore<Preferences> providePreferencesDataStore(@ApplicationContext Context context) {
         return new RxPreferenceDataStoreBuilder(context, PREF_KEY).build();
     }
 }

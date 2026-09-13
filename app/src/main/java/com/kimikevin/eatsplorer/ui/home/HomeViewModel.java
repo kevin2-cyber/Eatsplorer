@@ -43,27 +43,4 @@ public class HomeViewModel extends ViewModel {
         _isLoading.setValue(true);
         repository.searchNearby(lat, lng, _restaurants, _errorMessage);
     }
-
-//    // spin the wheel
-//    public void spinTheWheel() {
-//        List<Restaurant> currentList = _restaurants.getValue();
-//        if(currentList == null || currentList.isEmpty()) {
-//            _errorMessage.setValue("No restaurants found near you");
-//            return;
-//        }
-//
-//        List<Restaurant> candidates = new ArrayList<>();
-//        for (Restaurant restaurant : currentList) {
-//            if (restaurant.rating() >= 4.0) {
-//                candidates.add(restaurant);
-//            }
-//        }
-//
-//        if (candidates.isEmpty()) {
-//            candidates = currentList;
-//        }
-//
-//        int randomIndex = new Random().nextInt(candidates.size());
-//        _spinWinner.setValue(candidates.get(randomIndex));
-//    }
 }
